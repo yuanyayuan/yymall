@@ -13,7 +13,22 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>mall-parent</name>
     <description>微电商平台</description>
+    <packaging>pom</packaging>
 
+    <modules>
+        <module>mall_common</module>
+        <module>mall_util</module>
+        <module>mall_pojo</module>
+        <module>mall_mapper</module>
+        <module>mall_service</module>
+        <module>mall_api</module>
+    </modules>
+    <!--
+            1. 聚合工程里可以分为顶级项目（顶级工程、父工程）与子工程，这两者的关系其实就是父子继承的关系
+            子工程在maven里称之为模块（module），模块之间是平级，是可以相互依赖的。
+            2. 子模块可以使用顶级工程里所有的资源（依赖），子模块之间如果要使用资源，必须构建依赖（构建关系）
+            3. 一个顶级工程是可以由多个不同的子工程共同组合而成。
+        -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -31,7 +46,14 @@
         <spring-data-commons.version>2.3.0.RELEASE</spring-data-commons.version>
         <jjwt.version>0.9.0</jjwt.version>
         <logstash-logback.version>5.3</logstash-logback.version>
-        <minio.version>7.1.0</minio.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
+
+        <mall-common-version>0.0.1-SNAPSHOT</mall-common-version>
+        <mall-pojo-version>0.0.1-SNAPSHOT</mall-pojo-version>
+        <mall-mapper-version>0.0.1-SNAPSHOT</mall-mapper-version>
+        <mall-service-version>0.0.1-SNAPSHOT</mall-service-version>
+        <mall-api-version>0.0.1-SNAPSHOT</mall-api-version>
+        <mall-util-version>0.0.1-SNAPSHOT</mall-util-version>
     </properties>
 
     <dependencies>
@@ -72,6 +94,38 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--mall公共类-->
+            <dependency>
+                <groupId>com.nexus.mall</groupId>
+                <artifactId>mall-commom</artifactId>
+                <version>${mall-common-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nexus.mall</groupId>
+                <artifactId>mall-pojo</artifactId>
+                <version>${mall-pojo-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nexus.mall</groupId>
+                <artifactId>mall-mapper</artifactId>
+                <version>${mall-mapper-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nexus.mall</groupId>
+                <artifactId>mall-service</artifactId>
+                <version>${mall-service-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nexus.mall</groupId>
+                <artifactId>mall-api</artifactId>
+                <version>${mall-api-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nexus.mall</groupId>
+                <artifactId>mall-util</artifactId>
+                <version>${mall-util-version}</version>
+            </dependency>
+
             <!--Swagger-UI API文档生产工具-->
             <dependency>
                 <groupId>io.springfox</groupId>
@@ -148,15 +202,23 @@
                 <artifactId>logstash-logback-encoder</artifactId>
                 <version>${logstash-logback.version}</version>
             </dependency>
+            <!--工具类-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>
