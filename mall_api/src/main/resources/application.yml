@@ -1,1 +1,24 @@
-
+############################################################
+#
+# web访问端口号  约定：8088
+#
+############################################################
+server:
+  #  port: 8088
+  tomcat:
+    uri-encoding: UTF-8
+  max-http-header-size: 80KB
+############################################################
+#
+# 配置数据源信息
+#
+############################################################
+#spring:
+#  profiles:
+#    active: dev
+#  application:
+#    name: mall-api
+#  datasource:
+#    url: jdbc:mysql://rm-uf664qjgc068ae1fzro.mysql.rds.aliyuncs.com:3306/yymall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+#    username: root_mysql
+#    password: Liyuan233
