@@ -23,5 +23,13 @@
 			<groupId>com.nexus.mall</groupId>
 			<artifactId>mall-mapper</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.nexus.mall</groupId>
+			<artifactId>mall-util</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.nexus.mall</groupId>
+			<artifactId>mall-commom</artifactId>
+		</dependency>
 	</dependencies>
 </project>
