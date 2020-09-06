@@ -1,5 +1,8 @@
 package com.nexus.mall.api.controller;
 
+import com.nexus.mall.pojo.Users;
+import com.nexus.mall.service.TestService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,8 +26,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
 
+    @Autowired
+    private TestService testService;
+
     @GetMapping("hello")
     public String hello(){
         return "hello world";
+    }
+
+    @GetMapping("test")
+    public Users getUserById(Integer id){
+        return testService.getUserById(id);
     }
 }

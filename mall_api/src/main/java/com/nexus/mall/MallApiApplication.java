@@ -1,7 +1,11 @@
-package com.nexus.mall.api;
+package com.nexus.mall;
+
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import tk.mybatis.spring.annotation.MapperScan;
+
 /**
 
 * @Description:    启动类
@@ -19,6 +23,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 * @Version:        1.0
 
 */
+@MapperScan(basePackages = "com.nexus.mall.dao")
+@ComponentScan(basePackages = {"com.nexus.mall", "org.n3r.idworker"})
 @SpringBootApplication
 public class MallApiApplication {
 
