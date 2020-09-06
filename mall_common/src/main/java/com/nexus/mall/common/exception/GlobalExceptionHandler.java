@@ -85,10 +85,4 @@ public class GlobalExceptionHandler {
         }
         return ServerResponse.validateFailed(message);
     }
-
-    @ResponseBody
-    @ExceptionHandler
-    public ServerResponse defaultHandler() {
-        return ServerResponse.failed(ResultCode.UNKNOWN_ERROR);
-    }
 }

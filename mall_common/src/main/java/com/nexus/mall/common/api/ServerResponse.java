@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
 
-* @Description:    通用返回对象
+* @Description:    自定义响应数据结构
 
 * @Author:         Nexus
 
