@@ -2,6 +2,7 @@ package com.nexus.mall.common.exception;
 
 import com.nexus.mall.common.api.ResultCode;
 import com.nexus.mall.common.api.ServerResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import javax.validation.ConstraintViolationException;
 
 /**
 
@@ -31,6 +34,9 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 */
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final String BLANK_STR = "null";
+
     @ResponseBody
     @ExceptionHandler(value = ApiException.class)
     public ServerResponse handle(ApiException e) {
@@ -57,8 +63,20 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     public ServerResponse noHandlerFound(MissingServletRequestParameterException e){
-        return ServerResponse.failed(ResultCode.PARAMETER_VALIDATION_ERROR, String.valueOf(e.getCause()));
+        if(!BLANK_STR.equals(String.valueOf(e.getCause()))){
+            return ServerResponse.failed(ResultCode.PARAMETER_VALIDATION_ERROR, String.valueOf(e.getCause()));
+        }else {
+            return ServerResponse.failed(ResultCode.PARAMETER_VALIDATION_ERROR);
+        }
     }
+    /**
+     * handleValidException
+     * @Author : Nexus
+     * @Description : post请求参数校验抛出的异常
+     * @Date : 2020/9/7 23:25
+     * @Param : e
+     * @return : com.nexus.mall.common.api.ServerResponse
+     **/
     @ResponseBody
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ServerResponse handleValidException(MethodArgumentNotValidException e) {
@@ -72,6 +90,14 @@ public class GlobalExceptionHandler {
         }
         return ServerResponse.validateFailed(message);
     }
+    /**
+     * handleValidException
+     * @Author : Nexus
+     * @Description : get请求参数校验抛出的异常
+     * @Date : 2020/9/7 23:26
+     * @Param : e
+     * @return : com.nexus.mall.common.api.ServerResponse
+     **/
     @ResponseBody
     @ExceptionHandler(value = BindException.class)
     public ServerResponse handleValidException(BindException e) {
@@ -83,6 +109,21 @@ public class GlobalExceptionHandler {
                 message = fieldError.getField()+fieldError.getDefaultMessage();
             }
         }
+        return ServerResponse.validateFailed(message);
+    }
+    /**
+     * constraintViolationExceptionHandler
+     * @Author : Nexus
+     * @Description : 请求方法中校验抛出的异常
+     * @Date : 2020/9/7 23:26
+     * @Param : e
+     * @return : com.nexus.mall.common.api.ServerResponse
+     **/
+    @ResponseBody
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ServerResponse constraintViolationExceptionHandler(ConstraintViolationException e){
+        //获取异常中第一个错误信息
+        String message = e.getConstraintViolations().iterator().next().getMessage();
         return ServerResponse.validateFailed(message);
     }
 }
