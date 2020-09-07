@@ -5,8 +5,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
 
@@ -31,14 +34,16 @@ import javax.validation.constraints.NotBlank;
 @ApiModel(description = "用户注册表单对象")
 public class UserCreatBO {
     @ApiModelProperty(value = "用户名")
-    @NotBlank
+    @NotBlank(message = "不能为空")
     private String username;
 
     @ApiModelProperty(value = "密码")
-    @NotBlank
+    @NotBlank(message = "不能为空")
+    @Size(min = 6,message = "应大于6位数")
     private String password;
 
     @ApiModelProperty(value = "确认密码")
-    @NotBlank
+    @NotBlank(message = "不能为空")
+    @Size(min = 6,message = "应大于6位数")
     private String confirmPassword;
 }
