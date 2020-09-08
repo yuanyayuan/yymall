@@ -23,7 +23,11 @@ public abstract class BaseSwaggerConfig {
     @Bean
     public Docket createRestApi() {
         SwaggerProperties swaggerProperties = swaggerProperties();
-        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+
+        Docket docket =
+                //指定api类型为swagger2
+                new Docket(DocumentationType.SWAGGER_2)
+                //用于定义api文档汇总信息
                 .apiInfo(apiInfo(swaggerProperties))
                 .select()
                 .apis(RequestHandlerSelectors.basePackage(swaggerProperties.getApiBasePackage()))

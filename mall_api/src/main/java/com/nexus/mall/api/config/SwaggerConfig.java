@@ -34,10 +34,12 @@ public class SwaggerConfig extends BaseSwaggerConfig {
     @Override
     public SwaggerProperties swaggerProperties() {
         return SwaggerProperties.builder()
-                .apiBasePackage("com.macro.mall.controller")
+                .apiBasePackage("com.nexus.mall.api.controller")
                 .title("mall-api模块")
                 .description("mall-api相关接口文档")
                 .contactName("nexus")
+                .contactEmail("liyuan0707@outlook.com")
+                .contactUrl("https://github.com/yuanyayuan/yymall")
                 .version("1.0")
                 .enableSecurity(true)
                 .build();
