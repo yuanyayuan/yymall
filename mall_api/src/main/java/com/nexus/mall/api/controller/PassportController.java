@@ -41,7 +41,7 @@ public class PassportController {
         if(usernameIsExist){
             return ServerResponse.failed(ResultCode.REGISTER_DUP_FAIL);
         }
-        //3. 请求成功，用户名没有重复
+        //请求成功，用户名没有重复
         return ServerResponse.success("该用户不存在");
     }
 
@@ -54,18 +54,18 @@ public class PassportController {
         String password = userBO.getPassword();
         String confirmPwd = userBO.getConfirmPassword();
 
-        // 1. 查询用户名是否存在
+        //查询用户名是否存在
         boolean isExist = userService.queryUsernameIsExist(username);
         if (isExist) {
             return ServerResponse.failed("用户名已经存在");
         }
 
-        // 2. 判断两次密码是否一致
+        //判断两次密码是否一致
         if (!password.equals(confirmPwd)) {
             return ServerResponse.failed("两次密码输入不一致");
         }
 
-        // 3. 实现注册
+        //实现注册
         Users userResult = userService.createUser(userBO);
 
         setNullProperty(userResult);
