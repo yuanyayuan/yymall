@@ -7,9 +7,7 @@ import com.nexus.mall.pojo.bo.UserCreatBO;
 import com.nexus.mall.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +16,24 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 
 
+/**
 
-@Api(value = "通行相关接口",tags = {"passport"})
+* @Description:    java类作用描述
+
+* @Author:         Nexus
+
+* @CreateDate:     2020/9/8 21:29
+
+* @UpdateUser:     Nexus
+
+* @UpdateDate:     2020/9/8 21:29
+
+* @UpdateRemark:   修改内容
+
+* @Version:        1.0
+
+*/
+@Api(value = "通行相关接口",tags = {"用于注册登录的相关接口"})
 @Validated
 @RestController
 @RequestMapping("/passport")
@@ -34,7 +48,8 @@ public class PassportController {
      * @Param : username 用户名
      * @return : int
      **/
-    @GetMapping("/UsernameIsExist")
+    @ApiOperation(value = "用户名唯一校验", notes = "用户名唯一校验", httpMethod = "GET")
+    @GetMapping("/usernameIsExist")
     public ServerResponse usernameIsExist(@NotBlank(message = "用户名不能为空") @RequestParam("username") String username){
         //查找注册的用户名是否存在
         boolean usernameIsExist = userService.queryUsernameIsExist(username);
@@ -49,7 +64,7 @@ public class PassportController {
     @PostMapping("/register")
     public ServerResponse register(@Validated @RequestBody UserCreatBO userBO,
                                    HttpServletRequest request,
-                                   HttpServletResponse response, BindingResult result) {
+                                   HttpServletResponse response) {
         String username = userBO.getUsername();
         String password = userBO.getPassword();
         String confirmPwd = userBO.getConfirmPassword();
@@ -77,7 +92,7 @@ public class PassportController {
         // TODO 同步购物车数据
 
 
-        return ServerResponse.success();
+        return ServerResponse.success("注册成功");
     }
 
     private void setNullProperty(Users userResult) {
