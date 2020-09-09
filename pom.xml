@@ -22,6 +22,8 @@
         <module>mall_mapper</module>
         <module>mall_service</module>
         <module>mall_api</module>
+        <module>mall_backend_api</module>
+        <module>mall_security</module>
     </modules>
     <!--
             1. 聚合工程里可以分为顶级项目（顶级工程、父工程）与子工程，这两者的关系其实就是父子继承的关系
@@ -52,15 +54,16 @@
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-net.version>3.7</commons-net.version>
         <commons-codec.version>1.15</commons-codec.version>
-        <jackson-version>2.11.2</jackson-version>
+        <jackson.version>2.11.2</jackson.version>
         <mapper.version>2.1.5</mapper.version>
-
+        <mapper-generator.version>1.1.5</mapper-generator.version>
         <mall-common-version>0.0.1-SNAPSHOT</mall-common-version>
         <mall-pojo-version>0.0.1-SNAPSHOT</mall-pojo-version>
         <mall-mapper-version>0.0.1-SNAPSHOT</mall-mapper-version>
         <mall-service-version>0.0.1-SNAPSHOT</mall-service-version>
         <mall-api-version>0.0.1-SNAPSHOT</mall-api-version>
         <mall-util-version>0.0.1-SNAPSHOT</mall-util-version>
+        <mall-security-version>0.0.1-SNAPSHOT</mall-security-version>
     </properties>
 
     <dependencies>
@@ -132,6 +135,11 @@
                 <artifactId>mall-util</artifactId>
                 <version>${mall-util-version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.nexus.mall</groupId>
+                <artifactId>mall-security</artifactId>
+                <version>${mall-security-version}</version>
+            </dependency>
 
             <!--Swagger-UI API文档生产工具-->
             <dependency>
@@ -187,6 +195,11 @@
                 <groupId>tk.mybatis</groupId>
                 <artifactId>mapper-spring-boot-starter</artifactId>
                 <version>${mapper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-generator</artifactId>
+                <version>${mapper-generator.version}</version>
             </dependency>
             <!--Mysql数据库驱动-->
             <dependency>
@@ -245,19 +258,19 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
-                <version>${jackson-version}</version>
+                <version>${jackson.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>${jackson-version}</version>
+                <version>${jackson.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
-                <version>${jackson-version}</version>
+                <version>${jackson.version}</version>
             </dependency>
 
         </dependencies>
