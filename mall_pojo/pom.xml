@@ -24,6 +24,10 @@
 			<artifactId>mall-commom</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.nexus.mall</groupId>
+			<artifactId>mall-security</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.mybatis.generator</groupId>
 			<artifactId>mybatis-generator-core</artifactId>
 		</dependency>

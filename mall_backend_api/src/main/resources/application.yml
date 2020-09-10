@@ -65,19 +65,16 @@ secure:
       - /swagger-ui.html
       - /swagger-resources/**
       - /swagger/**
-      - /**/v2/api-docs
+      - /**/doc.html
       - /**/*.js
       - /**/*.css
       - /**/*.png
       - /**/*.ico
-      - /webjars/springfox-swagger-ui/**
       - /actuator/**
-      - /druid/**
       - /admin/login
       - /admin/register
       - /admin/info
       - /admin/logout
-      - /minio/upload
 ############################################################
 # JWT 配置
 #

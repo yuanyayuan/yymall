@@ -31,5 +31,9 @@
 			<groupId>com.nexus.mall</groupId>
 			<artifactId>mall-commom</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.nexus.mall</groupId>
+			<artifactId>mall-security</artifactId>
+		</dependency>
 	</dependencies>
 </project>
