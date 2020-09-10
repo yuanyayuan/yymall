@@ -43,7 +43,7 @@ public class PassportController {
     /**
      * UsernameIsExist
      * @Author : Nexus
-     * @Description : //TODO
+     * @Description : 用户名唯一校验
      * @Date : 2020/9/6 22:01
      * @Param : username 用户名
      * @return : int
