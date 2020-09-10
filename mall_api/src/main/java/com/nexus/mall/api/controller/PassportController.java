@@ -46,7 +46,7 @@ public class PassportController {
      * @Description : 用户名唯一校验
      * @Date : 2020/9/6 22:01
      * @Param : username 用户名
-     * @return : int
+     * @return : com.nexus.mall.common.api.ServerResponse
      **/
     @ApiOperation(value = "用户名唯一校验", notes = "用户名唯一校验", httpMethod = "GET")
     @GetMapping("/usernameIsExist")
@@ -59,7 +59,16 @@ public class PassportController {
         //请求成功，用户名没有重复
         return ServerResponse.success("该用户不存在");
     }
-
+    /**
+     * register
+     * @Author : Nexus
+     * @Description : //TODO
+     * @Date : 2020/9/10 23:58
+     * @Param : userBO
+     * @Param : request
+     * @Param : response
+     * @return : com.nexus.mall.common.api.ServerResponse
+     **/
     @ApiOperation(value = "用户注册", notes = "用户注册", httpMethod = "POST")
     @PostMapping("/register")
     public ServerResponse register(@Validated @RequestBody UserCreatBO userBO,
