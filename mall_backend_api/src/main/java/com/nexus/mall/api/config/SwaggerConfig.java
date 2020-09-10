@@ -36,7 +36,7 @@ public class SwaggerConfig extends BaseSwaggerConfig {
     public SwaggerProperties swaggerProperties() {
         return SwaggerProperties.builder()
                 .apiBasePackage("com.nexus.mall.api.controller")
-                .title("mall-api模块")
+                .title("mall-backend-api模块")
                 .description("mall-api相关接口文档")
                 .contactName("nexus")
                 .contactEmail("liyuan0707@outlook.com")

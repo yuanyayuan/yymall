@@ -1,6 +1,6 @@
 ############################################################
 #
-# web·ÃÎÊ¶Ë¿ÚºÅ  Ô¼¶¨£º8088
+# webè®¿é—®ç«¯å£å·  çº¦å®šï¼š9088
 #
 ############################################################
 server:
@@ -10,7 +10,7 @@ server:
   max-http-header-size: 80KB
 ############################################################
 #
-# ÅäÖÃÊı¾İÔ´ĞÅÏ¢
+# é…ç½®æ•°æ®æºä¿¡æ¯
 #
 ############################################################
 spring:
@@ -18,50 +18,50 @@ spring:
     active: dev
   application:
     name: mall-api
-  datasource:                                         # Êı¾İÔ´µÄÏà¹ØÅäÖÃ
-    type: com.zaxxer.hikari.HikariDataSource          # Êı¾İÔ´ÀàĞÍ£ºHikariCP
+  datasource:                                         # æ•°æ®æºçš„ç›¸å…³é…ç½®
+    type: com.zaxxer.hikari.HikariDataSource          # æ•°æ®æºç±»å‹ï¼šHikariCP
     driver-class-name: com.mysql.cj.jdbc.Driver
     #    url: jdbc:mysql://localhost:3306/yymall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     #    password: 12345
     hikari:
-      connection-timeout: 30000       # µÈ´ıÁ¬½Ó³Ø·ÖÅäÁ¬½ÓµÄ×î´óÊ±³¤£¨ºÁÃë£©£¬³¬¹ıÕâ¸öÊ±³¤»¹Ã»¿ÉÓÃµÄÁ¬½ÓÔò·¢ÉúSQLException£¬ Ä¬ÈÏ:30Ãë
-      minimum-idle: 5                 # ×îĞ¡Á¬½ÓÊı
-      maximum-pool-size: 20           # ×î´óÁ¬½ÓÊı
-      auto-commit: true               # ×Ô¶¯Ìá½»
-      idle-timeout: 600000            # Á¬½Ó³¬Ê±µÄ×î´óÊ±³¤£¨ºÁÃë£©£¬³¬Ê±Ôò±»ÊÍ·Å£¨retired£©£¬Ä¬ÈÏ:10·ÖÖÓ
-      pool-name: DateSourceHikariCP     # Á¬½Ó³ØÃû×Ö
-      max-lifetime: 1800000           # Á¬½ÓµÄÉúÃüÊ±³¤£¨ºÁÃë£©£¬³¬Ê±¶øÇÒÃ»±»Ê¹ÓÃÔò±»ÊÍ·Å£¨retired£©£¬Ä¬ÈÏ:30·ÖÖÓ 1800000ms
+      connection-timeout: 30000       # ç­‰å¾…è¿æ¥æ± åˆ†é…è¿æ¥çš„æœ€å¤§æ—¶é•¿ï¼ˆæ¯«ç§’ï¼‰ï¼Œè¶…è¿‡è¿™ä¸ªæ—¶é•¿è¿˜æ²¡å¯ç”¨çš„è¿æ¥åˆ™å‘ç”ŸSQLExceptionï¼Œ é»˜è®¤:30ç§’
+      minimum-idle: 5                 # æœ€å°è¿æ¥æ•°
+      maximum-pool-size: 20           # æœ€å¤§è¿æ¥æ•°
+      auto-commit: true               # è‡ªåŠ¨æäº¤
+      idle-timeout: 600000            # è¿æ¥è¶…æ—¶çš„æœ€å¤§æ—¶é•¿ï¼ˆæ¯«ç§’ï¼‰ï¼Œè¶…æ—¶åˆ™è¢«é‡Šæ”¾ï¼ˆretiredï¼‰ï¼Œé»˜è®¤:10åˆ†é’Ÿ
+      pool-name: DateSourceHikariCP     # è¿æ¥æ± åå­—
+      max-lifetime: 1800000           # è¿æ¥çš„ç”Ÿå‘½æ—¶é•¿ï¼ˆæ¯«ç§’ï¼‰ï¼Œè¶…æ—¶è€Œä¸”æ²¡è¢«ä½¿ç”¨åˆ™è¢«é‡Šæ”¾ï¼ˆretiredï¼‰ï¼Œé»˜è®¤:30åˆ†é’Ÿ 1800000ms
       connection-test-query: SELECT 1
   servlet:
     multipart:
-      max-file-size: 512000     # ÎÄ¼şÉÏ´«´óĞ¡ÏŞÖÆÎª500kb
-      max-request-size: 512000  # ÇëÇó´óĞ¡ÏŞÖÆÎª500kb
+      max-file-size: 512000     # æ–‡ä»¶ä¸Šä¼ å¤§å°é™åˆ¶ä¸º500kb
+      max-request-size: 512000  # è¯·æ±‚å¤§å°é™åˆ¶ä¸º500kb
 ############################################################
 #
-# mybatis ÅäÖÃ
+# mybatis é…ç½®
 #
 ############################################################
 mybatis:
-  type-aliases-package: com.nexus.mall.pojo      # ËùÓĞPOJOÀàËùÔÚ°üÂ·¾¶
-  mapper-locations: classpath*:mappers/*.xml      # mapperÓ³ÉäÎÄ¼ş
+  type-aliases-package: com.nexus.mall.pojo      # æ‰€æœ‰POJOç±»æ‰€åœ¨åŒ…è·¯å¾„
+  mapper-locations: classpath*:mappers/*.xml      # mapperæ˜ å°„æ–‡ä»¶
 ############################################################
-# mybatis mapper ÅäÖÃ
+# mybatis mapper é…ç½®
 #
 ############################################################
-# Í¨ÓÃ Mapper
+# é€šç”¨ Mapper
 mapper:
   mappers: com.nexus.mall.my.mapper.MyMapper
   not-empty: false
   identity: MYSQL
 
 ############################################################
-# °×Ãûµ¥ ÅäÖÃ
+# ç™½åå• é…ç½®
 #
 ############################################################
 secure:
   ignored:
-    urls: #°²È«Â·¾¶°×Ãûµ¥
+    urls: #å®‰å…¨è·¯å¾„ç™½åå•
       - /swagger-ui.html
       - /swagger-resources/**
       - /swagger/**
@@ -79,11 +79,11 @@ secure:
       - /admin/logout
       - /minio/upload
 ############################################################
-# JWT ÅäÖÃ
+# JWT é…ç½®
 #
 ############################################################
 jwt:
-  tokenHeader: Authorization #JWT´æ´¢µÄÇëÇóÍ·
-  secret: mall-admin-secret #JWT¼Ó½âÃÜÊ¹ÓÃµÄÃÜÔ¿
-  expiration: 604800 #JWTµÄ³¬ÆÚÏŞÊ±¼ä(60*60*24*7)
-  tokenHead: 'Bearer '  #JWT¸ºÔØÖĞÄÃµ½¿ªÍ·
+  tokenHeader: Authorization #JWTå­˜å‚¨çš„è¯·æ±‚å¤´
+  secret: mall-admin-secret #JWTåŠ è§£å¯†ä½¿ç”¨çš„å¯†é’¥
+  expiration: 604800 #JWTçš„è¶…æœŸé™æ—¶é—´(60*60*24*7)
+  tokenHead: 'Bearer '  #JWTè´Ÿè½½ä¸­æ‹¿åˆ°å¼€å¤´

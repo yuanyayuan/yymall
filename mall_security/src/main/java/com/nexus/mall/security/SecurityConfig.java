@@ -4,6 +4,7 @@ import com.nexus.mall.security.component.JwtAuthenticationTokenFilter;
 import com.nexus.mall.security.component.RestAuthenticationEntryPoint;
 import com.nexus.mall.security.component.RestfulAccessDeniedHandler;
 import com.nexus.mall.security.config.IgnoreUrlsConfig;
+import com.nexus.mall.security.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -80,6 +81,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public JwtTokenUtil jwtTokenUtil() {
+        return new JwtTokenUtil();
     }
     @Bean
     public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
