@@ -1,4 +1,4 @@
-package com.nexus.mall.security;
+package com.nexus.mall.security.config;
 
 import com.nexus.mall.security.component.JwtAuthenticationTokenFilter;
 import com.nexus.mall.security.component.RestAuthenticationEntryPoint;
