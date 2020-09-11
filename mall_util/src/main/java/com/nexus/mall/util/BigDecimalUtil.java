@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 /**
  * @author LiYuan
  * @className BigDecimalUtil
- * @description //TODO
+ * @description 精度要求数字工具类
  * @date 2020/6/24
  **/
 public class BigDecimalUtil {
