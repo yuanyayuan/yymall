@@ -125,7 +125,7 @@ public class ServerResponse<T>{
 
     /**
      * @Author LiYuan
-     * @Description //TODO
+     * @Description 失败返回结果
      * @Date 13:32 2020/6/17
      * @param message
      * @param data
