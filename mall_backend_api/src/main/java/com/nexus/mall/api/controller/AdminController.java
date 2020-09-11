@@ -1,13 +1,16 @@
 package com.nexus.mall.api.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import com.google.common.collect.Maps;
 import com.nexus.mall.common.api.ResultCode;
 import com.nexus.mall.common.api.ServerResponse;
 import com.nexus.mall.pojo.BackendAdmin;
+import com.nexus.mall.pojo.BackendRole;
 import com.nexus.mall.pojo.Users;
 import com.nexus.mall.pojo.bo.AdminCreateBO;
 import com.nexus.mall.pojo.bo.AdminLoginBO;
 import com.nexus.mall.service.BackendAdminService;
+import com.nexus.mall.service.BackendRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +18,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotBlank;
+import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
 
@@ -44,10 +51,12 @@ public class AdminController {
     @Value("${jwt.tokenHeader}")
     private String tokenHeader;
     @Value("${jwt.tokenHead}")
-    private String tokenHead;
+    private String tokenHead;   //Authorization
 
     @Autowired
     private BackendAdminService adminService;
+    @Autowired
+    private BackendRoleService roleService;
 
 
     @ApiOperation(value = "用户名唯一校验", notes = "用户名唯一校验", httpMethod = "GET")
@@ -84,6 +93,48 @@ public class AdminController {
         tokenMap.put("tokenHead", tokenHead);
         return ServerResponse.success(tokenMap);
     }
+
+    @ApiOperation(value = "刷新token")
+    @RequestMapping(value = "/refreshToken", method = RequestMethod.GET)
+    public ServerResponse refreshToken(HttpServletRequest request){
+        String token = request.getHeader(tokenHeader);
+        String newToken = adminService.refreshToken(token);
+        if(newToken == null){
+            return ServerResponse.failed("Token已过期");
+        }
+        Map<String, String> tokenMap = Maps.newHashMap();
+        tokenMap.put("token", newToken);
+        tokenMap.put("tokenHead", tokenHead);
+        return ServerResponse.success(tokenMap);
+    }
+
+    @ApiOperation(value = "获取当前登录用户信息")
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    public ServerResponse getAdminInfo(Principal principal){
+        if(principal == null){
+            return ServerResponse.unauthorized(null);
+        }
+        String username = principal.getName();
+        BackendAdmin admin = adminService.getAdminByUsername(username);
+        Map<String, Object> data = Maps.newHashMap();
+        data.put("username",admin.getUsername());
+        data.put("menus",roleService.getMenuList(admin.getId()));
+        data.put("icon",admin.getIcon());
+        List<BackendRole> roleList = adminService.getRoleList(admin.getId());
+        if(CollUtil.isNotEmpty(roleList)){
+            List<String> roles = roleList.stream().map(BackendRole::getName).collect(Collectors.toList());
+            data.put("roles",roles);
+        }
+        return ServerResponse.success(data);
+    }
+
+    @ApiOperation(value = "登出功能")
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public ServerResponse logout() {
+        return ServerResponse.success(null);
+    }
+
+
 
 
 }

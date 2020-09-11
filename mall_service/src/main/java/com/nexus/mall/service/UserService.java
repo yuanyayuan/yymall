@@ -7,7 +7,7 @@ public interface UserService {
     /**
      * queryUsernameIsExist
      * @Author : Nexus
-     * @Description : //TODO
+     * @Description : 校验用户名是否唯一
      * @Date : 2020/9/6 21:39
      * @Param : username 用户名
      * @return : boolean
@@ -16,7 +16,7 @@ public interface UserService {
     /**
      * createUser
      * @Author : Nexus
-     * @Description : //TODO
+     * @Description : 创建用户
      * @Date : 2020/9/6 23:02
      * @Param : userBO 用户注册表单对象
      * @return : com.nexus.mall.pojo.Users

@@ -5,6 +5,7 @@ import com.nexus.mall.dao.BackendAdminMapper;
 import com.nexus.mall.dao.BackendAdminRoleRelationMapper;
 import com.nexus.mall.pojo.BackendAdmin;
 import com.nexus.mall.pojo.BackendResource;
+import com.nexus.mall.pojo.BackendRole;
 import com.nexus.mall.pojo.bo.AdminCreateBO;
 import com.nexus.mall.pojo.bo.AdminUserDetails;
 import com.nexus.mall.security.util.JwtTokenUtil;
@@ -158,6 +159,21 @@ public class BackendAdminServiceImpl implements BackendAdminService {
         }
         return null;
     }
+
+    /**
+     * refreshToken
+     *
+     * @param oldToken
+     * @return java.lang.String
+     * @Author LiYuan
+     * @Description 刷新token的功能
+     * @Date 9:33 2020/9/11
+     **/
+    @Override
+    public String refreshToken(String oldToken) {
+        return jwtTokenUtil.refreshHeadToken(oldToken);
+    }
+
     /**
      * getResourceList
      *
@@ -173,6 +189,21 @@ public class BackendAdminServiceImpl implements BackendAdminService {
         List<BackendResource> resourceList = adminRoleRelationMapper.getResourceList(adminId);
         return resourceList;
     }
+
+    /**
+     * getRoleList
+     *
+     * @param adminId
+     * @return java.util.List<com.nexus.mall.pojo.BackendRole>
+     * @Author LiYuan
+     * @Description 获取用户对于角色
+     * @Date 14:44 2020/9/11
+     **/
+    @Override
+    public List<BackendRole> getRoleList(Long adminId) {
+        return adminRoleRelationMapper.getRoleList(adminId);
+    }
+
     /**
      * loadUserByUsername
      *
