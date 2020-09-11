@@ -3,7 +3,7 @@ package com.nexus.mall.service;
 import com.nexus.mall.pojo.BackendAdmin;
 import com.nexus.mall.pojo.BackendResource;
 import com.nexus.mall.pojo.BackendRole;
-import com.nexus.mall.pojo.bo.AdminCreateBO;
+import com.nexus.mall.pojo.bo.admin.AdminCreateBO;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;

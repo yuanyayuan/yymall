@@ -3,10 +3,14 @@ package com.nexus.mall.api.controller;
 import com.nexus.mall.common.api.ResultCode;
 import com.nexus.mall.common.api.ServerResponse;
 import com.nexus.mall.pojo.Users;
-import com.nexus.mall.pojo.bo.UserCreatBO;
+import com.nexus.mall.pojo.bo.user.UserCreatBO;
+import com.nexus.mall.pojo.bo.user.UserLoginBO;
 import com.nexus.mall.service.UserService;
+import com.nexus.mall.util.MD5Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +39,7 @@ import javax.validation.constraints.NotBlank;
 */
 @Api(value = "通行相关接口",tags = {"用于注册登录的相关接口"})
 @Validated
+@Slf4j
 @RestController
 @RequestMapping("/passport")
 public class PassportController {
@@ -103,6 +108,28 @@ public class PassportController {
 
         return ServerResponse.success("注册成功");
     }
+
+    @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")
+    @PostMapping("/login")
+    public ServerResponse login(@Validated @RequestBody UserLoginBO userBO){
+        String username = userBO.getUsername();
+        String password = userBO.getPassword();
+
+        //实现登录
+        Users userResult = null;
+        try {
+            userResult = userService.queryUserForLogin(username, MD5Utils.getMD5Str(password));
+        } catch (Exception e) {
+            log.warn("[PassportController.login] ,{}", ExceptionUtils.getStackTrace(e));
+        }
+
+        if(userResult == null){
+            return ServerResponse.loginFail();
+        }
+
+        return ServerResponse.success(userResult);
+    }
+
 
     private void setNullProperty(Users userResult) {
         userResult.setPassword(null);

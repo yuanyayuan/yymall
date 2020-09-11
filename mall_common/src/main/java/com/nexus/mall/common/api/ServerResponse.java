@@ -178,6 +178,20 @@ public class ServerResponse<T>{
     public static <T> ServerResponse<T> unauthorized(T data) {
         return new ServerResponse<T>(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), data);
     }
+    /**
+     *
+     * loginFail
+     *
+     * @Author LiYuan
+     * @Description 用户名或密码错误
+     * @Date 17:31 2020/9/11
+     * @param
+     * @return com.nexus.mall.common.api.ServerResponse<T>
+    **/
+    public static <T> ServerResponse<T> loginFail(){
+        return new ServerResponse<T>(ResultCode.LOGIN_FAIL.getCode(), ResultCode.LOGIN_FAIL.getMessage());
+    }
+
 
     /**
      * @Author LiYuan

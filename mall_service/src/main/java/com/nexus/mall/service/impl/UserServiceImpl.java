@@ -4,7 +4,7 @@ import com.nexus.mall.common.enums.Sex;
 import org.n3r.idworker.Sid;
 import com.nexus.mall.dao.UsersMapper;
 import com.nexus.mall.pojo.Users;
-import com.nexus.mall.pojo.bo.UserCreatBO;
+import com.nexus.mall.pojo.bo.user.UserCreatBO;
 import com.nexus.mall.service.UserService;
 import com.nexus.mall.util.DateUtils;
 import com.nexus.mall.util.MD5Utils;
@@ -81,6 +81,27 @@ public class UserServiceImpl implements UserService {
         user.setUpdatedTime(new Date());
         usersMapper.insert(user);
         return user;
+    }
+
+    /**
+     * queryUserForLogin
+     *
+     * @param username
+     * @param password
+     * @return com.nexus.mall.pojo.Users
+     * @Author LiYuan
+     * @Description 检索用户名与密码与数据库是否匹配
+     * @Date 17:09 2020/9/11
+     **/
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    public Users queryUserForLogin(String username, String password) {
+        Example userExample = new Example(Users.class);
+        Example.Criteria userCriteria = userExample.createCriteria();
+        userCriteria.andEqualTo("username", username);
+        userCriteria.andEqualTo("password",password);
+
+        return usersMapper.selectOneByExample(userCriteria);
     }
 
 

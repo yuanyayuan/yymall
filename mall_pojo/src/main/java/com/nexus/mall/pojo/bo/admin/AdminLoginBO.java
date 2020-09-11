@@ -1,4 +1,4 @@
-package com.nexus.mall.pojo.bo;
+package com.nexus.mall.pojo.bo.admin;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

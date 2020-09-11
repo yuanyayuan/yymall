@@ -1,4 +1,4 @@
-package com.nexus.mall.pojo.bo;
+package com.nexus.mall.pojo.bo.user;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

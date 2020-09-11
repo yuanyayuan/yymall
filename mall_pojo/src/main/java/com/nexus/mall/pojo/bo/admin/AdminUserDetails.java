@@ -1,4 +1,4 @@
-package com.nexus.mall.pojo.bo;
+package com.nexus.mall.pojo.bo.admin;
 
 import com.nexus.mall.pojo.BackendAdmin;
 import com.nexus.mall.pojo.BackendResource;
