@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
         userCriteria.andEqualTo("username", username);
         userCriteria.andEqualTo("password",password);
 
-        return usersMapper.selectOneByExample(userCriteria);
+        return usersMapper.selectOneByExample(userExample);
     }
 
 

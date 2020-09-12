@@ -46,16 +46,17 @@ import java.util.List;
 @Service
 @Slf4j
 public class BackendAdminServiceImpl implements BackendAdminService {
-    @Autowired
+
+    @Autowired(required = false)
     private JwtTokenUtil jwtTokenUtil;
+    @Autowired(required = false)
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private Sid sid;
 
     @Autowired
     private BackendAdminMapper adminMapper;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
     @Autowired
     private BackendAdminRoleRelationMapper  adminRoleRelationMapper;
 
