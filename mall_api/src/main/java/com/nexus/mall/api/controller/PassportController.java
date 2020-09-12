@@ -6,6 +6,8 @@ import com.nexus.mall.pojo.Users;
 import com.nexus.mall.pojo.bo.user.UserCreatBO;
 import com.nexus.mall.pojo.bo.user.UserLoginBO;
 import com.nexus.mall.service.UserService;
+import com.nexus.mall.util.CookieUtils;
+import com.nexus.mall.util.JsonUtils;
 import com.nexus.mall.util.MD5Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -99,8 +101,7 @@ public class PassportController {
 
         setNullProperty(userResult);
 
-//        CookieUtils.setCookie(request, response, "user",
-//                JsonUtils.objectToJson(userResult), true);
+        CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(userResult), true);
 
         // TODO 生成用户token，存入redis会话
         // TODO 同步购物车数据
@@ -111,7 +112,9 @@ public class PassportController {
 
     @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")
     @PostMapping("/login")
-    public ServerResponse login(@Validated @RequestBody UserLoginBO userBO){
+    public ServerResponse login(@Validated @RequestBody UserLoginBO userBO,
+                                HttpServletRequest request,
+                                HttpServletResponse response){
         String username = userBO.getUsername();
         String password = userBO.getPassword();
 
@@ -127,9 +130,26 @@ public class PassportController {
             return ServerResponse.loginFail();
         }
 
+        setNullProperty(userResult);
+        CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(userResult), true);
         return ServerResponse.success(userResult);
     }
 
+
+    @ApiOperation(value = "用户退出登录", notes = "用户退出登录", httpMethod = "POST")
+    @PostMapping("/logout")
+    public ServerResponse logout(@RequestParam String userId,
+                                  HttpServletRequest request,
+                                  HttpServletResponse response) {
+
+        // 清除用户的相关信息的cookie
+        CookieUtils.deleteCookie(request, response, "user");
+
+        // TODO 用户退出登录，需要清空购物车
+        // TODO 分布式会话中需要清除用户数据
+
+        return ServerResponse.success();
+    }
 
     private void setNullProperty(Users userResult) {
         userResult.setPassword(null);

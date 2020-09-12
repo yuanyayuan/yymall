@@ -2,7 +2,9 @@ package com.nexus.mall;
 
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import tk.mybatis.spring.annotation.MapperScan;
 
@@ -23,9 +25,8 @@ import tk.mybatis.spring.annotation.MapperScan;
 * @Version:        1.0
 
 */
-@MapperScan(basePackages = "com.nexus.mall.dao")
 @ComponentScan(basePackages = {"com.nexus.mall", "org.n3r.idworker"})
-@SpringBootApplication
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class})
 public class MallApiApplication {
 
 	public static void main(String[] args) {

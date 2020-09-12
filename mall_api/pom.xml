@@ -44,6 +44,7 @@
 			<groupId>com.nexus.mall</groupId>
 			<artifactId>mall-util</artifactId>
 		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
