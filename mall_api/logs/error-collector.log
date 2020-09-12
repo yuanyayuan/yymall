@@ -1,0 +1,1 @@
+[2020-09-12T23:14:22.532+08:00] [WARN] [main-1] [org.mybatis.spring.mapper.ClassPathMapperScanner] [] [] [] [Logger.java,44,org.mybatis.logging.Logger,warn] [No MyBatis mapper was found in '[com.nexus.mall]' package. Please check your configuration.] ## ''
