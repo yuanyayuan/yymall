@@ -2,7 +2,7 @@ package com.nexus.mall.pojo;
 
 import java.util.Date;
 import javax.persistence.*;
-
+@Table(name = "users")
 public class Users {
     /**
      * 主键id 用户id

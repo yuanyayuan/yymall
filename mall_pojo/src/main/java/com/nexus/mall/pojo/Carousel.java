@@ -2,7 +2,7 @@ package com.nexus.mall.pojo;
 
 import java.util.Date;
 import javax.persistence.*;
-
+@Table(name = "carousel")
 public class Carousel {
     /**
      * 主键

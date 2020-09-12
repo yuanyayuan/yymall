@@ -18,6 +18,7 @@ import javax.persistence.*;
 * @Version:        1.0
 
 */
+@Table(name = "category")
 public class Category {
     /**
      * 主键 分类id主键

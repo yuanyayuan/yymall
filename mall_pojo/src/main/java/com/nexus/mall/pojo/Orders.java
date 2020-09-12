@@ -2,7 +2,7 @@ package com.nexus.mall.pojo;
 
 import java.util.Date;
 import javax.persistence.*;
-
+@Table(name = "orders")
 public class Orders {
     /**
      * 订单主键 同时也是订单编号
