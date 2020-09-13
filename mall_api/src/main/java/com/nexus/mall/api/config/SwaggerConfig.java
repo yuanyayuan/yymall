@@ -3,6 +3,7 @@ package com.nexus.mall.api.config;
 import com.nexus.mall.common.config.BaseSwaggerConfig;
 import com.nexus.mall.common.domain.SwaggerProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
 
@@ -23,6 +24,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 */
 @Configuration
 @EnableSwagger2
+@Profile({"dev"})
 public class SwaggerConfig extends BaseSwaggerConfig {
     /**
      * @Author Noctis
@@ -35,6 +37,7 @@ public class SwaggerConfig extends BaseSwaggerConfig {
     public SwaggerProperties swaggerProperties() {
         return SwaggerProperties.builder()
                 .apiBasePackage("com.nexus.mall.api.controller")
+                .enableSecurity(true)
                 .title("mall-api模块")
                 .description("mall-api相关接口文档")
                 .contactName("nexus")
