@@ -1,5 +1,7 @@
 package com.nexus.mall.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.github.pagehelper.PageHelper;
 import com.nexus.mall.common.exception.Asserts;
 import com.nexus.mall.dao.BackendAdminMapper;
 import com.nexus.mall.dao.BackendAdminRoleRelationMapper;
@@ -21,6 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
@@ -131,10 +134,10 @@ public class BackendAdminServiceImpl implements BackendAdminService {
      */
     @Override
     public boolean queryUsernameIsExist(String username) {
-        Example adminExample = new Example(BackendAdmin.class);
-        Example.Criteria criteria = adminExample.createCriteria();
+        Example example = new Example(BackendAdmin.class);
+        Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("username",username);
-        BackendAdmin result = adminMapper.selectOneByExample(adminExample);
+        BackendAdmin result = adminMapper.selectOneByExample(example);
         return result != null;
 
     }
@@ -145,16 +148,16 @@ public class BackendAdminServiceImpl implements BackendAdminService {
      * @param username
      * @return : com.nexus.mall.pojo.BackendAdmin
      * @Author : Nexus
-     * @Description : //通过用户名获取用户
+     * @Description : 通过用户名获取用户
      * @Date : 2020/9/10 21:48
      * @Param : username
      */
     @Override
     public BackendAdmin getAdminByUsername(String username) {
-        Example adminExample = new Example(BackendAdmin.class);
-        Example.Criteria criteria = adminExample.createCriteria();
+        Example example = new Example(BackendAdmin.class);
+        Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("username",username);
-        List<BackendAdmin> adminList = adminMapper.selectByExample(criteria);
+        List<BackendAdmin> adminList = adminMapper.selectByExample(example);
         if (adminList != null && adminList.size() > 0) {
             return adminList.get(0);
         }
@@ -203,6 +206,72 @@ public class BackendAdminServiceImpl implements BackendAdminService {
     @Override
     public List<BackendRole> getRoleList(Long adminId) {
         return adminRoleRelationMapper.getRoleList(adminId);
+    }
+
+    /**
+     * list
+     *
+     * @param keyword
+     * @param pageSize
+     * @param pageNum
+     * @return java.util.List<com.nexus.mall.pojo.BackendAdmin>
+     * @Author LiYuan
+     * @Description 根据用户名或昵称分页查询用户
+     * @Date 10:47 2020/9/14
+     **/
+    @Override
+    public List<BackendAdmin> list(String keyword, Integer pageSize, Integer pageNum) {
+        PageHelper.startPage(pageNum, pageSize);
+        Example example = new Example(BackendAdmin.class);
+        Example.Criteria criteria = example.createCriteria();
+        if (!StringUtils.isEmpty(keyword)) {
+            criteria.andLike("username","%" + keyword + "%");
+            example.or(example.createCriteria().andLike("nickName","%" + keyword + "%"));
+        }
+        return adminMapper.selectByExample(example);
+
+    }
+
+    /**
+     * getItem
+     *
+     * @param id
+     * @return com.nexus.mall.pojo.BackendAdmin
+     * @Author LiYuan
+     * @Description 根据用户id获取用户
+     * @Date 11:29 2020/9/14
+     **/
+    @Override
+    public BackendAdmin getItem(Long id) {
+        return adminMapper.selectByPrimaryKey(id);
+    }
+
+    /**
+     * update
+     *
+     * @param id
+     * @param admin
+     * @return int
+     * @Author LiYuan
+     * @Description 修改指定用户信息
+     * @Date 11:39 2020/9/14
+     **/
+    @Override
+    public int update(Long id, BackendAdmin admin) {
+        admin.setId(id);
+        BackendAdmin backendAdmin = adminMapper.selectByPrimaryKey(id);
+        if(backendAdmin.getPassword().equals(admin.getPassword())){
+            //与原加密密码相同的不需要修改
+            admin.setPassword(null);
+        }else{
+            //与原加密密码不同的需要加密修改
+            if(StrUtil.isEmpty(admin.getPassword())){
+                admin.setPassword(null);
+            }else{
+                admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+            }
+        }
+        return adminMapper.updateByPrimaryKeySelective(admin);
     }
 
     /**

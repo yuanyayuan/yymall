@@ -68,9 +68,7 @@ public interface BackendAdminService {
     BackendAdmin getAdminByUsername(String username);
 
     /**
-     *
      * refreshToken
-     *
      * @Author LiYuan
      * @Description 刷新token的功能
      * @Date 9:33 2020/9/11
@@ -98,10 +96,9 @@ public interface BackendAdminService {
      * @return : java.util.List<com.nexus.mall.pojo.BackendResource>
      **/
     List<BackendResource> getResourceList(Long adminId);
+
     /**
-     *
      * getRoleList
-     *
      * @Author LiYuan
      * @Description 获取用户对于角色
      * @Date 14:44 2020/9/11
@@ -109,4 +106,37 @@ public interface BackendAdminService {
      * @return java.util.List<com.nexus.mall.pojo.BackendRole>
     **/
     List<BackendRole> getRoleList(Long adminId);
+
+    /**
+     * list
+     * @Author LiYuan
+     * @Description 根据用户名或昵称分页查询用户
+     * @Date 10:47 2020/9/14
+     * @param keyword
+     * @param pageSize
+     * @param pageNum
+     * @return java.util.List<com.nexus.mall.pojo.BackendAdmin>
+    **/
+    List<BackendAdmin> list(String keyword, Integer pageSize, Integer pageNum);
+    /**
+     * getItem
+     * @Author LiYuan
+     * @Description 根据用户id获取用户
+     * @Date 11:29 2020/9/14
+     * @param id
+     * @return com.nexus.mall.pojo.BackendAdmin
+    **/
+    BackendAdmin getItem(Long id);
+    /**
+     *
+     * update
+     *
+     * @Author LiYuan
+     * @Description 修改指定用户信息
+     * @Date 11:39 2020/9/14
+     * @param id
+     * @param admin
+     * @return int
+    **/
+    int update(Long id, BackendAdmin admin);
 }

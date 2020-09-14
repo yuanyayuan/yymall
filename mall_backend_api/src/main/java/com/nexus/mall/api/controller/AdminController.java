@@ -2,6 +2,7 @@ package com.nexus.mall.api.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import com.google.common.collect.Maps;
+import com.nexus.mall.common.api.CommonPage;
 import com.nexus.mall.common.api.ResultCode;
 import com.nexus.mall.common.api.ServerResponse;
 import com.nexus.mall.pojo.BackendAdmin;
@@ -49,7 +50,10 @@ public class AdminController {
     @Value("${jwt.tokenHeader}")
     private String tokenHeader;
     @Value("${jwt.tokenHead}")
-    private String tokenHead;   //Authorization
+    /*
+      Authorization
+     */
+    private String tokenHead;
 
     @Autowired
     private BackendAdminService adminService;
@@ -69,8 +73,8 @@ public class AdminController {
         return ServerResponse.success("该用户不存在");
     }
 
-    @ApiOperation(value = "用户注册")
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @ApiOperation(value = "用户注册", notes = "用户注册", httpMethod = "POST")
+    @PostMapping("/register")
     public ServerResponse<BackendAdmin> register(@Validated @RequestBody AdminCreateBO adminParam){
         BackendAdmin register = adminService.register(adminParam);
         if(register == null){
@@ -79,8 +83,8 @@ public class AdminController {
         return ServerResponse.success(register);
     }
 
-    @ApiOperation(value = "登录以后返回token")
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ApiOperation(value = "登录以后返回token",notes = "用户登录", httpMethod = "POST")
+    @PostMapping(value = "/login")
     public ServerResponse login(@Validated @RequestBody AdminLoginBO adminLoginParam){
         String token = adminService.login(adminLoginParam.getUsername(), adminLoginParam.getPassword());
         if(token == null){
@@ -92,8 +96,8 @@ public class AdminController {
         return ServerResponse.success(tokenMap);
     }
 
-    @ApiOperation(value = "刷新token")
-    @RequestMapping(value = "/refreshToken", method = RequestMethod.GET)
+    @ApiOperation(value = "刷新token",notes = "刷新token", httpMethod = "GET")
+    @GetMapping(value = "/refreshToken")
     public ServerResponse refreshToken(HttpServletRequest request){
         String token = request.getHeader(tokenHeader);
         String newToken = adminService.refreshToken(token);
@@ -106,8 +110,8 @@ public class AdminController {
         return ServerResponse.success(tokenMap);
     }
 
-    @ApiOperation(value = "获取当前登录用户信息")
-    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    @ApiOperation(value = "获取当前登录用户信息",notes = "获取当前登录用户信息", httpMethod = "GET")
+    @GetMapping(value = "/info")
     public ServerResponse getAdminInfo(Principal principal){
         if(principal == null){
             return ServerResponse.unauthorized(null);
@@ -126,13 +130,35 @@ public class AdminController {
         return ServerResponse.success(data);
     }
 
-    @ApiOperation(value = "登出功能")
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @ApiOperation(value = "登出功能",notes = "登出功能", httpMethod = "POST")
+    @PostMapping(value = "/logout")
     public ServerResponse logout() {
         return ServerResponse.success(null);
     }
 
+    @ApiOperation(value = "根据用户名或姓名分页获取用户列表",notes = "根据用户名或姓名分页获取用户列表", httpMethod = "GET")
+    @GetMapping(value = "/list")
+    public ServerResponse<CommonPage<BackendAdmin>> list(@RequestParam(value = "keyword", required = false) String keyword,
+                                                         @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize,
+                                                         @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum){
+        List<BackendAdmin> result = adminService.list(keyword, pageSize, pageNum);
+        return ServerResponse.success(CommonPage.restPage(result));
+    }
 
+    @ApiOperation(value = "获取指定用户信息",notes = "获取指定用户信息",httpMethod = "GET")
+    @GetMapping(value = "/{id}")
+    public ServerResponse<BackendAdmin> getItem(@PathVariable Long id) {
+        BackendAdmin admin = adminService.getItem(id);
+        return ServerResponse.success(admin);
+    }
 
-
+    @ApiOperation(value = "修改指定用户信息",notes = "修改指定用户信息",httpMethod = "POST")
+    @PostMapping("/update/{id}")
+    public ServerResponse update(@PathVariable Long id, @RequestBody BackendAdmin admin) {
+        int count = adminService.update(id, admin);
+        if (count > 0) {
+            return ServerResponse.success(count);
+        }
+        return ServerResponse.failed();
+    }
 }
