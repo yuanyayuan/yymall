@@ -46,11 +46,17 @@ mybatis:
   type-aliases-package: com.nexus.mall.pojo      # 所有POJO类所在包路径
   mapper-locations: classpath*:mappers/*.xml      # mapper映射文件
 ############################################################
-# mybatis mapper 配置
+# tk.mybatis通用 Mapper
 #
 ############################################################
-# 通用 Mapper
 mapper:
   mappers: com.nexus.mall.my.mapper.MyMapper
   not-empty: false
   identity: MYSQL
+############################################################
+# 分页插件配置
+#
+############################################################
+pagehelper:
+  helperDialect: mysql
+  supportMethodsArguments: true
