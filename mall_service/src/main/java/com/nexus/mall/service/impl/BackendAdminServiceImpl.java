@@ -1,15 +1,18 @@
 package com.nexus.mall.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.nexus.mall.common.exception.Asserts;
 import com.nexus.mall.dao.BackendAdminMapper;
 import com.nexus.mall.dao.BackendAdminRoleRelationMapper;
 import com.nexus.mall.pojo.BackendAdmin;
+import com.nexus.mall.pojo.BackendAdminRoleRelation;
 import com.nexus.mall.pojo.BackendResource;
 import com.nexus.mall.pojo.BackendRole;
 import com.nexus.mall.pojo.bo.admin.AdminCreateBO;
 import com.nexus.mall.pojo.bo.admin.AdminUserDetails;
+import com.nexus.mall.pojo.bo.admin.UpdateAdminPasswordParam;
 import com.nexus.mall.security.util.JwtTokenUtil;
 import com.nexus.mall.service.BackendAdminService;
 import lombok.extern.slf4j.Slf4j;
@@ -294,5 +297,70 @@ public class BackendAdminServiceImpl implements BackendAdminService {
         throw  new UsernameNotFoundException("用户名或密码错误");
     }
 
+    /**
+     * updatePassword
+     *
+     * @param updatePasswordParam
+     * @return int
+     * @Author LiYuan
+     * @Description 修改密码
+     * @Date 11:03 2020/9/15
+     **/
+    @Override
+    public int updatePassword(UpdateAdminPasswordParam updatePasswordParam) {
+        if(StrUtil.isEmpty(updatePasswordParam.getUsername())
+                ||StrUtil.isEmpty(updatePasswordParam.getOldPassword())
+                ||StrUtil.isEmpty(updatePasswordParam.getNewPassword())){
+            Asserts.fail("提交参数不合法");
+        }
+        Example example = new Example(BackendAdmin.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("username",updatePasswordParam.getUsername());
+        List<BackendAdmin> adminList = adminMapper.selectByExample(example);
+        if(CollUtil.isEmpty(adminList)){
+            Asserts.fail("找不到该用户");
+        }
+        BackendAdmin admin = adminList.get(0);
+        if(!passwordEncoder.matches(updatePasswordParam.getOldPassword(),admin.getPassword())){
+            Asserts.fail("旧密码错误");
+        }
+        admin.setPassword(passwordEncoder.encode(updatePasswordParam.getNewPassword()));
+        adminMapper.updateByPrimaryKey(admin);
+        return 1;
+    }
 
+    /**
+     * delete
+     *
+     * @param id
+     * @return int
+     * @Author LiYuan
+     * @Description 删除指定用户
+     * @Date 11:27 2020/9/15
+     **/
+    @Override
+    public int delete(Long id) {
+        return adminMapper.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * updateRole
+     *
+     * @param adminId
+     * @param roleIds
+     * @return int
+     * @Author LiYuan
+     * @Description 修改用户角色关系
+     * @Date 16:07 2020/9/15
+     **/
+    @Override
+    public int updateRole(Long adminId, List<Long> roleIds) {
+        int count = roleIds == null ? 0 : roleIds.size();
+        //1.先删除原来的关系
+        Example example = new Example(BackendAdminRoleRelation.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("adminId",adminId);
+        // TODO: 2020/9/15  
+        return 0;
+    }
 }

@@ -4,7 +4,9 @@ import com.nexus.mall.pojo.BackendAdmin;
 import com.nexus.mall.pojo.BackendResource;
 import com.nexus.mall.pojo.BackendRole;
 import com.nexus.mall.pojo.bo.admin.AdminCreateBO;
+import com.nexus.mall.pojo.bo.admin.UpdateAdminPasswordParam;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -139,4 +141,39 @@ public interface BackendAdminService {
      * @return int
     **/
     int update(Long id, BackendAdmin admin);
+    /**
+     *
+     * updatePassword
+     *
+     * @Author LiYuan
+     * @Description 修改密码
+     * @Date 11:03 2020/9/15
+     * @param updatePasswordParam
+     * @return int
+    **/
+    int updatePassword(UpdateAdminPasswordParam updatePasswordParam);
+    /**
+     *
+     * delete
+     *
+     * @Author LiYuan
+     * @Description 删除指定用户
+     * @Date 11:27 2020/9/15
+     * @param id
+     * @return int
+    **/
+    int delete(Long id);
+    /**
+     *
+     * updateRole
+     *
+     * @Author LiYuan
+     * @Description 修改用户角色关系
+     * @Date 16:07 2020/9/15
+     * @param adminId
+     * @param roleIds
+     * @return int
+    **/
+    @Transactional
+    int updateRole(Long adminId, List<Long> roleIds);
 }

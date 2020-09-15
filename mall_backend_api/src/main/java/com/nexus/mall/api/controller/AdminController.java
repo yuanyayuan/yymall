@@ -9,6 +9,7 @@ import com.nexus.mall.pojo.BackendAdmin;
 import com.nexus.mall.pojo.BackendRole;
 import com.nexus.mall.pojo.bo.admin.AdminCreateBO;
 import com.nexus.mall.pojo.bo.admin.AdminLoginBO;
+import com.nexus.mall.pojo.bo.admin.UpdateAdminPasswordParam;
 import com.nexus.mall.service.BackendAdminService;
 import com.nexus.mall.service.BackendRoleService;
 import io.swagger.annotations.Api;
@@ -153,12 +154,52 @@ public class AdminController {
     }
 
     @ApiOperation(value = "修改指定用户信息",notes = "修改指定用户信息",httpMethod = "POST")
-    @PostMapping("/update/{id}")
+    @PostMapping(value = "/update/{id}")
     public ServerResponse update(@PathVariable Long id, @RequestBody BackendAdmin admin) {
         int count = adminService.update(id, admin);
         if (count > 0) {
             return ServerResponse.success(count);
         }
         return ServerResponse.failed();
+    }
+    @ApiOperation(value = "修改指定用户密码",notes = "修改指定用户密码",httpMethod = "POST")
+    @PostMapping(value = "/updatePassword")
+    public ServerResponse updatePassword(@Validated @RequestBody UpdateAdminPasswordParam updatePasswordParam) {
+        int status = adminService.updatePassword(updatePasswordParam);
+        if(status > 1){
+            return ServerResponse.success(status);
+        }else {
+            return ServerResponse.failed();
+        }
+    }
+    @ApiOperation(value = "删除指定用户信息",notes = "删除指定用户信息",httpMethod = "POST")
+    @PostMapping(value = "/delete/{id}")
+    public ServerResponse delete(@PathVariable Long id) {
+        int count = adminService.delete(id);
+        if (count > 0) {
+            return ServerResponse.success(count);
+        }
+        return ServerResponse.failed();
+    }
+
+    @ApiOperation(value = "修改帐号状态",notes = "修改帐号状态",httpMethod = "POST")
+    @PostMapping(value = "/updateStatus/{id}")
+    public ServerResponse updateStatus(@PathVariable Long id,@RequestParam(value = "status") Integer status) {
+        BackendAdmin admin = new BackendAdmin();
+        admin.setStatus(status);
+        int count = adminService.update(id,admin);
+        if (count > 0) {
+            return ServerResponse.success(count);
+        }
+        return ServerResponse.failed();
+    }
+
+    @ApiOperation(value = "给用户分配角色",notes = "给用户分配角色",httpMethod = "POST")
+    @PostMapping(value = "/role/update")
+    public ServerResponse updateRole(@RequestParam("adminId") Long adminId,
+                                   @RequestParam("roleIds") List<Long> roleIds) {
+        int count = adminService.updateRole(adminId, roleIds);
+        // TODO: 2020/9/15  
+        return null;
     }
 }
