@@ -1,5 +1,6 @@
 package com.nexus.mall.service.impl;
 
+import com.google.common.collect.Maps;
 import com.nexus.mall.common.enums.CategoryState;
 import com.nexus.mall.dao.CategoryMapper;
 import com.nexus.mall.dao.CategoryMapperCustom;
@@ -50,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @param rootCatId
      * @return : java.util.List<com.nexus.mall.pojo.vo.CategoryVO>
      * @Author : Nexus
-     * @Description : //TODO
+     * @Description : 根据一级分类id查询下一层子分类信息
      * @Date : 2020/9/13 22:52
      * @Param : rootCatId
      */
@@ -73,7 +74,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     public List<NewItemsVO> getSixNewItemsLazy(Integer rootCatId) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = Maps.newHashMap();
         map.put("rootCatId", rootCatId);
 
         return categoryMapperCustom.getSixNewItemsLazy(map);

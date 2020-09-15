@@ -69,7 +69,7 @@ public class IndexController {
         return ServerResponse.success(list);
     }
 
-    @ApiOperation(value = "获取商品子分类", notes = "获取商品子分类", httpMethod = "GET")
+    @ApiOperation(value = "根据一级分类id查询下一层子分类信息", notes = "根据一级分类id查询下一层子分类信息", httpMethod = "GET")
     @GetMapping("/subCat/{rootCatId}")
     public ServerResponse subCat(
             @ApiParam(name = "rootCatId", value = "一级分类id", required = true)
