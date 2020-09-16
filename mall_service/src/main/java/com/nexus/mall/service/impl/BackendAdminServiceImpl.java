@@ -3,9 +3,11 @@ package com.nexus.mall.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Lists;
 import com.nexus.mall.common.exception.Asserts;
 import com.nexus.mall.dao.BackendAdminMapper;
 import com.nexus.mall.dao.BackendAdminRoleRelationMapper;
+import com.nexus.mall.dao.BackendAdminRoleRelationMapperCustom;
 import com.nexus.mall.pojo.BackendAdmin;
 import com.nexus.mall.pojo.BackendAdminRoleRelation;
 import com.nexus.mall.pojo.BackendResource;
@@ -26,6 +28,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
@@ -34,7 +37,7 @@ import java.util.List;
 
 /**
 
-* @Description:    java类作用描述
+* @Description:    BackendAdminService实现类
 
 * @Author:         Nexus
 
@@ -65,6 +68,9 @@ public class BackendAdminServiceImpl implements BackendAdminService {
 
     @Autowired
     private BackendAdminRoleRelationMapper  adminRoleRelationMapper;
+
+    @Autowired
+    private BackendAdminRoleRelationMapperCustom adminRoleRelationMapperCustom;
 
     /**
      * login
@@ -360,7 +366,19 @@ public class BackendAdminServiceImpl implements BackendAdminService {
         Example example = new Example(BackendAdminRoleRelation.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("adminId",adminId);
-        // TODO: 2020/9/15  
-        return 0;
+        adminRoleRelationMapper.deleteByExample(example);
+        //2.建立新关系
+        if(CollectionUtils.isEmpty(roleIds)){
+            List<BackendAdminRoleRelation> list = Lists.newLinkedList();
+            assert roleIds != null;
+            for (Long roleId : roleIds) {
+                BackendAdminRoleRelation roleRelation = new BackendAdminRoleRelation();
+                roleRelation.setAdminId(adminId);
+                roleRelation.setRoleId(roleId);
+                list.add(roleRelation);
+            }
+            adminRoleRelationMapperCustom.insertList(list);
+        }
+        return count;
     }
 }

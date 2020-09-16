@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.nexus.mall.dao.CategoryMapperCustom">
-    <resultMap id="myCategoryVO" type="com.nexus.mall.pojo.vo.CategoryVO">
+    <resultMap id="myCategoryVO" type="com.nexus.mall.pojo.vo.user.CategoryVO">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="type" property="type"/>
@@ -12,7 +12,7 @@
           property：对应三级分类的list属性名
           ofType：集合的类型，三级分类的vo
         -->
-        <collection property="subCatList" ofType="com.nexus.mall.pojo.vo.SubCategoryVO">
+        <collection property="subCatList" ofType="com.nexus.mall.pojo.vo.user.SubCategoryVO">
             <id column="subId" property="subId"/>
             <result column="subName" property="subName"/>
             <result column="subType" property="subType"/>
@@ -41,14 +41,14 @@
     </select>
 
 
-    <resultMap id="myNewItemsVO" type="com.nexus.mall.pojo.vo.NewItemsVO">
+    <resultMap id="myNewItemsVO" type="com.nexus.mall.pojo.vo.user.NewItemsVO">
         <id column="rootCatId" property="rootCatId"/>
         <result column="rootCatName" property="rootCatName"/>
         <result column="slogan" property="slogan"/>
         <result column="catImage" property="catImage"/>
         <result column="bgColor" property="bgColor"/>
 
-        <collection property="simpleItemList" ofType="com.nexus.mall.pojo.vo.SimpleItemVO">
+        <collection property="simpleItemList" ofType="com.nexus.mall.pojo.vo.user.SimpleItemVO">
             <id column="itemId" property="itemId"/>
             <result column="itemName" property="itemName"/>
             <result column="itemUrl" property="itemUrl"/>

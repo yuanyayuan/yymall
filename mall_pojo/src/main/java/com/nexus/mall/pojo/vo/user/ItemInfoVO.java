@@ -1,4 +1,4 @@
-package com.nexus.mall.pojo.vo;
+package com.nexus.mall.pojo.vo.user;
 
 import com.nexus.mall.pojo.Items;
 import com.nexus.mall.pojo.ItemsImg;

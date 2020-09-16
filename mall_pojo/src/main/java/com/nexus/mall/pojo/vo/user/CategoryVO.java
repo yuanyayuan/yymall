@@ -1,4 +1,4 @@
-package com.nexus.mall.pojo.vo;
+package com.nexus.mall.pojo.vo.user;
 
 import lombok.Data;
 

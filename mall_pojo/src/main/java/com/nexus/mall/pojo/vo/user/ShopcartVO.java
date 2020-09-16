@@ -1,9 +1,9 @@
-package com.nexus.mall.pojo.vo;
+package com.nexus.mall.pojo.vo.user;
 
 import lombok.Data;
 /**
 
-* @Description:    用于展示商品搜索列表结果的VO
+* @Description:    java类作用描述
 
 * @Author:         Nexus
 
@@ -19,10 +19,12 @@ import lombok.Data;
 
 */
 @Data
-public class SearchItemsVO {
+public class ShopcartVO {
     private String itemId;
+    private String itemImgUrl;
     private String itemName;
-    private int sellCounts;
-    private String imgUrl;
-    private int price;
+    private String specId;
+    private String specName;
+    private String priceDiscount;
+    private String priceNormal;
 }

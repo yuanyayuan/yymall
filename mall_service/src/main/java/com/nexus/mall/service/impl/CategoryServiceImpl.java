@@ -5,8 +5,8 @@ import com.nexus.mall.common.enums.CategoryState;
 import com.nexus.mall.dao.CategoryMapper;
 import com.nexus.mall.dao.CategoryMapperCustom;
 import com.nexus.mall.pojo.Category;
-import com.nexus.mall.pojo.vo.CategoryVO;
-import com.nexus.mall.pojo.vo.NewItemsVO;
+import com.nexus.mall.pojo.vo.user.CategoryVO;
+import com.nexus.mall.pojo.vo.user.NewItemsVO;
 import com.nexus.mall.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +48,7 @@ public class CategoryServiceImpl implements CategoryService {
      * getSubCatList
      *
      * @param rootCatId
-     * @return : java.util.List<com.nexus.mall.pojo.vo.CategoryVO>
+     * @return : java.util.List<com.nexus.mall.pojo.vo.user.CategoryVO>
      * @Author : Nexus
      * @Description : 根据一级分类id查询下一层子分类信息
      * @Date : 2020/9/13 22:52

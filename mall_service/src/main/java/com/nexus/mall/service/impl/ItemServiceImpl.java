@@ -8,8 +8,8 @@ import com.nexus.mall.common.enums.CommentLevel;
 import com.nexus.mall.common.util.DesensitizationUtil;
 import com.nexus.mall.dao.*;
 import com.nexus.mall.pojo.*;
-import com.nexus.mall.pojo.vo.CommentLevelCountsVO;
-import com.nexus.mall.pojo.vo.ItemCommentVO;
+import com.nexus.mall.pojo.vo.user.CommentLevelCountsVO;
+import com.nexus.mall.pojo.vo.user.ItemCommentVO;
 import com.nexus.mall.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -116,7 +115,7 @@ public class ItemServiceImpl implements ItemService {
      * queryCommentCounts
      *
      * @param itemId
-     * @return : com.nexus.mall.pojo.vo.CommentLevelCountsVO
+     * @return : com.nexus.mall.pojo.vo.user.CommentLevelCountsVO
      * @Author : Nexus
      * @Description : 根据商品id查询商品的评价等级数量
      * @Date : 2020/9/14 22:07
