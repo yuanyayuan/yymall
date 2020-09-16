@@ -50,7 +50,7 @@ public class ItemsController extends BaseController{
             @PathVariable String itemId) {
 
         if (StringUtils.isBlank(itemId)) {
-            return ServerResponse.failed(ResultCode.FAILED);
+            return ServerResponse.failed(ResultCode.PARAMETER_VALIDATION_ERROR);
         }
 
         Items item = itemService.queryItemById(itemId);
@@ -74,7 +74,7 @@ public class ItemsController extends BaseController{
             @RequestParam String itemId) {
 
         if (StringUtils.isBlank(itemId)) {
-            return ServerResponse.failed(ResultCode.FAILED);
+            return ServerResponse.failed(ResultCode.PARAMETER_VALIDATION_ERROR);
         }
 
         CommentLevelCountsVO countsVO = itemService.queryCommentCounts(itemId);
@@ -95,7 +95,7 @@ public class ItemsController extends BaseController{
             @RequestParam Integer pageSize) {
 
         if (StringUtils.isBlank(itemId)) {
-            return ServerResponse.failed(ResultCode.FAILED);
+            return ServerResponse.failed(ResultCode.PARAMETER_VALIDATION_ERROR);
         }
 
         if (page == null) {
