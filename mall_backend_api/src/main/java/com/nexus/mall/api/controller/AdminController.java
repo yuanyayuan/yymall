@@ -199,7 +199,17 @@ public class AdminController {
     public ServerResponse updateRole(@RequestParam("adminId") Long adminId,
                                    @RequestParam("roleIds") List<Long> roleIds) {
         int count = adminService.updateRole(adminId, roleIds);
-        // TODO: 2020/9/15  
-        return null;
+        if (count >= 0) {
+            return ServerResponse.success(count);
+        }
+        return ServerResponse.failed();
     }
+
+    @ApiOperation(value = "获取指定用户的角色",notes = "获取指定用户的角色",httpMethod = "GET")
+    @PostMapping(value = "role/{adminId}")
+    public ServerResponse<List<BackendRole>> getRoleList(@PathVariable Long adminId) {
+        List<BackendRole> roleList = adminService.getRoleList(adminId);
+        return ServerResponse.success(roleList);
+    }
+
 }
