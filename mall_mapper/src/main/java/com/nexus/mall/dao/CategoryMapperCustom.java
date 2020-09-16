@@ -1,7 +1,7 @@
 package com.nexus.mall.dao;
 
-import com.nexus.mall.pojo.vo.CategoryVO;
-import com.nexus.mall.pojo.vo.NewItemsVO;
+import com.nexus.mall.pojo.vo.user.CategoryVO;
+import com.nexus.mall.pojo.vo.user.NewItemsVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

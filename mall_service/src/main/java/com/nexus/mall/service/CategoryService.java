@@ -1,8 +1,8 @@
 package com.nexus.mall.service;
 
 import com.nexus.mall.pojo.Category;
-import com.nexus.mall.pojo.vo.CategoryVO;
-import com.nexus.mall.pojo.vo.NewItemsVO;
+import com.nexus.mall.pojo.vo.user.CategoryVO;
+import com.nexus.mall.pojo.vo.user.NewItemsVO;
 
 import java.util.List;
 /**
@@ -39,7 +39,7 @@ public interface CategoryService {
      * @Description : 根据一级分类id查询子分类信息
      * @Date : 2020/9/13 23:22
      * @Param : rootCatId
-     * @return : java.util.List<com.nexus.mall.pojo.vo.CategoryVO>
+     * @return : java.util.List<com.nexus.mall.pojo.vo.user.CategoryVO>
      **/
     List<CategoryVO> getSubCatList(Integer rootCatId);
 

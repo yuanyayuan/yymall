@@ -5,7 +5,7 @@ import com.nexus.mall.pojo.Items;
 import com.nexus.mall.pojo.ItemsImg;
 import com.nexus.mall.pojo.ItemsParam;
 import com.nexus.mall.pojo.ItemsSpec;
-import com.nexus.mall.pojo.vo.CommentLevelCountsVO;
+import com.nexus.mall.pojo.vo.user.CommentLevelCountsVO;
 
 import java.util.List;
 /**
@@ -72,7 +72,7 @@ public interface ItemService {
      * @Description : 根据商品id查询商品的评价等级数量
      * @Date : 2020/9/14 22:07
      * @Param : itemId
-     * @return : com.nexus.mall.pojo.vo.CommentLevelCountsVO
+     * @return : com.nexus.mall.pojo.vo.user.CommentLevelCountsVO
      **/
     CommentLevelCountsVO queryCommentCounts(String itemId);
     /**
