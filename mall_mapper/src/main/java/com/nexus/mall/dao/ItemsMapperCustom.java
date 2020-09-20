@@ -12,7 +12,7 @@ public interface ItemsMapperCustom {
     /**
      * queryItemComments
      * @Author : Nexus
-     * @Description :
+     * @Description : 搜索评价
      * @Date : 2020/9/14 21:50
      * @Param : map
      * @return : java.util.List<com.nexus.mall.pojo.vo.user.ItemCommentVO>
@@ -21,7 +21,7 @@ public interface ItemsMapperCustom {
     /**
      * searchItems
      * @Author : Nexus
-     * @Description :
+     * @Description : 搜索商品
      * @Date : 2020/9/14 21:50
      * @Param : map
      * @return : java.util.List<com.nexus.mall.pojo.vo.user.SearchItemsVO>
@@ -30,7 +30,7 @@ public interface ItemsMapperCustom {
     /**
      * searchItemsByThirdCat
      * @Author : Nexus
-     * @Description :
+     * @Description : 根据三级分类查询
      * @Date : 2020/9/14 21:50
      * @Param : map
      * @return : java.util.List<com.nexus.mall.pojo.vo.user.SearchItemsVO>
@@ -44,7 +44,7 @@ public interface ItemsMapperCustom {
      * @Param : specIdsList
      * @return : java.util.List<com.nexus.mall.pojo.vo.user.ShopcartVO>
      **/
-    List<ShopcartVO> queryItemsBySpecIds(@Param("paramsList") List specIdsList);
+    List<ShopcartVO> queryItemsBySpecIds(@Param("paramsList") List<String> specIdsList);
     /**
      * decreaseItemSpecStock
      * @Author : Nexus
@@ -54,6 +54,5 @@ public interface ItemsMapperCustom {
      * @Param : pendingCounts
      * @return : int
      **/
-    int decreaseItemSpecStock(@Param("specId") String specId,
-                                     @Param("pendingCounts") int pendingCounts);
+    int decreaseItemSpecStock(@Param("specId") String specId, @Param("pendingCounts") int pendingCounts);
 }

@@ -10,6 +10,8 @@ import com.nexus.mall.dao.*;
 import com.nexus.mall.pojo.*;
 import com.nexus.mall.pojo.vo.user.CommentLevelCountsVO;
 import com.nexus.mall.pojo.vo.user.ItemCommentVO;
+import com.nexus.mall.pojo.vo.user.SearchItemsVO;
+import com.nexus.mall.pojo.vo.user.ShopcartVO;
 import com.nexus.mall.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +19,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -38,14 +39,12 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * queryItemById
-     *
-     * @param itemId
-     * @return : com.nexus.mall.pojo.Items
      * @Author : Nexus
      * @Description : 根据商品ID查询详情
-     * @Date : 2020/9/14 21:44
+     * @Date : 2020/9/16 20:40
      * @Param : itemId
-     */
+     * @return : com.nexus.mall.pojo.Items
+     **/
     @Override
     @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     public Items queryItemById(String itemId) {
@@ -54,13 +53,11 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * queryItemImgList
-     *
-     * @param itemId
-     * @return : java.util.List<com.nexus.mall.pojo.ItemsImg>
      * @Author : Nexus
      * @Description : 根据商品id查询商品图片列表
      * @Date : 2020/9/14 21:44
      * @Param : itemId
+     * @return : java.util.List<com.nexus.mall.pojo.ItemsImg>
      */
     @Override
     @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
@@ -73,14 +70,12 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * queryItemSpecList
-     *
-     * @param itemId
-     * @return : java.util.List<com.nexus.mall.pojo.ItemsSpec>
      * @Author : Nexus
      * @Description : 根据商品id查询商品规格
-     * @Date : 2020/9/14 21:44
+     * @Date : 2020/9/16 20:40
      * @Param : itemId
-     */
+     * @return : java.util.List<com.nexus.mall.pojo.ItemsSpec>
+     **/
     @Override
     @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     public List<ItemsSpec> queryItemSpecList(String itemId) {
@@ -94,14 +89,12 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * queryItemParam
-     *
-     * @param itemId
-     * @return : com.nexus.mall.pojo.ItemsParam
      * @Author : Nexus
      * @Description : 根据商品id查询商品参数
-     * @Date : 2020/9/14 21:45
+     * @Date : 2020/9/16 20:39
      * @Param : itemId
-     */
+     * @return : com.nexus.mall.pojo.ItemsParam
+     **/
     @Override
     @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     public ItemsParam queryItemParam(String itemId) {
@@ -113,14 +106,12 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * queryCommentCounts
-     *
-     * @param itemId
-     * @return : com.nexus.mall.pojo.vo.user.CommentLevelCountsVO
      * @Author : Nexus
      * @Description : 根据商品id查询商品的评价等级数量
-     * @Date : 2020/9/14 22:07
+     * @Date : 2020/9/16 20:38
      * @Param : itemId
-     */
+     * @return : com.nexus.mall.pojo.vo.user.CommentLevelCountsVO
+     **/
     @Override
     @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     public CommentLevelCountsVO queryCommentCounts(String itemId) {
@@ -136,6 +127,7 @@ public class ItemServiceImpl implements ItemService {
 
         return countsVO;
     }
+
     @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     Integer getCommentCounts(String itemId, Integer level) {
         ItemsComments condition = new ItemsComments();
@@ -148,20 +140,15 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * queryPagedComments
-     *
-     * @param itemId
-     * @param level
-     * @param page
-     * @param pageSize
-     * @return : com.nexus.mall.common.api.PagedGridResult
      * @Author : Nexus
-     * @Description : 根据商品id查询商品的评价（分页）
-     * @Date : 2020/9/14 22:37
+     * @Description : 据商品id查询商品的评价（分页）
+     * @Date : 2020/9/16 20:38
      * @Param : itemId
      * @Param : level
      * @Param : page
      * @Param : pageSize
-     */
+     * @return : com.nexus.mall.common.api.PagedGridResult
+     **/
     @Override
     public PagedGridResult queryPagedComments(String itemId, Integer level, Integer page, Integer pageSize) {
         Map<String, Object> map = Maps.newHashMap();
@@ -180,6 +167,7 @@ public class ItemServiceImpl implements ItemService {
         }
         return setterPagedGrid(list, page);
     }
+
     private PagedGridResult setterPagedGrid(List<?> list, Integer page) {
         PageInfo<?> pageList = new PageInfo<>(list);
         PagedGridResult grid = new PagedGridResult();
@@ -188,5 +176,70 @@ public class ItemServiceImpl implements ItemService {
         grid.setTotal(pageList.getPages());
         grid.setRecords(pageList.getTotal());
         return grid;
+    }
+
+    /**
+     * searchItems
+     * @Author : Nexus
+     * @Description : 搜索商品列表
+     * @Date : 2020/9/16 20:41
+     * @Param : keywords
+     * @Param : sort
+     * @Param : page
+     * @Param : pageSize
+     * @return : com.nexus.mall.common.api.PagedGridResult
+     **/
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    public PagedGridResult searchItems(String keywords, String sort, Integer page, Integer pageSize) {
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("keywords", keywords);
+        map.put("sort", sort);
+
+        PageHelper.startPage(page, pageSize);
+        List<SearchItemsVO> list = itemsMapperCustom.searchItems(map);
+
+        return setterPagedGrid(list, page);
+    }
+
+    /**
+     * searchItems
+     * @Author : Nexus
+     * @Description : 根据分类id搜索商品列表
+     * @Date : 2020/9/16 20:34
+     * @Param : catId
+     * @Param : sort
+     * @Param : page
+     * @Param : pageSize
+     * @return : com.nexus.mall.common.api.PagedGridResult
+     */
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Override
+    public PagedGridResult searchItems(Integer catId, String sort, Integer page, Integer pageSize) {
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("catId", catId);
+        map.put("sort", sort);
+
+        PageHelper.startPage(page, pageSize);
+        List<SearchItemsVO> list = itemsMapperCustom.searchItemsByThirdCat(map);
+
+        return setterPagedGrid(list, page);
+    }
+
+    /**
+     * queryItemsBySpecIds
+     * @Author : Nexus
+     * @Description : 根据规格ids查询最新的购物车中商品数据（用于刷新渲染购物车中的商品数据）
+     * @Date : 2020/9/16 20:55
+     * @Param : specIds
+     * @return : java.util.List<com.nexus.mall.pojo.vo.user.ShopcartVO>
+     */
+    @Override
+    public List<ShopcartVO> queryItemsBySpecIds(String specIds) {
+        String[] ids = specIds.split(",");
+        List<String> specIdsList = new ArrayList<>();
+        Collections.addAll(specIdsList, ids);
+
+        return itemsMapperCustom.queryItemsBySpecIds(specIdsList);
     }
 }

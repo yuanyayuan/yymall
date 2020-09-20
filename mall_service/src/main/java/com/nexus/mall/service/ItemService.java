@@ -6,6 +6,7 @@ import com.nexus.mall.pojo.ItemsImg;
 import com.nexus.mall.pojo.ItemsParam;
 import com.nexus.mall.pojo.ItemsSpec;
 import com.nexus.mall.pojo.vo.user.CommentLevelCountsVO;
+import com.nexus.mall.pojo.vo.user.ShopcartVO;
 
 import java.util.List;
 /**
@@ -88,4 +89,40 @@ public interface ItemService {
      **/
     PagedGridResult queryPagedComments(String itemId, Integer level,
                                        Integer page, Integer pageSize);
+
+    /**
+     * searchItems
+     * @Author : Nexus
+     * @Description : 搜索商品列表
+     * @Date : 2020/9/16 20:30
+     * @Param : keywords
+     * @Param : sort
+     * @Param : page
+     * @Param : pageSize
+     * @return : com.nexus.mall.common.api.PagedGridResult
+     **/
+    PagedGridResult searchItems(String keywords, String sort, Integer page, Integer pageSize);
+
+    /**
+     * searhItems
+     * @Author : Nexus
+     * @Description : 根据分类id搜索商品列表
+     * @Date : 2020/9/16 20:34
+     * @Param : catId
+     * @Param : sort
+     * @Param : page
+     * @Param : pageSize
+     * @return : com.nexus.mall.common.api.PagedGridResult
+     **/
+    PagedGridResult searchItems(Integer catId, String sort, Integer page, Integer pageSize);
+
+    /**
+     * queryItemsBySpecIds
+     * @Author : Nexus
+     * @Description : 根据规格ids查询最新的购物车中商品数据（用于刷新渲染购物车中的商品数据）
+     * @Date : 2020/9/16 20:55
+     * @Param : specIds
+     * @return : java.util.List<com.nexus.mall.pojo.vo.user.ShopcartVO>
+     **/
+    List<ShopcartVO> queryItemsBySpecIds(String specIds);
 }

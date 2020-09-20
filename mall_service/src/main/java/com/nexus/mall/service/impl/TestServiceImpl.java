@@ -40,7 +40,7 @@ public class TestServiceImpl implements TestService {
      * @Description //测试
      * @Date 2020/9/6 18:02
      **/
-    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = RuntimeException.class)
     @Override
     public Users getUserById(Integer id) {
         return usersMapper.selectByPrimaryKey(id);

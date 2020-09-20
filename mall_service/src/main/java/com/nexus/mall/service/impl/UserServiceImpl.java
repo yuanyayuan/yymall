@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
      * @Date : 2020/9/6 21:39
      * @Param : username 用户名
      */
-    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = RuntimeException.class)
     @Override
     public boolean queryUsernameIsExist(String username) {
         Example userExample = new Example(Users.class);
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
      * @Date 17:09 2020/9/11
      **/
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = RuntimeException.class)
     public Users queryUserForLogin(String username, String password) {
         Example userExample = new Example(Users.class);
         Example.Criteria userCriteria = userExample.createCriteria();

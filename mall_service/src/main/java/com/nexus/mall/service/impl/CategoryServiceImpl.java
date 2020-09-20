@@ -36,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @Param :
      **/
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = RuntimeException.class)
     public List<Category> queryAllRootLevelCat() {
         Example example = new Example(Category.class);
         Example.Criteria criteria = example.createCriteria();
@@ -54,7 +54,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @Date : 2020/9/13 22:52
      * @Param : rootCatId
      */
-    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = RuntimeException.class)
     @Override
     public List<CategoryVO> getSubCatList(Integer rootCatId) {
         return categoryMapperCustom.getSubCatList(rootCatId);
@@ -71,7 +71,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @Param : rootCatId
      */
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = RuntimeException.class)
     public List<NewItemsVO> getSixNewItemsLazy(Integer rootCatId) {
         Map<String, Object> map = Maps.newHashMap();
         map.put("rootCatId", rootCatId);
