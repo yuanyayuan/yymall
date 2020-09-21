@@ -67,5 +67,5 @@ public interface AddressService {
      * @Param : addressId
      * @return : com.nexus.mall.pojo.UserAddress
      **/
-    public UserAddress queryUserAddress(String userId, String addressId);
+    UserAddress queryUserAddress(String userId, String addressId);
 }

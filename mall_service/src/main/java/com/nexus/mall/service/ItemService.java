@@ -125,4 +125,35 @@ public interface ItemService {
      * @return : java.util.List<com.nexus.mall.pojo.vo.user.ShopcartVO>
      **/
     List<ShopcartVO> queryItemsBySpecIds(String specIds);
+
+    /**
+     * queryItemSpecById
+     * @Author : Nexus
+     * @Description : 根据商品规格id获取规格对象的具体信息
+     * @Date : 2020/9/21 22:53
+     * @Param : specId
+     * @return : com.nexus.mall.pojo.ItemsSpec
+     **/
+    ItemsSpec queryItemSpecById(String specId);
+
+    /**
+     * queryItemMainImgById
+     * @Author : Nexus
+     * @Description : 根据商品id获得商品图片主图url
+     * @Date : 2020/9/21 22:53
+     * @Param : itemId
+     * @return : java.lang.String
+     **/
+    String queryItemMainImgById(String itemId);
+
+    /**
+     * decreaseItemSpecStock
+     * @Author : Nexus
+     * @Description : 减少库存
+     * @Date : 2020/9/21 22:53
+     * @Param : specId
+     * @Param : buyCounts
+     * @return : void
+     **/
+    void decreaseItemSpecStock(String specId, int buyCounts);
 }
