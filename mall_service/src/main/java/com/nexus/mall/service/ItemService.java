@@ -104,7 +104,7 @@ public interface ItemService {
     PagedGridResult searchItems(String keywords, String sort, Integer page, Integer pageSize);
 
     /**
-     * searhItems
+     * 根据分类id搜索商品列表
      * @Author : Nexus
      * @Description : 根据分类id搜索商品列表
      * @Date : 2020/9/16 20:34
@@ -117,7 +117,7 @@ public interface ItemService {
     PagedGridResult searchItems(Integer catId, String sort, Integer page, Integer pageSize);
 
     /**
-     * queryItemsBySpecIds
+     * 根据规格ids查询最新的购物车中商品数据（用于刷新渲染购物车中的商品数据）
      * @Author : Nexus
      * @Description : 根据规格ids查询最新的购物车中商品数据（用于刷新渲染购物车中的商品数据）
      * @Date : 2020/9/16 20:55
@@ -127,7 +127,7 @@ public interface ItemService {
     List<ShopcartVO> queryItemsBySpecIds(String specIds);
 
     /**
-     * queryItemSpecById
+     * 根据商品规格id获取规格对象的具体信息
      * @Author : Nexus
      * @Description : 根据商品规格id获取规格对象的具体信息
      * @Date : 2020/9/21 22:53
@@ -137,7 +137,7 @@ public interface ItemService {
     ItemsSpec queryItemSpecById(String specId);
 
     /**
-     * queryItemMainImgById
+     * 根据商品id获得商品图片主图url
      * @Author : Nexus
      * @Description : 根据商品id获得商品图片主图url
      * @Date : 2020/9/21 22:53
@@ -147,7 +147,7 @@ public interface ItemService {
     String queryItemMainImgById(String itemId);
 
     /**
-     * decreaseItemSpecStock
+     * 减少库存
      * @Author : Nexus
      * @Description : 减少库存
      * @Date : 2020/9/21 22:53

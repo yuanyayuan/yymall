@@ -6,7 +6,7 @@ import com.nexus.mall.pojo.vo.user.OrderVO;
 
 public interface OrderService {
     /**
-     * createOrder
+     * 用于创建订单相关信息
      * @Author : Nexus
      * @Description : 用于创建订单相关信息
      * @Date : 2020/9/21 22:41

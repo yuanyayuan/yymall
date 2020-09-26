@@ -59,11 +59,12 @@ public interface AddressService {
     void updateUserAddressToBeDefault(String userId, String addressId);
 
     /**
-     * queryUserAddres
+     * 据用户id和地址id，查询具体的用户地址对象信息
+     *
      * @Author : Nexus
      * @Description : 根据用户id和地址id，查询具体的用户地址对象信息
      * @Date : 2020/9/20 16:23
-     * @Param : userId
+     * @Param : userId 用户id
      * @Param : addressId
      * @return : com.nexus.mall.pojo.UserAddress
      **/

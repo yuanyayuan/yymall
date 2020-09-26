@@ -169,7 +169,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     /**
-     * queryUserAddres
+     * 据用户id和地址id，查询具体的用户地址对象信息
      *
      * @param userId
      * @param addressId
@@ -181,6 +181,7 @@ public class AddressServiceImpl implements AddressService {
      * @Param : addressId
      */
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = RuntimeException.class)
     public UserAddress queryUserAddress(String userId, String addressId) {
         UserAddress singleAddress = new UserAddress();
         singleAddress.setId(addressId);

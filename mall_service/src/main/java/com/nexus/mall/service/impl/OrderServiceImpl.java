@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private Sid sid;
     /**
-     * createOrder
+     * 用于创建订单相关信息
      *
      * @param submitOrderBO
      * @return : OrderVO
@@ -63,13 +63,15 @@ public class OrderServiceImpl implements OrderService {
         Integer payMethod = submitOrderBO.getPayMethod();
         String leftMsg = submitOrderBO.getLeftMsg();
         // 包邮费用设置为0
-        Integer postAmount = 0;
+        int postAmount = 0;
 
         String orderId = sid.nextShort();
 
         UserAddress address = addressService.queryUserAddress(userId, addressId);
 
-        // 1. 新订单数据保存
+        /*
+         1. 新订单数据保存
+         */
         Orders newOrder = new Orders();
         newOrder.setId(orderId);
         newOrder.setUserId(userId);
@@ -78,8 +80,9 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setReceiverMobile(address.getMobile());
         newOrder.setReceiverAddress(address.getProvince() + " " + address.getCity() + " " + address.getDistrict() + " " + address.getDetail());
 
-//      newOrder.setTotalAmount();
-//      newOrder.setRealPayAmount();
+        // 后面通过计算得到
+        ///newOrder.setTotalAmount();
+        ///newOrder.setRealPayAmount();
         newOrder.setPostAmount(postAmount);
 
         newOrder.setPayMethod(payMethod);
@@ -90,10 +93,14 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setCreatedTime(new Date());
         newOrder.setUpdatedTime(new Date());
 
-        // 2. 循环根据itemSpecIds保存订单商品信息表
-        String itemSpecIdArr[] = itemSpecIds.split(",");
-        Integer totalAmount = 0;    // 商品原价累计
-        Integer realPayAmount = 0;  // 优惠后的实际支付价格累计
+        /*
+        2. 循环根据itemSpecIds保存订单商品信息表
+        */
+        String[] itemSpecIdArr = itemSpecIds.split(",");
+        // 商品原价累计
+        int totalAmount = 0;
+        // 优惠后的实际支付价格累计
+        int realPayAmount = 0;
         for (String itemSpecId : itemSpecIdArr) {
 
             // TODO 整合redis后，商品购买的数量重新从redis的购物车中获取

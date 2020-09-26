@@ -39,7 +39,7 @@ public class ItemServiceImpl implements ItemService {
 
 
     /**
-     * queryItemById
+     * 根据商品ID查询详情
      * @Author : Nexus
      * @Description : 根据商品ID查询详情
      * @Date : 2020/9/16 20:40
@@ -53,7 +53,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     /**
-     * queryItemImgList
+     * 根据商品id查询商品图片列表
      * @Author : Nexus
      * @Description : 根据商品id查询商品图片列表
      * @Date : 2020/9/14 21:44
@@ -70,7 +70,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     /**
-     * queryItemSpecList
+     * 根据商品id查询商品规格
      * @Author : Nexus
      * @Description : 根据商品id查询商品规格
      * @Date : 2020/9/16 20:40
@@ -89,7 +89,7 @@ public class ItemServiceImpl implements ItemService {
 
 
     /**
-     * queryItemParam
+     * 根据商品id查询商品参数
      * @Author : Nexus
      * @Description : 根据商品id查询商品参数
      * @Date : 2020/9/16 20:39
@@ -106,7 +106,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     /**
-     * queryCommentCounts
+     * 根据商品id查询商品的评价等级数量
      * @Author : Nexus
      * @Description : 根据商品id查询商品的评价等级数量
      * @Date : 2020/9/16 20:38
@@ -140,7 +140,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     /**
-     * queryPagedComments
+     * 据商品id查询商品的评价（分页）
      * @Author : Nexus
      * @Description : 据商品id查询商品的评价（分页）
      * @Date : 2020/9/16 20:38
@@ -180,7 +180,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     /**
-     * searchItems
+     * 搜索商品列表
      * @Author : Nexus
      * @Description : 搜索商品列表
      * @Date : 2020/9/16 20:41
@@ -204,7 +204,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     /**
-     * searchItems
+     * 根据分类id搜索商品列表
      * @Author : Nexus
      * @Description : 根据分类id搜索商品列表
      * @Date : 2020/9/16 20:34
@@ -228,7 +228,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     /**
-     * queryItemsBySpecIds
+     * 根据规格ids查询最新的购物车中商品数据（用于刷新渲染购物车中的商品数据）
      * @Author : Nexus
      * @Description : 根据规格ids查询最新的购物车中商品数据（用于刷新渲染购物车中的商品数据）
      * @Date : 2020/9/16 20:55
@@ -245,7 +245,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     /**
-     * queryItemSpecById
+     * 根据商品规格id获取规格对象的具体信息
      *
      * @param specId
      * @return : com.nexus.mall.pojo.ItemsSpec
@@ -261,7 +261,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     /**
-     * queryItemMainImgById
+     * 根据商品id获得商品图片主图url
      *
      * @param itemId
      * @return : java.lang.String
@@ -281,7 +281,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     /**
-     * decreaseItemSpecStock
+     * 减少库存
      *
      * @param specId
      * @param buyCounts
@@ -292,17 +292,21 @@ public class ItemServiceImpl implements ItemService {
      * @Param : specId
      * @Param : buyCounts
      */
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = RuntimeException.class)
     @Override
     public void decreaseItemSpecStock(String specId, int buyCounts) {
+        // 高并发下防止超卖
         // synchronized 不推荐使用，集群下无用，性能低下
         // 锁数据库: 不推荐，导致数据库性能低下
         // 分布式锁 zookeeper redis
 
+
+        // 加锁防止超卖
         // lockUtil.getLock(); -- 加锁
 
+        // 操作步骤
         // 1. 查询库存
         // int stock = 10;
-
         // 2. 判断库存，是否能够减少到0以下
         // if (stock - buyCounts < 0) {
         // 提示用户库存不够

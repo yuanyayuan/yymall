@@ -46,7 +46,7 @@ public interface ItemsMapperCustom {
      **/
     List<ShopcartVO> queryItemsBySpecIds(@Param("paramsList") List<String> specIdsList);
     /**
-     * decreaseItemSpecStock
+     * 乐观锁扣库存防止超卖
      * @Author : Nexus
      * @Description :
      * @Date : 2020/9/14 21:50
