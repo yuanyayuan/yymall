@@ -50,7 +50,6 @@ public class OrderController  extends BaseController{
     @Autowired
     private RestTemplate restTemplate;
 
-
     @ApiOperation(value = "用户下单", notes = "用户下单", httpMethod = "POST")
     @PostMapping("/create")
     public ServerResponse create(
@@ -77,7 +76,7 @@ public class OrderController  extends BaseController{
          * 4004
          */
         // TODO 整合redis之后，完善购物车中的已结算商品清除，并且同步到前端的cookie
-//        CookieUtils.setCookie(request, response, FOODIE_SHOPCART, "", true);
+        // CookieUtils.setCookie(request, response, FOODIE_SHOPCART, "", true);
 
         // 3. 向支付中心发送当前订单，用于保存支付中心的订单数据
         MerchantOrdersVO merchantOrdersVO = orderVO.getMerchantOrdersVO();
@@ -106,12 +105,15 @@ public class OrderController  extends BaseController{
 
         return ServerResponse.success(orderId);
     }
+
+    @ApiOperation(value = "修改订单状态", notes = "修改订单状态", httpMethod = "POST")
     @PostMapping("notifyMerchantOrderPaid")
     public Integer notifyMerchantOrderPaid(String merchantOrderId) {
         orderService.updateOrderStatus(merchantOrderId, OrderStatusEnum.WAIT_DELIVER.type);
         return HttpStatus.OK.value();
     }
 
+    @ApiOperation(value = "获取订单信息", notes = "获取订单信息", httpMethod = "POST")
     @PostMapping("getPaidOrderInfo")
     public ServerResponse getPaidOrderInfo(String orderId) {
 
