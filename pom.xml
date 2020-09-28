@@ -23,6 +23,7 @@
         <module>mall_service</module>
         <module>mall_api</module>
         <module>mall_backend_api</module>
+        <module>mall_backend_service</module>
         <module>mall_security</module>
     </modules>
     <!--
@@ -57,13 +58,15 @@
         <jackson.version>2.11.2</jackson.version>
         <mapper.version>2.1.5</mapper.version>
         <mapper-generator.version>1.1.5</mapper-generator.version>
-        <mall-common-version>0.0.1-SNAPSHOT</mall-common-version>
-        <mall-pojo-version>0.0.1-SNAPSHOT</mall-pojo-version>
-        <mall-mapper-version>0.0.1-SNAPSHOT</mall-mapper-version>
-        <mall-service-version>0.0.1-SNAPSHOT</mall-service-version>
-        <mall-api-version>0.0.1-SNAPSHOT</mall-api-version>
-        <mall-util-version>0.0.1-SNAPSHOT</mall-util-version>
-        <mall-security-version>0.0.1-SNAPSHOT</mall-security-version>
+        <mall-common.version>0.0.1-SNAPSHOT</mall-common.version>
+        <mall-pojo.version>0.0.1-SNAPSHOT</mall-pojo.version>
+        <mall-mapper.version>0.0.1-SNAPSHOT</mall-mapper.version>
+        <mall-service.version>0.0.1-SNAPSHOT</mall-service.version>
+        <mall-api.version>0.0.1-SNAPSHOT</mall-api.version>
+        <mall-backend-api.version>0.0.1-SNAPSHOT</mall-backend-api.version>
+        <mall-backend-service.version>0.0.1-SNAPSHOT</mall-backend-service.version>
+        <mall-util.version>0.0.1-SNAPSHOT</mall-util.version>
+        <mall-security.version>0.0.1-SNAPSHOT</mall-security.version>
     </properties>
 
     <dependencies>
@@ -108,37 +111,42 @@
             <dependency>
                 <groupId>com.nexus.mall</groupId>
                 <artifactId>mall-commom</artifactId>
-                <version>${mall-common-version}</version>
+                <version>${mall-common.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.nexus.mall</groupId>
                 <artifactId>mall-pojo</artifactId>
-                <version>${mall-pojo-version}</version>
+                <version>${mall-pojo.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.nexus.mall</groupId>
                 <artifactId>mall-mapper</artifactId>
-                <version>${mall-mapper-version}</version>
+                <version>${mall-mapper.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.nexus.mall</groupId>
                 <artifactId>mall-service</artifactId>
-                <version>${mall-service-version}</version>
+                <version>${mall-service.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.nexus.mall</groupId>
                 <artifactId>mall-api</artifactId>
-                <version>${mall-api-version}</version>
+                <version>${mall-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nexus.mall</groupId>
+                <artifactId>mall-backend-service</artifactId>
+                <version>${mall-backend-service.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.nexus.mall</groupId>
                 <artifactId>mall-util</artifactId>
-                <version>${mall-util-version}</version>
+                <version>${mall-util.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.nexus.mall</groupId>
                 <artifactId>mall-security</artifactId>
-                <version>${mall-security-version}</version>
+                <version>${mall-security.version}</version>
             </dependency>
 
             <!--Swagger-UI API文档生产工具-->
@@ -281,6 +289,17 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>2.2.2.RELEASE</version>
+                    <configuration>
+                        <fork>true</fork>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
