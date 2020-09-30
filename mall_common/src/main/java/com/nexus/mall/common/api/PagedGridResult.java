@@ -2,18 +2,29 @@ package com.nexus.mall.common.api;
 
 import java.util.List;
 /**
- *
- * @Title: PagedGridResult.java
- * @Package com.imooc.utils
- * @Description: 用来返回分页Grid的数据格式
- * Copyright: Copyright (c) 2019
- */
+ * @className PagedGridResult
+ * @description PageHelper分页
+ * @author LiYuan
+ * @date 2020/9/30
+**/
 public class PagedGridResult {
 
-    private int page;			// 当前页数
-    private int total;			// 总页数
-    private long records;		// 总记录数
-    private List<?> rows;		// 每行显示的内容
+    /**
+     当前页数
+     */
+    private int page;
+    /**
+     总页数
+     */
+    private int total;
+    /**
+     总记录数
+     */
+    private long records;
+    /**
+     每行显示的内容
+     */
+    private List<?> rows;
 
     public int getPage() {
         return page;

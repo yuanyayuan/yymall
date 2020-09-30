@@ -203,9 +203,11 @@ public final class CookieUtils {
                 cookieValue = URLEncoder.encode(cookieValue, "utf-8");
             }
             Cookie cookie = new Cookie(cookieName, cookieValue);
-            if (cookieMaxage > 0)
+            if (cookieMaxage > 0) {
                 cookie.setMaxAge(cookieMaxage);
-            if (null != request) {// 设置域名的cookie
+            }
+            if (null != request) {
+                // 设置域名的cookie
             	String domainName = getDomainName(request);
                 logger.info("========== domainName: {} ==========", domainName);
                 if (!"localhost".equals(domainName)) {
@@ -238,8 +240,9 @@ public final class CookieUtils {
                 cookieValue = URLEncoder.encode(cookieValue, encodeString);
             }
             Cookie cookie = new Cookie(cookieName, cookieValue);
-            if (cookieMaxage > 0)
+            if (cookieMaxage > 0) {
                 cookie.setMaxAge(cookieMaxage);
+            }
             if (null != request) {// 设置域名的cookie
             	String domainName = getDomainName(request);
                 logger.info("========== domainName: {} ==========", domainName);
@@ -304,12 +307,16 @@ public final class CookieUtils {
         boolean b = false;  
         IP = trimSpaces(IP);  
         if(IP.matches("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}")){  
-            String s[] = IP.split("\\.");  
-            if(Integer.parseInt(s[0])<255)  
-                if(Integer.parseInt(s[1])<255)  
-                    if(Integer.parseInt(s[2])<255)  
-                        if(Integer.parseInt(s[3])<255)  
-                            b = true;  
+            String[] s = IP.split("\\.");
+            if(Integer.parseInt(s[0])<255) {
+                if(Integer.parseInt(s[1])<255) {
+                    if(Integer.parseInt(s[2])<255) {
+                        if(Integer.parseInt(s[3])<255) {
+                            b = true;
+                        }
+                    }
+                }
+            }
         }  
         return b;  
     }  

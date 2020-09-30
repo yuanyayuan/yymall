@@ -21,7 +21,10 @@ public class RoleController {
     @ApiOperation(value = "添加角色", notes = "添加角色", httpMethod = "POST")
     @GetMapping(value = "/create")
     public ServerResponse create(@RequestBody BackendRole role){
-
-        return null;
+        int count = roleService.create(role);
+        if (count > 0) {
+            return ServerResponse.success(count);
+        }
+        return ServerResponse.failed();
     }
 }

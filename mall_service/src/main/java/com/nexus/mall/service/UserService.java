@@ -2,7 +2,12 @@ package com.nexus.mall.service;
 
 import com.nexus.mall.pojo.Users;
 import com.nexus.mall.pojo.bo.user.UserCreatBO;
-
+/**
+ * @className UserService
+ * @description 用户Service类
+ * @author LiYuan
+ * @date 2020/9/29
+**/
 public interface UserService {
     /**
      * queryUsernameIsExist

@@ -254,9 +254,10 @@ public class FileUtils {
             }
         }
         if (file.isDirectory()) {
-            File files[] = file.listFiles();
-            for (int i = 0; i < files.length; i++) {
-                list(list, files[i], filter);
+            File[] files = file.listFiles();
+            assert files != null;
+            for (File value : files) {
+                list(list, value, filter);
             }
         }
 

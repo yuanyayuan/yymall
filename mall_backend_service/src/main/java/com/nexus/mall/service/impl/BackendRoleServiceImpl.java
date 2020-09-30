@@ -4,9 +4,11 @@ import com.nexus.mall.dao.BackendRoleMapper;
 import com.nexus.mall.pojo.BackendMenu;
 import com.nexus.mall.pojo.BackendResource;
 import com.nexus.mall.pojo.BackendRole;
+import com.nexus.mall.pojo.Users;
 import com.nexus.mall.service.BackendRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
@@ -93,7 +95,9 @@ public class BackendRoleServiceImpl implements BackendRoleService {
      **/
     @Override
     public int delete(List<Long> ids) {
-        return 0;
+        Example roleExample = new Example(BackendRole.class);
+        roleExample.createCriteria().andIn("id",ids);
+        return roleMapper.deleteByExample(roleExample);
     }
 
     /**
@@ -106,7 +110,7 @@ public class BackendRoleServiceImpl implements BackendRoleService {
      **/
     @Override
     public List<BackendRole> list() {
-        return null;
+        return roleMapper.selectByExample(new Example((BackendRole.class)));
     }
 
     /**
