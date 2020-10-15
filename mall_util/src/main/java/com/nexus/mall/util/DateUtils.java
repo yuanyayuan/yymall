@@ -9,6 +9,55 @@ import java.util.*;
 
 public class DateUtils {
     /**
+     * Base ISO 8601 Date format yyyyMMdd i.e., 20021225 for the 25th day of December in the year 2002
+     */
+    public static final String ISO_DATE_FORMAT = "yyyyMMdd";
+
+    /**
+     * Expanded ISO 8601 Date format yyyy-MM-dd i.e., 2002-12-25 for the 25th day of December in the year 2002
+     */
+    public static final String ISO_EXPANDED_DATE_FORMAT = "yyyy-MM-dd";
+
+    /**
+     * yyyy-MM-dd hh:mm:ss
+     */
+    public static String DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    public static String DATE_PATTERN = "yyyyMMddHHmmss";
+    /**
+     *
+     * @param pattern
+     * @return
+     */
+    public static String getCurrentDateString(String pattern) {
+        return dateToString(getCurrentDateTime(), pattern);
+    }
+    /**
+     * @return
+     * @param pattern
+     * @param date
+     */
+    public static String dateToString(Date date, String pattern) {
+        if (date == null) {
+            return null;
+        }
+        try {
+            SimpleDateFormat sfDate = new SimpleDateFormat(pattern);
+            sfDate.setLenient(false);
+            return sfDate.format(date);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    /**
+     * @return
+     */
+    public static Date getCurrentDateTime() {
+        Calendar calNow = Calendar.getInstance();
+        Date dtNow = calNow.getTime();
+        return dtNow;
+    }
+
+    /**
      * 将长时间格式字符串转换为时间 yyyy-MM-dd HH:mm:ss
      *
      * @param strDate

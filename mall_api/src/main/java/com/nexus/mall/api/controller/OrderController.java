@@ -62,18 +62,16 @@ public class OrderController  extends BaseController{
             return ServerResponse.failed("支付方式不支持！");
         }
 
-//        System.out.println(submitOrderBO.toString());
-
         // 1. 创建订单
         OrderVO orderVO = orderService.createOrder(submitOrderBO);
         String orderId = orderVO.getOrderId();
 
         // 2. 创建订单以后，移除购物车中已结算（已提交）的商品
-        /**
-         * 1001
-         * 2002 -> 用户购买
-         * 3003 -> 用户购买
-         * 4004
+        /*
+          1001
+          2002 -> 用户购买
+          3003 -> 用户购买
+          4004
          */
         // TODO 整合redis之后，完善购物车中的已结算商品清除，并且同步到前端的cookie
         // CookieUtils.setCookie(request, response, FOODIE_SHOPCART, "", true);

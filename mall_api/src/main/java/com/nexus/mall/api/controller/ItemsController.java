@@ -74,17 +74,13 @@ public class ItemsController extends BaseController{
     @GetMapping("/comments")
     public ServerResponse comments(
             @ApiParam(name = "itemId", value = "商品id", required = true)
-            @RequestParam
-                    String itemId,
+            @RequestParam String itemId,
             @ApiParam(name = "level", value = "评价等级", required = false)
-            @RequestParam(value = "level",required = false)
-                    Integer level,
+            @RequestParam(value = "level",required = false) Integer level,
             @ApiParam(name = "page", value = "查询下一页的第几页", required = false)
-            @RequestParam(value = "page",defaultValue = "1",required = false)
-                    Integer page,
+            @RequestParam(value = "page",defaultValue = "1",required = false) Integer page,
             @ApiParam(name = "pageSize", value = "分页的每一页显示的条数", required = false)
-            @RequestParam(value = "pageSize",defaultValue = "10",required = false)
-                    Integer pageSize) {
+            @RequestParam(value = "pageSize",defaultValue = "10",required = false) Integer pageSize) {
 
         if (StringUtils.isBlank(itemId)) { return ServerResponse.failed(ResultCode.PARAMETER_VALIDATION_ERROR); }
         if (page == null) { page = 1; }
@@ -97,17 +93,13 @@ public class ItemsController extends BaseController{
     @GetMapping("/search")
     public ServerResponse search(
             @ApiParam(name = "keywords", value = "关键字", required = true)
-            @RequestParam (value = "keywords")
-                    String keywords,
+            @RequestParam (value = "keywords") String keywords,
             @ApiParam(name = "sort", value = "排序", required = false)
-            @RequestParam(value = "sort",required = false)
-                    String sort,
+            @RequestParam(value = "sort",required = false) String sort,
             @ApiParam(name = "page", value = "查询下一页的第几页", required = false)
-            @RequestParam(value = "page",defaultValue = "1",required = false)
-                    Integer page,
+            @RequestParam(value = "page",defaultValue = "1",required = false) Integer page,
             @ApiParam(name = "pageSize", value = "分页的每一页显示的条数", required = false)
-            @RequestParam(value = "pageSize",defaultValue = "20",required = false)
-                    Integer pageSize) {
+            @RequestParam(value = "pageSize",defaultValue = "20",required = false) Integer pageSize) {
 
         if (StringUtils.isBlank(keywords)) { return ServerResponse.failed(ResultCode.PARAMETER_VALIDATION_ERROR); }
         if (page == null) { page = 1; }
@@ -120,17 +112,13 @@ public class ItemsController extends BaseController{
     @GetMapping("/catItems")
     public ServerResponse catItems(
             @ApiParam(name = "catId", value = "三级分类id", required = true)
-            @RequestParam
-                    Integer catId,
+            @RequestParam Integer catId,
             @ApiParam(name = "sort", value = "排序", required = false)
-            @RequestParam(value = "sort",required = false)
-                    String sort,
+            @RequestParam(value = "sort",required = false) String sort,
             @ApiParam(name = "page", value = "查询下一页的第几页", required = false)
-            @RequestParam(value = "page",defaultValue = "1",required = false)
-                    Integer page,
+            @RequestParam(value = "page",defaultValue = "1",required = false) Integer page,
             @ApiParam(name = "pageSize", value = "分页的每一页显示的条数", required = false)
-            @RequestParam(value = "pageSize",defaultValue = "10",required = false)
-                    Integer pageSize) {
+            @RequestParam(value = "pageSize",defaultValue = "10",required = false) Integer pageSize) {
 
         if (catId == null) { return ServerResponse.failed(ResultCode.PARAMETER_VALIDATION_ERROR); }
         if (page == null) { page = 1; }

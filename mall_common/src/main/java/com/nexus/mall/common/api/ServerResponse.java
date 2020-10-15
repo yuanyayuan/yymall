@@ -91,7 +91,6 @@ public class ServerResponse<T>{
     public static <T> ServerResponse<T> success(T data,String message){
         return new ServerResponse<T>(ResultCode.SUCCESS.getCode(),message,data);
     }
-
     /**
      * @Author LiYuan
      * @Description 失败返回结果
@@ -134,7 +133,16 @@ public class ServerResponse<T>{
     public static <T> ServerResponse<T> failed(String message,T data) {
         return new ServerResponse<T>(ResultCode.FAILED.getCode(), message, data);
     }
-
+    /**
+     * @Author : Nexus
+     * @Description : //TODO
+     * @Date : 2020/10/15 22:31
+     * @Param : data
+     * @return : com.nexus.mall.common.api.ServerResponse<T>
+     **/
+    public static <T> ServerResponse<T> failed(T data) {
+        return new ServerResponse<T>(ResultCode.FAILED.getCode(), ResultCode.FAILED.getMessage(), data);
+    }
     /**
      * @Author LiYuan
      * @Description 失败返回结果
