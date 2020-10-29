@@ -3,12 +3,15 @@ package com.nexus.mall.api.config;
 import com.nexus.mall.common.enums.QueueEnum;
 import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 /**
  * @className RabbitMqConfig
  * @description //TODO 
  * @author LiYuan
  * @date 2020/10/19
 **/
+@Configuration
 public class RabbitMqConfig {
     /**
      * 订单消息实际消费队列所绑定的交换机

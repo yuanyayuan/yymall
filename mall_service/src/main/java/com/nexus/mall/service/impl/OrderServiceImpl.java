@@ -1,6 +1,8 @@
 package com.nexus.mall.service.impl;
 
 
+import com.nexus.mall.common.api.ServerResponse;
+import com.nexus.mall.service.component.CancelOrderSender;
 import com.nexus.mall.util.DateUtils;
 import com.nexus.mall.common.enums.OrderStatusEnum;
 import com.nexus.mall.common.enums.YesOrNo;
@@ -14,6 +16,7 @@ import com.nexus.mall.pojo.vo.user.OrderVO;
 import com.nexus.mall.service.AddressService;
 import com.nexus.mall.service.ItemService;
 import com.nexus.mall.service.OrderService;
+import lombok.extern.slf4j.Slf4j;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +25,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-
+/**
+ * @className OrderServiceImpl
+ * @description 订单业务类
+ * @author LiYuan
+ * @date 2020/10/29
+**/
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
 
@@ -44,6 +53,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private Sid sid;
+
+    @Autowired
+    private CancelOrderSender cancelOrderSender;
+
     /**
      * 用于创建订单相关信息
      *
@@ -226,12 +239,53 @@ public class OrderServiceImpl implements OrderService {
             }
         }
     }
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = RuntimeException.class)
     void doCloseOrder(String orderId) {
         OrderStatus close = new OrderStatus();
         close.setOrderId(orderId);
         close.setOrderStatus(OrderStatusEnum.CLOSE.type);
         close.setCloseTime(new Date());
         orderStatusMapper.updateByPrimaryKeySelective(close);
+    }
+
+    /**
+     * 根据提交信息生成订单
+     *
+     * @param submitOrderBO
+     * @return com.nexus.mall.common.api.ServerResponse
+     * @Author LiYuan
+     * @Description //TODO
+     * @Date 13:55 2020/10/29
+     **/
+    @Override
+    public ServerResponse generateOrder(SubmitOrderBO submitOrderBO) {
+        //todo 执行一系类下单操作，具体参考mall项目
+        log.info("process generateOrder");
+        //下单完成后开启一个延迟消息，用于当用户没有付款时取消订单（orderId应该在下单后生成）
+        sendDelayMessageCancelOrder(11L);
+        return ServerResponse.success(submitOrderBO);
+    }
+
+    /**
+     * 取消单个超时订单
+     *
+     * @param orderId 订单id
+     * @return void
+     * @Author LiYuan
+     * @Description 取消单个超时订单
+     * @Date 13:53 2020/10/29
+     **/
+    @Override
+    public void cancelOrder(Long orderId) {
+        //todo 执行一系类取消订单操作，具体参考mall项目
+        log.info("process cancelOrder orderId:{}",orderId);
+    }
+
+    private void sendDelayMessageCancelOrder(Long orderId) {
+        //获取订单超时时间，假设为60分钟
+        long delayTimes = 3000;
+        //发送延迟消息
+        cancelOrderSender.sendMessage(orderId, delayTimes);
+
     }
 }

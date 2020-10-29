@@ -2,6 +2,7 @@ package com.nexus.mall.common.config;
 
 
 import com.nexus.mall.common.domain.SwaggerProperties;
+import io.swagger.models.auth.In;
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -15,9 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Swagger基础配置
- * Created by macro on 2020/7/16.
- */
+ * @className BaseSwaggerConfig
+ * @description Swagger基础配置
+ * @author LiYuan
+ * @date 2020/10/28
+**/
 public abstract class BaseSwaggerConfig {
 
     @Bean
@@ -48,28 +51,37 @@ public abstract class BaseSwaggerConfig {
                 .build();
     }
 
-    private List<ApiKey> securitySchemes() {
+    private List<SecurityScheme> securitySchemes() {
         //设置请求头信息
-        List<ApiKey> result = new ArrayList<>();
-        ApiKey apiKey = new ApiKey("Authorization", "Authorization", "header");
+        List<SecurityScheme> result = new ArrayList<>();
+        ApiKey apiKey = new ApiKey("Authorization", "Authorization", In.HEADER.toValue());
         result.add(apiKey);
         return result;
     }
-
+    /**
+     *
+     * 授权信息全局应用
+     *
+     * @Author LiYuan
+     * @Description 授权信息全局应用
+     * @Date 9:44 2020/10/29
+     * @param
+     * @return java.util.List<springfox.documentation.spi.service.contexts.SecurityContext>
+    **/
     private List<SecurityContext> securityContexts() {
         //设置需要登录认证的路径
         List<SecurityContext> result = new ArrayList<>();
-        result.add(getContextByPath("/*/.*"));
+        result.add(getContextByPath());
         return result;
     }
 
-    private SecurityContext getContextByPath(String pathRegex) {
+    private SecurityContext getContextByPath() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.regex(pathRegex))
+                .forPaths(PathSelectors.regex("/*/.*"))
+                //.operationSelector(PathSelectors.regex("/*/.*"))//使用这个替代，但不会用
                 .build();
     }
-
     private List<SecurityReference> defaultAuth() {
         List<SecurityReference> result = new ArrayList<>();
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
@@ -83,4 +95,7 @@ public abstract class BaseSwaggerConfig {
      * 自定义Swagger配置
      */
     public abstract SwaggerProperties swaggerProperties();
+
+
+
 }

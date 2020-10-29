@@ -1,4 +1,5 @@
-package com.nexus.mall.api.component;
+package com.nexus.mall.service.component;
+
 
 import com.nexus.mall.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,5 +22,6 @@ public class CancelOrderReceiver {
     @RabbitHandler
     public void handle(Long orderId){
         log.info("receive delay message orderId:{}",orderId);
+        orderService.cancelOrder(orderId);
     }
 }

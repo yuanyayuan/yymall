@@ -1,5 +1,10 @@
 package com.nexus.mall.common.api;
-
+/**
+ * @className ResultCode
+ * @description 返回结果状态标志枚举类
+ * @author LiYuan
+ * @date 2020/10/28
+**/
 public enum ResultCode implements IErrorCode {
     //操作成功
     SUCCESS(200, "操作成功"),

@@ -1,5 +1,6 @@
 package com.nexus.mall.service;
 
+import com.nexus.mall.common.api.ServerResponse;
 import com.nexus.mall.pojo.OrderStatus;
 import com.nexus.mall.pojo.bo.user.SubmitOrderBO;
 import com.nexus.mall.pojo.vo.user.OrderVO;
@@ -45,4 +46,25 @@ public interface OrderService {
      * @return : void
      **/
     void closeOrder();
+
+
+    /**
+     * 根据提交信息生成订单
+     * @Author LiYuan
+     * @Description //TODO 
+     * @Date 13:55 2020/10/29
+     * @param submitOrderBO
+     * @return com.nexus.mall.common.api.ServerResponse
+    **/
+    ServerResponse generateOrder(SubmitOrderBO submitOrderBO);
+
+    /**
+     * 取消单个超时订单
+     * @Author LiYuan
+     * @Description 取消单个超时订单
+     * @Date 13:53 2020/10/29
+     * @param orderId 订单id
+     * @return void
+    **/
+    void cancelOrder(Long orderId);
 }

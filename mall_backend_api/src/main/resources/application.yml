@@ -62,10 +62,13 @@ mapper:
 secure:
   ignored:
     urls: #安全路径白名单
-      - /swagger-ui.html
+      - /swagger-ui/
       - /swagger-resources/**
       - /swagger/**
-      - /**/doc.html
+      - /*.html
+      - /favicon.ico
+      - /**/*.html
+      - /v2/api-docs/**
       - /**/*.js
       - /**/*.css
       - /**/*.png

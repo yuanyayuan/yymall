@@ -104,6 +104,12 @@ public class OrderController  extends BaseController{
         return ServerResponse.success(orderId);
     }
 
+    @ApiOperation(value = "根据购物车信息生成订单", notes = "添加消息队列用户下单", httpMethod = "POST")
+    @PostMapping("/generateOrder")
+    public ServerResponse generateOrder(SubmitOrderBO submitOrderBO){
+        return orderService.generateOrder(submitOrderBO);
+    }
+
     @ApiOperation(value = "修改订单状态", notes = "修改订单状态", httpMethod = "POST")
     @PostMapping("notifyMerchantOrderPaid")
     public Integer notifyMerchantOrderPaid(String merchantOrderId) {

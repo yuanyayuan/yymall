@@ -1,5 +1,6 @@
 package com.nexus.mall.api.config;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.nexus.mall.common.config.BaseSwaggerConfig;
 import com.nexus.mall.common.domain.SwaggerProperties;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 */
 @Configuration
 @EnableSwagger2
+@EnableKnife4j
 @Profile({"dev"})
 public class SwaggerConfig extends BaseSwaggerConfig {
     /**
