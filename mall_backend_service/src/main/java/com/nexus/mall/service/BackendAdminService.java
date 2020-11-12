@@ -50,7 +50,7 @@ public interface BackendAdminService {
     BackendAdmin register(AdminCreateBO adminParam);
 
     /**
-     * queryUsernameIsExist
+     * 判断用户名是否唯一
      * @Author : Nexus
      * @Description : 判断用户名是否唯一
      * @Date : 2020/9/10 23:28
@@ -60,7 +60,7 @@ public interface BackendAdminService {
     boolean queryUsernameIsExist(String username);
 
     /**
-     * getAdminByUsername
+     * 根据用户名获取用户
      * @Author : Nexus
      * @Description : 根据用户名获取用户
      * @Date : 2020/9/10 21:48
@@ -70,7 +70,7 @@ public interface BackendAdminService {
     BackendAdmin getAdminByUsername(String username);
 
     /**
-     * refreshToken
+     * 刷新token的功能
      * @Author LiYuan
      * @Description 刷新token的功能
      * @Date 9:33 2020/9/11
@@ -80,7 +80,7 @@ public interface BackendAdminService {
     String refreshToken(String oldToken);
 
     /**
-     * loadUserByUsername
+     * 获取用户信息
      * @Author : Nexus
      * @Description : 获取用户信息
      * @Date : 2020/9/10 21:46

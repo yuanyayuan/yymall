@@ -60,6 +60,16 @@ public class GlobalExceptionHandler {
     public ServerResponse noHandlerFound(IllegalStateException e){
         return ServerResponse.failed(ResultCode.STATE_EXCEPTION_ERROR, String.valueOf(e.getCause()));
     }
+    /**
+     *
+     * 请求参数错误
+     *
+     * @Author LiYuan
+     * @Description 请求参数错误
+     * @Date 15:45 2020/11/2
+     * @param e
+     * @return com.nexus.mall.common.api.ServerResponse
+    **/
     @ResponseBody
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     public ServerResponse noHandlerFound(MissingServletRequestParameterException e){
@@ -70,7 +80,7 @@ public class GlobalExceptionHandler {
         }
     }
     /**
-     * handleValidException
+     * post请求参数校验抛出的异常
      * @Author : Nexus
      * @Description : post请求参数校验抛出的异常
      * @Date : 2020/9/7 23:25
@@ -91,7 +101,7 @@ public class GlobalExceptionHandler {
         return ServerResponse.validateFailed(message);
     }
     /**
-     * handleValidException
+     * get请求参数校验抛出的异常
      * @Author : Nexus
      * @Description : get请求参数校验抛出的异常
      * @Date : 2020/9/7 23:26
@@ -112,7 +122,7 @@ public class GlobalExceptionHandler {
         return ServerResponse.validateFailed(message);
     }
     /**
-     * constraintViolationExceptionHandler
+     * 请求方法中校验抛出的异常
      * @Author : Nexus
      * @Description : 请求方法中校验抛出的异常
      * @Date : 2020/9/7 23:26
