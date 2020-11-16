@@ -1,7 +1,23 @@
 package com.nexus.mall.pojo.vo.user;
 
 import lombok.Data;
+/**
 
+* @Description:    商户
+
+* @Author:         Nexus
+
+* @CreateDate:     2020/11/11 21:39
+
+* @UpdateUser:     Nexus
+
+* @UpdateDate:     2020/11/11 21:39
+
+* @UpdateRemark:   修改内容
+
+* @Version:        1.0
+
+*/
 @Data
 public class MerchantOrdersVO {
     /**

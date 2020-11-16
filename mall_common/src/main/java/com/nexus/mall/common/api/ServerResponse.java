@@ -2,7 +2,9 @@ package com.nexus.mall.common.api;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
 
@@ -23,6 +25,7 @@ import lombok.Data;
 */
 @ApiModel(value = "返回JSON对象")
 @Data
+@NoArgsConstructor
 public class ServerResponse<T>{
     @ApiModelProperty(value = "状态码；200:成功",example = "200")
     private long code;

@@ -199,7 +199,7 @@ public class BackendAdminServiceImpl implements BackendAdminService {
      */
     @Override
     public List<BackendResource> getResourceList(Long adminId) {
-        List<BackendResource> resourceList = adminRoleRelationMapper.getResourceList(adminId);
+        List<BackendResource> resourceList = adminRoleRelationMapperCustom.getResourceList(adminId);
         return resourceList;
     }
 
@@ -214,7 +214,7 @@ public class BackendAdminServiceImpl implements BackendAdminService {
      **/
     @Override
     public List<BackendRole> getRoleList(Long adminId) {
-        return adminRoleRelationMapper.getRoleList(adminId);
+        return adminRoleRelationMapperCustom.getRoleList(adminId);
     }
 
     /**

@@ -67,6 +67,8 @@
         <mall-backend-service.version>0.0.1-SNAPSHOT</mall-backend-service.version>
         <mall-util.version>0.0.1-SNAPSHOT</mall-util.version>
         <mall-security.version>0.0.1-SNAPSHOT</mall-security.version>
+
+        <redis.version>2.3.5.RELEASE</redis.version>
     </properties>
 
     <dependencies>
@@ -102,6 +104,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
         </dependency>
     </dependencies>
 
@@ -273,7 +279,12 @@
                 <artifactId>jackson-annotations</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
-
+            <!--redis-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${redis.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
