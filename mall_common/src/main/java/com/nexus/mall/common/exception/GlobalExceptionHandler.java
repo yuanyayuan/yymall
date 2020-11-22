@@ -11,6 +11,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.validation.ConstraintViolationException;
@@ -135,5 +136,18 @@ public class GlobalExceptionHandler {
         //获取异常中第一个错误信息
         String message = e.getConstraintViolations().iterator().next().getMessage();
         return ServerResponse.validateFailed(message);
+    }
+
+    /**
+     * 上传文件超过500k，捕获异常：MaxUploadSizeExceededException
+     * @Author : Nexus
+     * @Description : 上传文件超过500k，捕获异常：MaxUploadSizeExceededException
+     * @Date : 2020/11/21 18:40
+     * @Param : ex
+     * @return : com.nexus.mall.common.api.ServerResponse
+     **/
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ServerResponse handlerMaxUploadFile(MaxUploadSizeExceededException ex) {
+        return ServerResponse.failed("文件上传大小不能超过500k，请压缩图片或者降低图片质量再上传！");
     }
 }

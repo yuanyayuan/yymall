@@ -32,7 +32,7 @@ public enum QueueEnum {
 
      */
 
-    private String exchange;
+    private final String exchange;
 
     /**
 
@@ -40,7 +40,7 @@ public enum QueueEnum {
 
      */
 
-    private String name;
+    private final String name;
 
     /**
 
@@ -48,7 +48,7 @@ public enum QueueEnum {
 
      */
 
-    private String routeKey;
+    private final String routeKey;
 
 
     QueueEnum(String exchange, String name, String routeKey) {

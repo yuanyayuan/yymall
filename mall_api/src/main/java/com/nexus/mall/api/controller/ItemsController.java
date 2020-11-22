@@ -49,7 +49,7 @@ public class ItemsController extends BaseController{
 
     @ApiOperation(value = "查询商品详情", notes = "查询商品详情", httpMethod = "GET")
     @GetMapping("/info/{itemId}")
-    public ServerResponse info(@NotBlank @ApiParam(name = "itemId", value = "商品id", required = true) @PathVariable String itemId) {
+    public ServerResponse info(@NotBlank(message = "商品不能为空") @ApiParam(name = "itemId", value = "商品id", required = true) @PathVariable String itemId) {
         Items item = itemService.queryItemById(itemId);
         List<ItemsImg> itemImgList = itemService.queryItemImgList(itemId);
         List<ItemsSpec> itemsSpecList = itemService.queryItemSpecList(itemId);
@@ -74,13 +74,17 @@ public class ItemsController extends BaseController{
     @GetMapping("/comments")
     public ServerResponse comments(
             @ApiParam(name = "itemId", value = "商品id", required = true)
-            @RequestParam String itemId,
+            @RequestParam
+                    String itemId,
             @ApiParam(name = "level", value = "评价等级", required = false)
-            @RequestParam(value = "level",required = false) Integer level,
+            @RequestParam(value = "level",required = false)
+                    Integer level,
             @ApiParam(name = "page", value = "查询下一页的第几页", required = false)
-            @RequestParam(value = "page",defaultValue = "1",required = false) Integer page,
+            @RequestParam(value = "page",defaultValue = "1",required = false)
+                    Integer page,
             @ApiParam(name = "pageSize", value = "分页的每一页显示的条数", required = false)
-            @RequestParam(value = "pageSize",defaultValue = "10",required = false) Integer pageSize) {
+            @RequestParam(value = "pageSize",defaultValue = "10",required = false)
+                    Integer pageSize) {
 
         if (StringUtils.isBlank(itemId)) { return ServerResponse.failed(ResultCode.PARAMETER_VALIDATION_ERROR); }
         if (page == null) { page = 1; }

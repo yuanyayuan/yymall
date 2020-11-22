@@ -1,6 +1,9 @@
 package com.nexus.mall.api.controller;
 
+import com.nexus.mall.api.resource.PayConfig;
+import com.nexus.mall.common.api.ResultCode;
 import com.nexus.mall.common.api.ServerResponse;
+import com.nexus.mall.common.enums.ImoocPayResultCode;
 import com.nexus.mall.common.enums.OrderStatusEnum;
 import com.nexus.mall.common.enums.PayMethod;
 import com.nexus.mall.pojo.OrderStatus;
@@ -50,6 +53,9 @@ public class OrderController  extends BaseController{
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private PayConfig payConfig;
+
     @ApiOperation(value = "用户下单", notes = "用户下单", httpMethod = "POST")
     @PostMapping("/create")
     public ServerResponse create(
@@ -76,7 +82,9 @@ public class OrderController  extends BaseController{
         // TODO 整合redis之后，完善购物车中的已结算商品清除，并且同步到前端的cookie
         // CookieUtils.setCookie(request, response, FOODIE_SHOPCART, "", true);
 
-        // 3. 向支付中心发送当前订单，用于保存支付中心的订单数据
+        /**
+         * 3. 向支付中心发送当前订单，用于保存支付中心的订单数据
+         **/
         MerchantOrdersVO merchantOrdersVO = orderVO.getMerchantOrdersVO();
         merchantOrdersVO.setReturnUrl(payReturnUrl);
 
@@ -85,8 +93,8 @@ public class OrderController  extends BaseController{
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.add("imoocUserId","imooc");
-        headers.add("password","imooc");
+        headers.add("imoocUserId",payConfig.getUserId());
+        headers.add("password",payConfig.getPassword());
 
         HttpEntity<MerchantOrdersVO> entity =
                 new HttpEntity<>(merchantOrdersVO, headers);
@@ -96,7 +104,8 @@ public class OrderController  extends BaseController{
                         entity,
                         ServerResponse.class);
         ServerResponse paymentResult = responseEntity.getBody();
-        if (paymentResult.getCode() != 200) {
+        assert paymentResult != null;
+        if (paymentResult.getCode() != ImoocPayResultCode.success.code) {
             log.error("发送错误：{}", paymentResult.getMessage());
             return ServerResponse.failed("支付中心订单创建失败，请联系管理员！");
         }
@@ -109,7 +118,14 @@ public class OrderController  extends BaseController{
     public ServerResponse generateOrder(SubmitOrderBO submitOrderBO){
         return orderService.generateOrder(submitOrderBO);
     }
-
+    /**
+     * 支付中心回调地址
+     * @Author : Nexus
+     * @Description : 支付中心回调地址
+     * @Date : 2020/11/21 20:37
+     * @Param : merchantOrderId
+     * @return : java.lang.Integer
+     **/
     @ApiOperation(value = "修改订单状态", notes = "修改订单状态", httpMethod = "POST")
     @PostMapping("notifyMerchantOrderPaid")
     public Integer notifyMerchantOrderPaid(String merchantOrderId) {

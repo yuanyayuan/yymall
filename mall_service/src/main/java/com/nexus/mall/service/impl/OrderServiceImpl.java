@@ -82,9 +82,9 @@ public class OrderServiceImpl implements OrderService {
 
         UserAddress address = addressService.queryUserAddress(userId, addressId);
 
-        /*
-         1. 新订单数据保存
-         */
+        /**
+         * 1. 新订单数据保存
+         **/
         Orders newOrder = new Orders();
         newOrder.setId(orderId);
         newOrder.setUserId(userId);
@@ -96,19 +96,18 @@ public class OrderServiceImpl implements OrderService {
         // 后面通过计算得到
         ///newOrder.setTotalAmount();
         ///newOrder.setRealPayAmount();
-        newOrder.setPostAmount(postAmount);
 
+        newOrder.setPostAmount(postAmount);
         newOrder.setPayMethod(payMethod);
         newOrder.setLeftMsg(leftMsg);
-
         newOrder.setIsComment(YesOrNo.NO.type);
         newOrder.setIsDelete(YesOrNo.NO.type);
         newOrder.setCreatedTime(new Date());
         newOrder.setUpdatedTime(new Date());
 
-        /*
-        2. 循环根据itemSpecIds保存订单商品信息表
-        */
+        /**
+         * 2. 循环根据itemSpecIds保存订单商品信息表
+         **/
         String[] itemSpecIdArr = itemSpecIds.split(",");
         // 商品原价累计
         int totalAmount = 0;
@@ -162,6 +161,7 @@ public class OrderServiceImpl implements OrderService {
         MerchantOrdersVO merchantOrdersVO = new MerchantOrdersVO();
         merchantOrdersVO.setMerchantOrderId(orderId);
         merchantOrdersVO.setMerchantUserId(userId);
+        //postAmount——运费
         merchantOrdersVO.setAmount(realPayAmount + postAmount);
         merchantOrdersVO.setPayMethod(payMethod);
 
@@ -174,16 +174,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * updateOrderStatus
-     *
+     * 修改订单状态
      * @param orderId
      * @param orderStatus
      * @return : void
      * @Author : Nexus
      * @Description : 修改订单状态
      * @Date : 2020/9/21 22:46
-     * @Param : orderId
-     * @Param : orderStatus
      */
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = RuntimeException.class)
     @Override
@@ -197,7 +194,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * queryOrderStatusInfo
+     * 查询订单状态
      *
      * @param orderId
      * @return : com.nexus.mall.pojo.OrderStatus

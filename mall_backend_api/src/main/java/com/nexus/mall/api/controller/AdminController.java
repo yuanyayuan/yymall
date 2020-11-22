@@ -71,7 +71,7 @@ public class AdminController {
             return ServerResponse.failed(ResultCode.REGISTER_DUP_FAIL);
         }
         //请求成功，用户名没有重复
-        return ServerResponse.success("该用户不存在");
+        return ServerResponse.success(null,"该用户不存在");
     }
 
     @ApiOperation(value = "用户注册", notes = "用户注册", httpMethod = "POST")

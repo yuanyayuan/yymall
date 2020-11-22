@@ -6,6 +6,7 @@ import org.springframework.boot.actuate.autoconfigure.security.servlet.Managemen
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import tk.mybatis.spring.annotation.MapperScan;
 
 /**
@@ -25,6 +26,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 * @Version:        1.0
 
 */
+@EnableScheduling
 @ComponentScan(basePackages = {"com.nexus.mall", "org.n3r.idworker"})
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class})
 public class MallApiApplication {

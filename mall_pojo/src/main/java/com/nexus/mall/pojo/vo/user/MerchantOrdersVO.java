@@ -37,7 +37,7 @@ public class MerchantOrdersVO {
     */
     private Integer payMethod;
     /**
-    支付成功后的回调地址（学生自定义）
+    支付成功后的回调地址
     */
     private String returnUrl;
 }

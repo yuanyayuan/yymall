@@ -64,16 +64,7 @@ public class ServerResponse<T>{
     public static <T> ServerResponse<T> success(){
         return new ServerResponse<T>(ResultCode.SUCCESS.getCode());
     }
-    /**
-     * @Author LiYuan
-     * @Description 成功返回结果
-     * @Date 10:38 2020/6/1
-     * @Param [message]
-     * @return com.snpas.pom.api.ServerResponse<T>
-     **/
-    public static <T> ServerResponse<T> success(String message){
-        return new ServerResponse<T>(ResultCode.SUCCESS.getCode(),message);
-    }
+
     /**
      * @Author LiYuan
      * @Description 成功返回结果

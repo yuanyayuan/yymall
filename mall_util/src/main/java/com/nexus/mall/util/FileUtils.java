@@ -1,6 +1,7 @@
 package com.nexus.mall.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -20,6 +21,10 @@ public class FileUtils {
      * 私有构造方法，防止类的实例化，因为工具类不需要实例化。
      */
     private FileUtils() {
+
+    }
+
+    public static void uploadFile(){
 
     }
 

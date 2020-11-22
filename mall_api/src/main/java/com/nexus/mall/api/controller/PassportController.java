@@ -64,7 +64,7 @@ public class PassportController {
             return ServerResponse.failed(ResultCode.REGISTER_DUP_FAIL);
         }
         //请求成功，用户名没有重复
-        return ServerResponse.success("该用户不存在");
+        return ServerResponse.success(null,"该用户不存在");
     }
     /**
      * register
@@ -107,7 +107,7 @@ public class PassportController {
         // TODO 同步购物车数据
 
 
-        return ServerResponse.success("注册成功");
+        return ServerResponse.success(null,"注册成功");
     }
 
     @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")

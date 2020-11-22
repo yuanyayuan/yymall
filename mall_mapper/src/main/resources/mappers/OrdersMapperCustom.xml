@@ -17,7 +17,6 @@
             <result column="itemId" property="itemId"/>
             <result column="itemName" property="itemName"/>
             <result column="itemImg" property="itemImg"/>
-            <result column="itemSpecId" property="itemSpecId"/>
             <result column="itemSpecName" property="itemSpecName"/>
             <result column="buyCounts" property="buyCounts"/>
             <result column="price" property="price"/>
