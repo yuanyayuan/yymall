@@ -1,13 +1,14 @@
 package com.nexus.mall.service.impl;
 
-import com.nexus.mall.dao.BackendRoleMapper;
+import com.github.pagehelper.PageHelper;
+import com.nexus.mall.dao.backend.BackendRoleMapper;
 import com.nexus.mall.pojo.BackendMenu;
 import com.nexus.mall.pojo.BackendResource;
 import com.nexus.mall.pojo.BackendRole;
-import com.nexus.mall.pojo.Users;
 import com.nexus.mall.service.BackendRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
@@ -117,16 +118,21 @@ public class BackendRoleServiceImpl implements BackendRoleService {
      * 分页获取角色列表
      *
      * @param keyword
+     * @param page
      * @param pageSize
-     * @param pageNum
      * @return java.util.List<com.nexus.mall.pojo.BackendRole>
      * @Author LiYuan
      * @Description 分页获取角色列表
      * @Date 14:53 2020/9/25
      **/
     @Override
-    public List<BackendRole> list(String keyword, Integer pageSize, Integer pageNum) {
-        return null;
+    public List<BackendRole> list(String keyword, Integer page, Integer pageSize) {
+        Example example = new Example(BackendRole.class);
+        PageHelper.startPage(page, pageSize);
+        if (!StringUtils.isEmpty(keyword)) {
+            example.createCriteria().andLike("name","%" + keyword + "%");
+        }
+        return roleMapper.selectByExample(example);
     }
 
     /**

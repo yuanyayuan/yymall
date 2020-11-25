@@ -1,4 +1,4 @@
-package com.nexus.mall.dao;
+package com.nexus.mall.dao.backend;
 
 import com.nexus.mall.pojo.BackendAdminRoleRelation;
 import com.nexus.mall.pojo.BackendResource;
@@ -6,6 +6,7 @@ import com.nexus.mall.pojo.BackendRole;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+
 /**
  * @className BackendAdminRoleRelationMapperCustom
  * @description 自定义后台用户与角色管理Mapper

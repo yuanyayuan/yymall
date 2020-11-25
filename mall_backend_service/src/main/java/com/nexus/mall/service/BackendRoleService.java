@@ -72,11 +72,11 @@ public interface BackendRoleService {
      * @Description 分页获取角色列表
      * @Date 14:53 2020/9/25
      * @param keyword
+     * @param page
      * @param pageSize
-     * @param pageNum
      * @return java.util.List<com.nexus.mall.pojo.BackendRole>
     **/
-    List<BackendRole> list(String keyword,Integer pageSize,Integer pageNum);
+    List<BackendRole> list(String keyword,Integer page,Integer pageSize);
 
     /**
      *

@@ -1,6 +1,6 @@
 package com.nexus.mall.service.impl;
 
-import com.nexus.mall.dao.BackendResourceMapper;
+import com.nexus.mall.dao.backend.BackendResourceMapper;
 import com.nexus.mall.pojo.BackendResource;
 import com.nexus.mall.service.BackendResourceService;
 import org.springframework.beans.factory.annotation.Autowired;

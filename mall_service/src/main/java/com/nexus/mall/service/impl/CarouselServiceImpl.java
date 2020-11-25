@@ -1,6 +1,6 @@
 package com.nexus.mall.service.impl;
 
-import com.nexus.mall.dao.CarouselMapper;
+import com.nexus.mall.dao.protal.CarouselMapper;
 import com.nexus.mall.pojo.Carousel;
 import com.nexus.mall.service.CarouselService;
 import org.springframework.beans.factory.annotation.Autowired;

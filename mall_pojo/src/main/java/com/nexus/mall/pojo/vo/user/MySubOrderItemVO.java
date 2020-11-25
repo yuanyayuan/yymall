@@ -11,4 +11,13 @@ public class MySubOrderItemVO {
     private String itemSpecName;
     private Integer buyCounts;
     private Integer price;
+    private String itemSpecId;
+
+    public String getItemSpecId() {
+        return itemSpecId;
+    }
+
+    public void setItemSpecId(String itemSpecId) {
+        this.itemSpecId = itemSpecId;
+    }
 }

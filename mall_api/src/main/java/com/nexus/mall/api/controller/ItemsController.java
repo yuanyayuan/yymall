@@ -87,7 +87,7 @@ public class ItemsController extends BaseController{
                     Integer pageSize) {
 
         if (StringUtils.isBlank(itemId)) { return ServerResponse.failed(ResultCode.PARAMETER_VALIDATION_ERROR); }
-        if (page == null) { page = 1; }
+        if (page == null) { page = COMMON_PAGE; }
         if (pageSize == null) { pageSize = COMMON_PAGE_SIZE; }
         PagedGridResult grid = itemService.queryPagedComments(itemId, level, page, pageSize);
         return ServerResponse.success(grid);

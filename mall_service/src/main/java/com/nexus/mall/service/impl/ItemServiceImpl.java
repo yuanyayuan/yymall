@@ -7,7 +7,7 @@ import com.nexus.mall.common.api.PagedGridResult;
 import com.nexus.mall.common.enums.CommentLevel;
 import com.nexus.mall.common.enums.YesOrNo;
 import com.nexus.mall.common.util.DesensitizationUtil;
-import com.nexus.mall.dao.*;
+import com.nexus.mall.dao.protal.*;
 import com.nexus.mall.pojo.*;
 import com.nexus.mall.pojo.vo.user.CommentLevelCountsVO;
 import com.nexus.mall.pojo.vo.user.ItemCommentVO;

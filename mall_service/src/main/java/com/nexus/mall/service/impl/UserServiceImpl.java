@@ -2,7 +2,7 @@ package com.nexus.mall.service.impl;
 
 import com.nexus.mall.common.enums.Sex;
 import org.n3r.idworker.Sid;
-import com.nexus.mall.dao.UsersMapper;
+import com.nexus.mall.dao.protal.UsersMapper;
 import com.nexus.mall.pojo.Users;
 import com.nexus.mall.pojo.bo.user.UserCreatBO;
 import com.nexus.mall.service.UserService;

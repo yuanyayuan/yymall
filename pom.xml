@@ -68,6 +68,7 @@
         <mall-util.version>0.0.1-SNAPSHOT</mall-util.version>
         <mall-security.version>0.0.1-SNAPSHOT</mall-security.version>
 
+        <aliyun.oss.version>3.9.1</aliyun.oss.version>
         <redis.version>2.3.5.RELEASE</redis.version>
     </properties>
 
@@ -285,6 +286,13 @@
                 <artifactId>spring-boot-starter-data-redis</artifactId>
                 <version>${redis.version}</version>
             </dependency>
+            <!-- aliyunoss -->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun.oss.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <build>

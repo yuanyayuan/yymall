@@ -1,6 +1,6 @@
 package com.nexus.mall.service.impl;
 
-import com.nexus.mall.dao.UsersMapper;
+import com.nexus.mall.dao.protal.UsersMapper;
 import com.nexus.mall.pojo.Users;
 import com.nexus.mall.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;

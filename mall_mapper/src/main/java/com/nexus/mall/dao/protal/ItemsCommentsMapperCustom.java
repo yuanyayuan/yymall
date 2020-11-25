@@ -1,4 +1,4 @@
-package com.nexus.mall.dao;
+package com.nexus.mall.dao.protal;
 
 import com.nexus.mall.pojo.vo.user.MyCommentVO;
 import org.apache.ibatis.annotations.Param;

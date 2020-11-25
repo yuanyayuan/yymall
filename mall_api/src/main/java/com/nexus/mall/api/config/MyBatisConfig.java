@@ -7,6 +7,6 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 @Configuration
 @EnableTransactionManagement
-@MapperScan({"com.nexus.mall.dao"})
+@MapperScan({"com.nexus.mall.dao.backend","com.nexus.mall.dao.protal"})
 public class MyBatisConfig {
 }

@@ -1,4 +1,4 @@
-package com.nexus.mall.dao;
+package com.nexus.mall.dao.protal;
 
 import com.nexus.mall.pojo.OrderStatus;
 import com.nexus.mall.pojo.vo.user.MyOrdersVO;

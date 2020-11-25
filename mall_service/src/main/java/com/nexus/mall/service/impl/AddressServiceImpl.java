@@ -1,7 +1,7 @@
 package com.nexus.mall.service.impl;
 
 import com.nexus.mall.common.enums.YesOrNo;
-import com.nexus.mall.dao.UserAddressMapper;
+import com.nexus.mall.dao.protal.UserAddressMapper;
 import com.nexus.mall.pojo.UserAddress;
 import com.nexus.mall.pojo.bo.user.AddressBO;
 import com.nexus.mall.service.AddressService;

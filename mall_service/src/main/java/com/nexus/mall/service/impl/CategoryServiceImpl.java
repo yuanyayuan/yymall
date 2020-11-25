@@ -2,8 +2,8 @@ package com.nexus.mall.service.impl;
 
 import com.google.common.collect.Maps;
 import com.nexus.mall.common.enums.CategoryState;
-import com.nexus.mall.dao.CategoryMapper;
-import com.nexus.mall.dao.CategoryMapperCustom;
+import com.nexus.mall.dao.protal.CategoryMapper;
+import com.nexus.mall.dao.protal.CategoryMapperCustom;
 import com.nexus.mall.pojo.Category;
 import com.nexus.mall.pojo.vo.user.CategoryVO;
 import com.nexus.mall.pojo.vo.user.NewItemsVO;

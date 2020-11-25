@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nexus.mall.dao.BackendAdminRoleRelationMapperCustom">
+<mapper namespace="com.nexus.mall.dao.backend.BackendAdminRoleRelationMapperCustom">
     <insert id="insertList">
         INSERT INTO  backend_admin_role_relation(admin_id, role_id) VALUES
         <foreach collection="list" separator="," item="item" index="index">
@@ -30,7 +30,7 @@
 
     <select id="getRoleList" resultType="com.nexus.mall.pojo.BackendRole">
         select r.*
-        from ums_admin_role_relation ar left join ums_role r on ar.role_id = r.id
+        from backend_admin_role_relation ar left join backend_role r on ar.role_id = r.id
         where ar.admin_id = #{adminId}
     </select>
 </mapper>
