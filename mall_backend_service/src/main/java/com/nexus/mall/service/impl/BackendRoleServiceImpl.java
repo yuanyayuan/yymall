@@ -1,10 +1,8 @@
 package com.nexus.mall.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.nexus.mall.dao.backend.BackendRoleMapper;
-import com.nexus.mall.pojo.BackendMenu;
-import com.nexus.mall.pojo.BackendResource;
-import com.nexus.mall.pojo.BackendRole;
+import com.nexus.mall.dao.backend.*;
+import com.nexus.mall.pojo.*;
 import com.nexus.mall.service.BackendRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +35,15 @@ public class BackendRoleServiceImpl implements BackendRoleService {
     @Autowired
     private BackendRoleMapper roleMapper;
 
+    @Autowired
+    private BackendRoleMenuRelationMapper roleMenuRelationMapper;
+
+    @Autowired
+    private BackendRoleResourceRelationMapper roleResourceRelationMapper;
+
+    @Autowired
+    private BackendRoleMapperCustom roleMapperCustom;
+
     /**
      * 根据用户id获取对应菜单
      *
@@ -48,7 +55,7 @@ public class BackendRoleServiceImpl implements BackendRoleService {
      **/
     @Override
     public List<BackendMenu> getMenuList(Long adminId) {
-        return roleMapper.getMenuList(adminId);
+        return roleMapperCustom.getMenuList(adminId);
     }
 
 
@@ -146,7 +153,7 @@ public class BackendRoleServiceImpl implements BackendRoleService {
      **/
     @Override
     public List<BackendMenu> listMenu(Long roleId) {
-        return null;
+        return roleMapperCustom.getMenuListByRoleId(roleId);
     }
 
     /**
@@ -160,7 +167,7 @@ public class BackendRoleServiceImpl implements BackendRoleService {
      **/
     @Override
     public List<BackendResource> listResource(Long roleId) {
-        return null;
+        return roleMapperCustom.getResourceListByRoleId(roleId);
     }
 
     /**
@@ -175,7 +182,18 @@ public class BackendRoleServiceImpl implements BackendRoleService {
      **/
     @Override
     public int allocMenu(Long roleId, List<Long> menuIds) {
-        return 0;
+        //先删除原有关系
+        Example example = new Example(BackendRoleMenuRelation.class);
+        example.createCriteria().andEqualTo("roleId",roleId);
+        roleMenuRelationMapper.deleteByExample(example);
+        //批量插入新关系
+        for (Long menuId : menuIds) {
+            BackendRoleMenuRelation backendRoleMenuRelation = new BackendRoleMenuRelation();
+            backendRoleMenuRelation.setRoleId(roleId);
+            backendRoleMenuRelation.setMenuId(menuId);
+            roleMenuRelationMapper.insert(backendRoleMenuRelation);
+        }
+        return menuIds.size();
     }
 
     /**
@@ -190,6 +208,17 @@ public class BackendRoleServiceImpl implements BackendRoleService {
      **/
     @Override
     public int allocResource(Long roleId, List<Long> resourceIds) {
-        return 0;
+        //先删除原有关系
+        Example example = new Example(BackendRoleResourceRelation.class);
+        example.createCriteria().andEqualTo("roleId",roleId);
+        roleResourceRelationMapper.deleteByExample(example);
+        //批量插入新关系
+        for (Long menuId : resourceIds) {
+            BackendRoleResourceRelation backendRoleResourceRelation = new BackendRoleResourceRelation();
+            backendRoleResourceRelation.setRoleId(roleId);
+            backendRoleResourceRelation.setResourceId(menuId);
+            roleResourceRelationMapper.insert(backendRoleResourceRelation);
+        }
+        return resourceIds.size();
     }
 }

@@ -47,12 +47,12 @@ import java.util.stream.Collectors;
 @Validated
 @RestController
 @RequestMapping("/admin")
-public class AdminController {
+public class BackendAdminController {
     @Value("${jwt.tokenHeader}")
     private String tokenHeader;
-    /*
-      Authorization
-     */
+    /**
+     * Authorization
+     **/
     @Value("${jwt.tokenHead}")
     private String tokenHead;
 

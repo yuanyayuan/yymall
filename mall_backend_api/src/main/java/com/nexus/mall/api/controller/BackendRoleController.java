@@ -15,7 +15,7 @@ import java.util.List;
 @Api(value = "后台用户角色管理",tags = {"后台用户角色管理"})
 @RestController
 @RequestMapping("/role")
-public class RoleController {
+public class BackendRoleController {
     @Autowired
     private BackendRoleService roleService;
 
@@ -75,7 +75,9 @@ public class RoleController {
     @ApiOperation(value = "修改角色状态", notes = "修改角色状态", httpMethod = "POST")
     @PostMapping(value = "/updateStatus/{id}")
     public ServerResponse updateStatus(@PathVariable Long id, @RequestParam(value = "status") Integer status) {
-        // TODO: 2020/11/25  
+        BackendRole backendRole = new BackendRole();
+        backendRole.setStatus(status);
+        int update = roleService.update(id, backendRole);
         return null;
     }
 }

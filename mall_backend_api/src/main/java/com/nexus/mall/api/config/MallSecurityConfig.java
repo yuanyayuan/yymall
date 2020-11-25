@@ -20,6 +20,8 @@ import java.util.Map;
 /**
 
 * @Description:    SpringSecurity子配置
+ * 只有加了@EnableGlobalMethodSecurity(prePostEnabled=true)
+ *  那么在上面使用的 @PreAuthorize("hasAuthority('admin')")才会生效
 
 * @Author:         Nexus
 
@@ -36,12 +38,9 @@ import java.util.Map;
 */
 @Configuration
 @EnableWebSecurity
-/*
- 只有加了@EnableGlobalMethodSecurity(prePostEnabled=true)
- 那么在上面使用的 @PreAuthorize("hasAuthority('admin')")才会生效
-*/
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MallSecurityConfig extends SecurityConfig {
+
     @Autowired
     private BackendAdminService adminService;
 
