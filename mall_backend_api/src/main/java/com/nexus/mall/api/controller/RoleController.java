@@ -1,5 +1,6 @@
 package com.nexus.mall.api.controller;
 
+import com.nexus.mall.common.api.CommonPage;
 import com.nexus.mall.common.api.ServerResponse;
 import com.nexus.mall.pojo.BackendRole;
 import com.nexus.mall.service.BackendRoleService;
@@ -68,8 +69,13 @@ public class RoleController {
             @RequestParam(value = "pageSize",defaultValue = "10",required = false)
                     Integer pageSize) {
         List<BackendRole> roleList = roleService.list(keyword, page, pageSize);
-        return ServerResponse.success(roleList);
+        return ServerResponse.success(CommonPage.restPage(roleList));
     }
 
-
+    @ApiOperation(value = "修改角色状态", notes = "修改角色状态", httpMethod = "POST")
+    @PostMapping(value = "/updateStatus/{id}")
+    public ServerResponse updateStatus(@PathVariable Long id, @RequestParam(value = "status") Integer status) {
+        // TODO: 2020/11/25  
+        return null;
+    }
 }

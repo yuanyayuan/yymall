@@ -50,10 +50,10 @@ import java.util.stream.Collectors;
 public class AdminController {
     @Value("${jwt.tokenHeader}")
     private String tokenHeader;
-    @Value("${jwt.tokenHead}")
     /*
       Authorization
      */
+    @Value("${jwt.tokenHead}")
     private String tokenHead;
 
     @Autowired
