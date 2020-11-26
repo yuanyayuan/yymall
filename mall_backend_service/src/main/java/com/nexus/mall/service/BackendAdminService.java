@@ -115,11 +115,11 @@ public interface BackendAdminService {
      * @Description 根据用户名或昵称分页查询用户
      * @Date 10:47 2020/9/14
      * @param keyword
+     * @param page
      * @param pageSize
-     * @param pageNum
      * @return java.util.List<com.nexus.mall.pojo.BackendAdmin>
     **/
-    List<BackendAdmin> list(String keyword, Integer pageSize, Integer pageNum);
+    List<BackendAdmin> list(String keyword, Integer page, Integer pageSize);
     /**
      * getItem
      * @Author LiYuan

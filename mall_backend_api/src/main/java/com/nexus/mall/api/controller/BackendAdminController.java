@@ -14,6 +14,7 @@ import com.nexus.mall.service.BackendAdminService;
 import com.nexus.mall.service.BackendRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
@@ -139,10 +140,17 @@ public class BackendAdminController {
 
     @ApiOperation(value = "根据用户名或姓名分页获取用户列表",notes = "根据用户名或姓名分页获取用户列表", httpMethod = "GET")
     @GetMapping(value = "/list")
-    public ServerResponse<CommonPage<BackendAdmin>> list(@RequestParam(value = "keyword", required = false) String keyword,
-                                                         @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize,
-                                                         @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum){
-        List<BackendAdmin> result = adminService.list(keyword, pageSize, pageNum);
+    public ServerResponse<CommonPage<BackendAdmin>> list(
+            @ApiParam(name = "keyword", value = "关键字", required = true)
+            @RequestParam(value = "keyword", required = false)
+                    String keyword,
+            @ApiParam(name = "page", value = "查询下一页的第几页", required = false)
+            @RequestParam(value = "page", defaultValue = "1")
+                    Integer page,
+            @ApiParam(name = "pageSize", value = "分页的每一页显示的条数", required = false)
+            @RequestParam(value = "pageSize", defaultValue = "10")
+                    Integer pageSize){
+        List<BackendAdmin> result = adminService.list(keyword, page, pageSize);
         return ServerResponse.success(CommonPage.restPage(result));
     }
 

@@ -16,6 +16,7 @@ import com.nexus.mall.pojo.bo.admin.AdminCreateBO;
 import com.nexus.mall.pojo.bo.admin.AdminUserDetails;
 import com.nexus.mall.pojo.bo.admin.UpdateAdminPasswordParam;
 import com.nexus.mall.security.util.JwtTokenUtil;
+import com.nexus.mall.service.BackendAdminCacheService;
 import com.nexus.mall.service.BackendAdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.n3r.idworker.Sid;
@@ -71,6 +72,9 @@ public class BackendAdminServiceImpl implements BackendAdminService {
 
     @Autowired
     private BackendAdminRoleRelationMapperCustom adminRoleRelationMapperCustom;
+
+    @Autowired
+    private BackendAdminCacheService adminCacheService;
 
     /**
      * login
@@ -221,16 +225,16 @@ public class BackendAdminServiceImpl implements BackendAdminService {
      * list
      *
      * @param keyword
+     * @param page
      * @param pageSize
-     * @param pageNum
      * @return java.util.List<com.nexus.mall.pojo.BackendAdmin>
      * @Author LiYuan
      * @Description 根据用户名或昵称分页查询用户
      * @Date 10:47 2020/9/14
      **/
     @Override
-    public List<BackendAdmin> list(String keyword, Integer pageSize, Integer pageNum) {
-        PageHelper.startPage(pageNum, pageSize);
+    public List<BackendAdmin> list(String keyword, Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
         Example example = new Example(BackendAdmin.class);
         Example.Criteria criteria = example.createCriteria();
         if (!StringUtils.isEmpty(keyword)) {
