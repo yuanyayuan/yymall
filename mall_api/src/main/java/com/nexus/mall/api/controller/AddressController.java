@@ -46,6 +46,7 @@ public class AddressController {
     @PostMapping("/add")
     public ServerResponse add(@Validated @RequestBody AddressBO addressBO) {
 
+//        参数校验
 //        ServerResponse checkRes = checkAddress(addressBO);
 //        if (checkRes.getCode() != ResultCode.SUCCESS.getCode()) {
 //            return checkRes;
@@ -98,7 +99,7 @@ public class AddressController {
         if (StringUtils.isBlank(addressBO.getAddressId())) {
             return ServerResponse.failed("修改地址错误：addressId不能为空");
         }
-
+//        参数校验
 //        ServerResponse checkRes = checkAddress(addressBO);
 //        if (checkRes.getCode() != ResultCode.SUCCESS.getCode()) {
 //            return checkRes;
