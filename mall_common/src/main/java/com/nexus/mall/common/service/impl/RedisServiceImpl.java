@@ -3,12 +3,29 @@ package com.nexus.mall.common.service.impl;
 import com.nexus.mall.common.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+/**
 
+* @Description:    redis操作实现类
+
+* @Author:         Nexus
+
+* @CreateDate:     2020/11/26 23:20
+
+* @UpdateUser:     Nexus
+
+* @UpdateDate:     2020/11/26 23:20
+
+* @UpdateRemark:   修改内容
+
+* @Version:        1.0
+
+*/
 public class RedisServiceImpl implements RedisService {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
