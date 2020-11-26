@@ -46,4 +46,14 @@ public interface BackendAdminRoleRelationMapperCustom {
      * @return java.util.List<com.nexus.mall.pojo.BackendRole>
      **/
     List<BackendRole> getRoleList(@Param("adminId") Long adminId);
+
+    /**
+     * 获取资源相关用户ID列表
+     * @Author : Nexus
+     * @Description : 获取资源相关用户ID列表
+     * @Date : 2020/11/26 23:27
+     * @Param : resourceId
+     * @return : java.util.List<java.lang.Long>
+     **/
+    List<Long> getAdminIdList(@Param("resourceId") Long resourceId);
 }
