@@ -5,15 +5,11 @@ import com.nexus.mall.dao.backend.BackendAdminRoleRelationMapper;
 import com.nexus.mall.dao.backend.BackendAdminRoleRelationMapperCustom;
 import com.nexus.mall.pojo.BackendAdmin;
 import com.nexus.mall.pojo.BackendResource;
-import com.nexus.mall.pojo.BackendRole;
-import com.nexus.mall.pojo.bo.admin.AdminCreateBO;
-import com.nexus.mall.pojo.bo.admin.UpdateAdminPasswordParam;
 import com.nexus.mall.service.BackendAdminCacheService;
 import com.nexus.mall.service.BackendAdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
