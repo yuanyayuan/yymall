@@ -479,9 +479,51 @@ public class DateUtils {
         return JD;
     }
 
+    public static Long getDayPoor(Date nowDate, Date endDate) {
+
+        long nd = 1000 * 24 * 60 * 60;
+        long nh = 1000 * 60 * 60;
+        long nm = 1000 * 60;
+
+        // 获得两个时间的毫秒时间差异
+        long diff = nowDate.getTime() - endDate.getTime();
+        // 计算差多少天
+        return diff / nd;
+    }
+    public static Long getHourPoor(Date nowDate, Date endDate) {
+
+        long nd = 1000 * 24 * 60 * 60;
+        long nh = 1000 * 60 * 60;
+        long nm = 1000 * 60;
+
+        // 获得两个时间的毫秒时间差异
+        long diff = nowDate.getTime() - endDate.getTime();
+        // 计算差多少小时
+        return diff % nd / nh;
+    }
+    public static Long getMinPoor(Date nowDate, Date endDate) {
+
+        long nd = 1000 * 24 * 60 * 60;
+        long nh = 1000 * 60 * 60;
+        long nm = 1000 * 60;
+
+        // 获得两个时间的毫秒时间差异
+        long diff = nowDate.getTime() - endDate.getTime();
+
+        // 计算差多少分钟
+
+        return diff % nd % nh / nm;
+    }
+
+
+
 
 
     public static void main(String[] args) {
-        System.out.println(DateUtils.getQuartList());
+        Date nowDate = DateUtils.strToDateLong(DateUtils.getCurrentTime());
+        Date endDate = DateUtils.strToDateLong("2020-11-29 18:30:00");
+
+        Long minPoor = getMinPoor(nowDate, endDate);
+        System.out.println(minPoor);
     }
 }

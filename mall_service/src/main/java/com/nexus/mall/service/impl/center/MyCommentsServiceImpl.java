@@ -1,6 +1,7 @@
 package com.nexus.mall.service.impl.center;
 
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Maps;
 import com.nexus.mall.common.api.PagedGridResult;
 import com.nexus.mall.common.enums.YesOrNo;
 import com.nexus.mall.dao.protal.ItemsCommentsMapperCustom;
@@ -81,7 +82,7 @@ public class MyCommentsServiceImpl extends BaseService implements MyCommentsServ
         for (OrderItemsCommentBO oic : commentList) {
             oic.setCommentId(sid.nextShort());
         }
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = Maps.newHashMap();
         map.put("userId", userId);
         map.put("commentList", commentList);
         itemsCommentsMapperCustom.saveComments(map);

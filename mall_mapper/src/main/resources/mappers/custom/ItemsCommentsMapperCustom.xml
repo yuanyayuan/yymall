@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.nexus.mall.dao.protal.ItemsCommentsMapperCustom" >
-    <select id="saveComments" parameterType="Map">
-
+    <insert id="saveComments" parameterType="Map">
         insert into
         items_comments
         (
@@ -11,7 +10,7 @@
         item_id,
         item_name,
         item_spec_id,
-        sepc_name,
+        spec_name,
         comment_level,
         content,
         created_time,
@@ -32,8 +31,7 @@
             now()
             )
         </foreach>
-
-    </select>
+    </insert>
 
     <resultMap id="myComments" type="com.nexus.mall.pojo.vo.user.MyCommentVO">
         <id column="commentId" property="commentId"/>
@@ -41,7 +39,7 @@
         <result column="createdTime" property="createdTime"/>
         <result column="itemId" property="itemId"/>
         <result column="itemName" property="itemName"/>
-        <result column="sepcName" property="specName"/>
+        <result column="specName" property="specName"/>
         <result column="itemImg" property="itemImg"/>
     </resultMap>
 
@@ -52,7 +50,7 @@
         ic.created_time as createdTime,
         ic.item_id as itemId,
         ic.item_name as itemName,
-        ic.sepc_name as sepcName,
+        ic.sepc_name as specName,
         ii.url as itemImg
         FROM
         items_comments ic

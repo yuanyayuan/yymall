@@ -34,6 +34,9 @@ spring:
         min-idle: 0
     # 连接超时时间（毫秒）
     timeout: 300ms
+#################################################################
+#打印SQL
+#################################################################
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

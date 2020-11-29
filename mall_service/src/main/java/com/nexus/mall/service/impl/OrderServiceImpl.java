@@ -221,7 +221,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = RuntimeException.class)
     @Override
     public void closeOrder() {
-        // 查询所有未付款订单，判断时间是否超时（1天），超时则关闭交易
+        // 查询所有未付款订单，判断时间是否超时（30min），超时则关闭交易
         OrderStatus queryOrder = new OrderStatus();
         queryOrder.setOrderStatus(OrderStatusEnum.WAIT_PAY.type);
         List<OrderStatus> list = orderStatusMapper.select(queryOrder);
@@ -229,9 +229,9 @@ public class OrderServiceImpl implements OrderService {
             // 获得订单创建时间
             Date createdTime = os.getCreatedTime();
             // 和当前时间进行对比
-            int days = DateUtils.daysBetween(createdTime, new Date());
-            if (days >= 1) {
-                // 超过1天，关闭订单
+            Long min = DateUtils.getMinPoor(new Date(),createdTime);
+            if (min > 30) {
+                // 超过30min，关闭订单
                 doCloseOrder(os.getOrderId());
             }
         }

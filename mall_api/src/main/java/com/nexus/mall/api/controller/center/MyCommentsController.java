@@ -61,9 +61,6 @@ public class MyCommentsController extends BaseController {
             @ApiParam(name = "orderId", value = "订单id", required = true)
             @RequestParam String orderId,
             @RequestBody List<OrderItemsCommentBO> commentList) {
-
-        System.out.println(commentList);
-
         // 判断用户和订单是否关联
         ServerResponse checkResult = checkUserOrder(userId, orderId);
         if (checkResult.getCode() != HttpStatus.OK.value()) {
@@ -73,7 +70,6 @@ public class MyCommentsController extends BaseController {
         if (commentList == null || commentList.isEmpty() || commentList.size() == 0) {
             return ServerResponse.failed("评论内容不能为空！");
         }
-
         myCommentsService.saveComments(orderId, userId, commentList);
         return ServerResponse.success();
     }

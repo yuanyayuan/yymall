@@ -67,8 +67,7 @@ public class MyOrdersController extends BaseController {
     public ServerResponse deliver(
             @ApiParam(name = "orderId", value = "订单id", required = true)
             @NotBlank(message = "订单ID不能为空")
-            @RequestParam String orderId) throws Exception {
-
+            @RequestParam String orderId) {
         myOrdersService.updateDeliverOrderStatus(orderId);
         return ServerResponse.success();
     }
@@ -80,7 +79,7 @@ public class MyOrdersController extends BaseController {
             @ApiParam(name = "orderId", value = "订单id", required = true)
             @RequestParam String orderId,
             @ApiParam(name = "userId", value = "用户id", required = true)
-            @RequestParam String userId) throws Exception {
+            @RequestParam String userId) {
 
         ServerResponse checkResult = checkUserOrder(userId, orderId);
         if (checkResult.getCode() != HttpStatus.OK.value()) {
@@ -101,7 +100,7 @@ public class MyOrdersController extends BaseController {
             @ApiParam(name = "orderId", value = "订单id", required = true)
             @RequestParam String orderId,
             @ApiParam(name = "userId", value = "用户id", required = true)
-            @RequestParam String userId) throws Exception {
+            @RequestParam String userId) {
 
         ServerResponse checkResult = checkUserOrder(userId, orderId);
         if (checkResult.getCode() != HttpStatus.OK.value()) {
@@ -115,20 +114,6 @@ public class MyOrdersController extends BaseController {
 
         return ServerResponse.success();
     }
-
-
-
-    /**
-     * 用于验证用户和订单是否有关联关系，避免非法用户调用
-     * @return
-     */
-//    private IMOOCJSONResult checkUserOrder(String userId, String orderId) {
-//        Orders order = myOrdersService.queryMyOrder(userId, orderId);
-//        if (order == null) {
-//            return IMOOCJSONResult.errorMsg("订单不存在！");
-//        }
-//        return IMOOCJSONResult.ok();
-//    }
 
     @ApiOperation(value = "查询订单动向", notes = "查询订单动向", httpMethod = "POST")
     @PostMapping("/trend")

@@ -27,8 +27,10 @@ import org.springframework.stereotype.Component;
 public class OrderJob {
     @Autowired
     private OrderService orderService;
-    //    @Scheduled(cron = "0/3 * * * * ?")
-    //    @Scheduled(cron = "0 0 0/1 * * ?")
+    /**
+     *每分钟执行一次
+     **/
+    @Scheduled(cron = "0 0/1 0/1 * * ? ")
     public void autoCloseOrder(){
         orderService.closeOrder();
         System.out.println("执行定时任务，当前时间为："

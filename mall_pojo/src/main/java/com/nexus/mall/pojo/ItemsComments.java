@@ -2,7 +2,23 @@ package com.nexus.mall.pojo;
 
 import javax.persistence.*;
 import java.util.Date;
+/**
 
+* @Description:    用户对商品的评价
+
+* @Author:         Nexus
+
+* @CreateDate:     2020/11/29 22:35
+
+* @UpdateUser:     Nexus
+
+* @UpdateDate:     2020/11/29 22:35
+
+* @UpdateRemark:   修改内容
+
+* @Version:        1.0
+
+*/
 @Table(name = "items_comments")
 public class ItemsComments {
     /**
@@ -38,8 +54,8 @@ public class ItemsComments {
     /**
      * 规格名称 可为空
      */
-    @Column(name = "sepc_name")
-    private String sepcName;
+    @Column(name = "spec_name")
+    private String specName;
 
     /**
      * 评价等级 1：好评 2：中评 3：差评
@@ -157,19 +173,19 @@ public class ItemsComments {
     /**
      * 获取规格名称 可为空
      *
-     * @return sepc_name - 规格名称 可为空
+     * @return spec_name - 规格名称 可为空
      */
-    public String getSepcName() {
-        return sepcName;
+    public String getSpecName() {
+        return specName;
     }
 
     /**
      * 设置规格名称 可为空
      *
-     * @param sepcName 规格名称 可为空
+     * @param specName 规格名称 可为空
      */
-    public void setSepcName(String sepcName) {
-        this.sepcName = sepcName;
+    public void setSpecName(String specName) {
+        this.specName = specName;
     }
 
     /**
