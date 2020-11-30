@@ -1,9 +1,9 @@
-package com.nexus.mall.api.controller;
+package com.nexus.mall.api.controller.backend;
 
 import com.nexus.mall.common.api.CommonPage;
 import com.nexus.mall.common.api.ServerResponse;
 import com.nexus.mall.pojo.BackendRole;
-import com.nexus.mall.service.BackendRoleService;
+import com.nexus.mall.service.backend.BackendRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

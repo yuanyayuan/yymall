@@ -1,4 +1,4 @@
-package com.nexus.mall.service;
+package com.nexus.mall.service.backend;
 
 import com.nexus.mall.pojo.BackendResource;
 

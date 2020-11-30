@@ -1,10 +1,10 @@
-package com.nexus.mall.api.controller;
+package com.nexus.mall.api.controller.backend;
 
 import com.nexus.mall.common.api.CommonPage;
 import com.nexus.mall.common.api.ServerResponse;
 import com.nexus.mall.pojo.BackendMenu;
 import com.nexus.mall.pojo.dto.admin.BackendMenuNode;
-import com.nexus.mall.service.BackendMenuService;
+import com.nexus.mall.service.backend.BackendMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

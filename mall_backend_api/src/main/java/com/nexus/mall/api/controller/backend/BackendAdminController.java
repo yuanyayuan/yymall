@@ -1,4 +1,4 @@
-package com.nexus.mall.api.controller;
+package com.nexus.mall.api.controller.backend;
 
 import cn.hutool.core.collection.CollUtil;
 import com.google.common.collect.Maps;
@@ -10,8 +10,8 @@ import com.nexus.mall.pojo.BackendRole;
 import com.nexus.mall.pojo.bo.admin.AdminCreateBO;
 import com.nexus.mall.pojo.bo.admin.AdminLoginBO;
 import com.nexus.mall.pojo.bo.admin.UpdateAdminPasswordParam;
-import com.nexus.mall.service.BackendAdminService;
-import com.nexus.mall.service.BackendRoleService;
+import com.nexus.mall.service.backend.BackendAdminService;
+import com.nexus.mall.service.backend.BackendRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

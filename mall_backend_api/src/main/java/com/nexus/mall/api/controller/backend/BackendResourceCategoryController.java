@@ -1,4 +1,4 @@
-package com.nexus.mall.api.controller;
+package com.nexus.mall.api.controller.backend;
 
 import io.swagger.annotations.Api;
 import org.springframework.validation.annotation.Validated;
