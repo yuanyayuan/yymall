@@ -3,7 +3,7 @@ package com.nexus.mall.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.nexus.mall.dao.backend.*;
 import com.nexus.mall.pojo.*;
-import com.nexus.mall.service.BackendRoleService;
+import com.nexus.mall.service.backend.BackendRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

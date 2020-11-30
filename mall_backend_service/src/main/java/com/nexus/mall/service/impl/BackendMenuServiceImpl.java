@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.nexus.mall.dao.backend.BackendMenuMapper;
 import com.nexus.mall.pojo.BackendMenu;
 import com.nexus.mall.pojo.dto.admin.BackendMenuNode;
-import com.nexus.mall.service.BackendMenuService;
+import com.nexus.mall.service.backend.BackendMenuService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
