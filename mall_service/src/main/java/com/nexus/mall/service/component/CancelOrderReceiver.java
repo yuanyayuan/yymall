@@ -14,14 +14,16 @@ import org.springframework.stereotype.Component;
  * @date 2020/10/19
 **/
 @Component
-@RabbitListener(queues = "mall.order.cancel")
+//@RabbitListener(queues = "mall.order.cancel")
+@RabbitListener(queues = "mall.order.cancel.plugin")
 @Slf4j
 public class CancelOrderReceiver {
     @Autowired
     private OrderService orderService;
+
     @RabbitHandler
-    public void handle(Long orderId){
+    public void handle(String orderId){
         log.info("receive delay message orderId:{}",orderId);
-        orderService.cancelOrder(orderId);
+        orderService.closeOrderByOrderId(orderId);
     }
 }
