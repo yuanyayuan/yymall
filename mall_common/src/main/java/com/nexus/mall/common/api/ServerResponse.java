@@ -129,7 +129,7 @@ public class ServerResponse<T>{
     }
     /**
      * @Author : Nexus
-     * @Description : //TODO
+     * @Description :
      * @Date : 2020/10/15 22:31
      * @Param : data
      * @return : com.nexus.mall.common.api.ServerResponse<T>

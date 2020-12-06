@@ -1,6 +1,5 @@
 package com.nexus.mall.api.controller;
 
-import com.google.common.collect.Lists;
 import com.nexus.mall.common.api.ServerResponse;
 import com.nexus.mall.common.enums.YesOrNo;
 import com.nexus.mall.common.util.RedisOperator;
@@ -24,9 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

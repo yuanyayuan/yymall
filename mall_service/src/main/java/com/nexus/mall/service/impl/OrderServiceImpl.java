@@ -2,6 +2,8 @@ package com.nexus.mall.service.impl;
 
 
 import com.nexus.mall.common.api.ServerResponse;
+import com.nexus.mall.common.exception.Asserts;
+import com.nexus.mall.pojo.bo.user.ShopcartBO;
 import com.nexus.mall.service.component.CancelOrderSender;
 import com.nexus.mall.util.DateUtils;
 import com.nexus.mall.common.enums.OrderStatusEnum;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 /**
@@ -34,7 +37,6 @@ import java.util.List;
 @Service
 @Slf4j
 public class OrderServiceImpl implements OrderService {
-
 
     @Autowired
     private OrdersMapper ordersMapper;
@@ -69,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = RuntimeException.class)
     @Override
-    public OrderVO createOrder(SubmitOrderBO submitOrderBO) {
+    public OrderVO createOrder(List<ShopcartBO> shopcartList, SubmitOrderBO submitOrderBO) {
         String userId = submitOrderBO.getUserId();
         String addressId = submitOrderBO.getAddressId();
         String itemSpecIds = submitOrderBO.getItemSpecIds();
@@ -82,41 +84,28 @@ public class OrderServiceImpl implements OrderService {
 
         UserAddress address = addressService.queryUserAddress(userId, addressId);
 
-        /**
-         * 1. 新订单数据保存
-         **/
-        Orders newOrder = new Orders();
-        newOrder.setId(orderId);
-        newOrder.setUserId(userId);
+        /*
+          1. 新订单数据保存
+         */
+        Orders newOrder = saveNewOrder(orderId, userId, address, postAmount, payMethod, leftMsg);
 
-        newOrder.setReceiverName(address.getReceiver());
-        newOrder.setReceiverMobile(address.getMobile());
-        newOrder.setReceiverAddress(address.getProvince() + " " + address.getCity() + " " + address.getDistrict() + " " + address.getDetail());
-
-        // 后面通过计算得到
-        ///newOrder.setTotalAmount();
-        ///newOrder.setRealPayAmount();
-
-        newOrder.setPostAmount(postAmount);
-        newOrder.setPayMethod(payMethod);
-        newOrder.setLeftMsg(leftMsg);
-        newOrder.setIsComment(YesOrNo.NO.type);
-        newOrder.setIsDelete(YesOrNo.NO.type);
-        newOrder.setCreatedTime(new Date());
-        newOrder.setUpdatedTime(new Date());
-
-        /**
-         * 2. 循环根据itemSpecIds保存订单商品信息表
-         **/
+        /*
+          2. 循环根据itemSpecIds保存订单商品信息表
+         */
         String[] itemSpecIdArr = itemSpecIds.split(",");
         // 商品原价累计
         int totalAmount = 0;
         // 优惠后的实际支付价格累计
         int realPayAmount = 0;
+        List<ShopcartBO> toBeRemovedShopcatList = new ArrayList<>();
         for (String itemSpecId : itemSpecIdArr) {
-
-            // TODO 整合redis后，商品购买的数量重新从redis的购物车中获取
-            int buyCounts = 1;
+            ShopcartBO cartItem = getBuyCountsFromShopcart(shopcartList, itemSpecId);
+            //todo 整合redis后，商品购买的数量重新从redis的购物车中获取
+            if (cartItem == null){
+                Asserts.fail("服务器异常，请稍后再试");
+            }
+            int buyCounts = cartItem.getBuyCounts();
+            toBeRemovedShopcatList.add(cartItem);
 
             // 2.1 根据规格id，查询规格的具体信息，主要获取价格
             ItemsSpec itemSpec = itemService.queryItemSpecById(itemSpecId);
@@ -169,8 +158,72 @@ public class OrderServiceImpl implements OrderService {
         OrderVO orderVO = new OrderVO();
         orderVO.setOrderId(orderId);
         orderVO.setMerchantOrdersVO(merchantOrdersVO);
+        orderVO.setToBeRemovedShopcatList(toBeRemovedShopcatList);
 
+        sendDelayMessageCancelOrder(orderId);
         return orderVO;
+    }
+
+    /**
+     * 新订单数据保存
+     * @Author : Nexus
+     * @Description : 新订单数据保存
+     * @Date : 2020/12/3 22:41
+     * @Param : orderId
+     * @Param : userId
+     * @Param : address
+     * @Param : postAmount
+     * @Param : payMethod
+     * @Param : leftMsg
+     * @return : com.nexus.mall.pojo.Orders
+     **/
+    private Orders saveNewOrder(String orderId,
+                                String userId,
+                                UserAddress address,
+                                int postAmount,
+                                Integer payMethod,
+                                String leftMsg){
+        Orders newOrder = new Orders();
+        newOrder.setId(orderId);
+        newOrder.setUserId(userId);
+        newOrder.setReceiverName(address.getReceiver());
+        newOrder.setReceiverMobile(address.getMobile());
+        newOrder.setReceiverAddress(address.getProvince() + " " + address.getCity() + " " + address.getDistrict() + " " + address.getDetail());
+        newOrder.setPostAmount(postAmount);
+        newOrder.setPayMethod(payMethod);
+        newOrder.setLeftMsg(leftMsg);
+        newOrder.setIsComment(YesOrNo.NO.type);
+        newOrder.setIsDelete(YesOrNo.NO.type);
+        newOrder.setCreatedTime(new Date());
+        newOrder.setUpdatedTime(new Date());
+
+        return newOrder;
+    }
+
+    private void sendDelayMessageCancelOrder(String orderId) {
+        //获取订单超时时间，假设为60分钟(测试用的30秒)
+        long delayTimes = 30 * 1000;
+        //发送延迟消息
+        cancelOrderSender.sendMessage(orderId, delayTimes);
+    }
+
+
+    /**
+     * 从redis中的购物车里获取商品，目的：counts
+     * @Author : Nexus
+     * @Description :从redis中的购物车里获取商品，目的：counts
+     * @Date : 2020/11/30 20:52
+     * @Param : shopcartList
+     * @Param : specId
+     * @return : com.nexus.mall.pojo.bo.user.ShopcartBO
+     **/
+    private ShopcartBO getBuyCountsFromShopcart(List<ShopcartBO> shopcartList, String specId) {
+        for (ShopcartBO cart : shopcartList) {
+            if (cart.getSpecId().equals(specId)) {
+                return cart;
+            }
+        }
+        return null;
     }
 
     /**
@@ -225,6 +278,7 @@ public class OrderServiceImpl implements OrderService {
         OrderStatus queryOrder = new OrderStatus();
         queryOrder.setOrderStatus(OrderStatusEnum.WAIT_PAY.type);
         List<OrderStatus> list = orderStatusMapper.select(queryOrder);
+        log.info("所有待支付："+list);
         for (OrderStatus os : list) {
             // 获得订单创建时间
             Date createdTime = os.getCreatedTime();
@@ -232,12 +286,21 @@ public class OrderServiceImpl implements OrderService {
             Long min = DateUtils.getMinPoor(new Date(),createdTime);
             if (min > 30) {
                 // 超过30min，关闭订单
-                doCloseOrder(os.getOrderId());
+                closeOrderByOrderId(os.getOrderId());
             }
         }
     }
+    /**
+     * 根据orderId关闭订单
+     * @Author : Nexus
+     * @Description : 根据orderId关闭订单
+     * @Date : 2020/12/3 22:37
+     * @Param : orderId
+     * @return : void
+     **/
+    @Override
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = RuntimeException.class)
-    void doCloseOrder(String orderId) {
+    public void closeOrderByOrderId(String orderId) {
         OrderStatus close = new OrderStatus();
         close.setOrderId(orderId);
         close.setOrderStatus(OrderStatusEnum.CLOSE.type);
@@ -245,44 +308,6 @@ public class OrderServiceImpl implements OrderService {
         orderStatusMapper.updateByPrimaryKeySelective(close);
     }
 
-    /**
-     * 根据提交信息生成订单
-     *
-     * @param submitOrderBO
-     * @return com.nexus.mall.common.api.ServerResponse
-     * @Author LiYuan
-     * @Description //TODO
-     * @Date 13:55 2020/10/29
-     **/
-    @Override
-    public ServerResponse generateOrder(SubmitOrderBO submitOrderBO) {
-        //todo 执行一系类下单操作，具体参考mall项目
-        log.info("process generateOrder");
-        //下单完成后开启一个延迟消息，用于当用户没有付款时取消订单（orderId应该在下单后生成）
-        sendDelayMessageCancelOrder(11L);
-        return ServerResponse.success(submitOrderBO);
-    }
 
-    /**
-     * 取消单个超时订单
-     *
-     * @param orderId 订单id
-     * @return void
-     * @Author LiYuan
-     * @Description 取消单个超时订单
-     * @Date 13:53 2020/10/29
-     **/
-    @Override
-    public void cancelOrder(Long orderId) {
-        //todo 执行一系类取消订单操作，具体参考mall项目
-        log.info("process cancelOrder orderId:{}",orderId);
-    }
 
-    private void sendDelayMessageCancelOrder(Long orderId) {
-        //获取订单超时时间，假设为60分钟
-        long delayTimes = 3000;
-        //发送延迟消息
-        cancelOrderSender.sendMessage(orderId, delayTimes);
-
-    }
 }
