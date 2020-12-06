@@ -7,12 +7,15 @@ spring:
     username: root
     password: 12345
   rabbitmq:
-    host: localhost
+    host: loaclhost
     port: 5672
     virtual-host: /mall
     username: mall
     password: mall
+    # 确认消息已发送到交换机（Exchange）选择确认类型为交互
+    # publisher-confirms: true
     publisher-confirm-type: correlated
+
   redis:
     # Redis数据库索引（默认为0）
     database: 0
