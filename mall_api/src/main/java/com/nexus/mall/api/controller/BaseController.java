@@ -6,6 +6,7 @@ import com.nexus.mall.pojo.Orders;
 import com.nexus.mall.pojo.Users;
 import com.nexus.mall.pojo.vo.user.UsersVO;
 import com.nexus.mall.service.center.MyOrdersService;
+import com.nexus.mall.util.JwtTokenUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -75,13 +76,21 @@ public class BaseController {
      * @return : com.nexus.mall.pojo.vo.user.UsersVO
      **/
     public UsersVO conventUsersVO(Users user) {
+        JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
+        /*
+            createTime
+            过期时间
+            randomKey - JWT数据签名： AES -> 源数据 + 盐 -> 在token中解析出randomKey -> 数据验签
+            userid - 用户身份验证
+         */
+        String randomKey = jwtTokenUtil.getRandomKey();
+        String token = jwtTokenUtil.generateToken(user.getId(), randomKey);
         // 实现用户的redis会话
-        String uniqueToken = UUID.randomUUID().toString().trim();
         redisOperator.set(REDIS_USER_TOKEN + ":" + user.getId(),
-                uniqueToken);
+                token);
         UsersVO usersVO = new UsersVO();
         BeanUtils.copyProperties(user, usersVO);
-        usersVO.setUserUniqueToken(uniqueToken);
+        usersVO.setUserUniqueToken(token);
         return usersVO;
     }
 }

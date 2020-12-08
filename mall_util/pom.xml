@@ -52,5 +52,14 @@
 			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+		<!-- JWT依赖 -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+		</dependency>
 	</dependencies>
 </project>
