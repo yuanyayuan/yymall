@@ -1,10 +1,12 @@
 package com.nexus.mall.api.controller.center;
 
+import com.nexus.mall.api.controller.BaseController;
 import com.nexus.mall.api.resource.FileUpload;
 import com.nexus.mall.common.api.ServerResponse;
 import com.nexus.mall.common.enums.Suffix;
 import com.nexus.mall.pojo.Users;
 import com.nexus.mall.pojo.bo.user.center.CenterUserBO;
+import com.nexus.mall.pojo.vo.user.UsersVO;
 import com.nexus.mall.service.center.CenterUserService;
 import com.nexus.mall.util.CookieUtils;
 import com.nexus.mall.util.DateUtils;
@@ -34,7 +36,7 @@ import java.util.Map;
 @Api(value = "用户信息接口", tags = {"用户信息相关接口"})
 @RestController
 @RequestMapping("/userInfo")
-public class CenterUserController {
+public class CenterUserController extends BaseController {
     @Autowired
     private CenterUserService centerUserService;
 
@@ -107,10 +109,15 @@ public class CenterUserController {
                 + "?t=" + DateUtils.getCurrentDateString(DateUtils.DATE_PATTERN);
         // 更新用户头像到数据库
         Users userResult = centerUserService.updateUserFace(userId, finalUserFaceUrl);
-        setNullProperty(userResult);
+
+        // 引入UserVO 无需脱敏操作
+        // setNullProperty(userResult);
+
+        //增加令牌token，会整合进redis，分布式会话
+        UsersVO usersVO = conventUsersVO(userResult);
         CookieUtils.setCookie(request, response, "user",
-                JsonUtils.objectToJson(userResult), true);
-        // TODO 后续要改，增加令牌token，会整合进redis，分布式会话
+                JsonUtils.objectToJson(usersVO), true);
+
         return ServerResponse.success();
     }
 
@@ -135,11 +142,13 @@ public class CenterUserController {
 
         Users userResult = centerUserService.updateUserInfo(userId, centerUserBO);
 
-        setNullProperty(userResult);
-        CookieUtils.setCookie(request, response, "user",
-                JsonUtils.objectToJson(userResult), true);
+        // 引入UserVO 无需脱敏操作
+        // setNullProperty(userResult);
 
-        // TODO 后续要改，增加令牌token，会整合进redis，分布式会话
+        //增加令牌token，会整合进redis，分布式会话
+        UsersVO usersVO = conventUsersVO(userResult);
+        CookieUtils.setCookie(request, response, "user",
+                JsonUtils.objectToJson(usersVO), true);
 
         return ServerResponse.success();
     }
