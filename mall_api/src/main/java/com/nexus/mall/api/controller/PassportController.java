@@ -7,6 +7,7 @@ import com.nexus.mall.pojo.Users;
 import com.nexus.mall.pojo.bo.user.ShopcartBO;
 import com.nexus.mall.pojo.bo.user.UserCreatBO;
 import com.nexus.mall.pojo.bo.user.UserLoginBO;
+import com.nexus.mall.pojo.vo.user.UsersVO;
 import com.nexus.mall.service.UserService;
 import com.nexus.mall.util.CookieUtils;
 import com.nexus.mall.util.JsonUtils;
@@ -16,6 +17,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -106,25 +109,20 @@ public class PassportController extends BaseController{
         //实现注册
         Users userResult = userService.createUser(userBO);
 
-        setNullProperty(userResult);
-
-        CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(userResult), true);
-
-        // TODO 生成用户token，存入redis会话
-        // TODO 同步购物车数据
+        //引入UserVO 不需要进行脱敏
+        //setNullProperty(userResult);
+        // 实现用户的redis会话
+        UsersVO usersVO = conventUsersVO(userResult);
+        CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(usersVO), true);
         synchShopcartData(userResult.getId(), request, response);
-
         return ServerResponse.success(null,"注册成功");
     }
 
     @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")
     @PostMapping("/login")
-    public ServerResponse login(@Validated @RequestBody UserLoginBO userBO,
-                                HttpServletRequest request,
-                                HttpServletResponse response){
+    public ServerResponse login(@Validated @RequestBody UserLoginBO userBO, HttpServletRequest request, HttpServletResponse response){
         String username = userBO.getUsername();
         String password = userBO.getPassword();
-
         //实现登录
         Users userResult = null;
         try {
@@ -132,18 +130,19 @@ public class PassportController extends BaseController{
         } catch (Exception e) {
             log.warn("[PassportController.login] ,{}", ExceptionUtils.getStackTrace(e));
         }
-
         if(userResult == null){
             return ServerResponse.loginFail();
         }
 
-        setNullProperty(userResult);
-        CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(userResult), true);
+        //引入UserVO 不需要进行脱敏
+        //setNullProperty(userResult);
 
-        // TODO 生成用户token，存入redis会话
-        // todo 同步购物车数据
+        //redis 存入用户Token
+        // 实现用户的redis会话
+        UsersVO usersVO = conventUsersVO(userResult);
+        CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(usersVO), true);
+        //同步购物车数据
         synchShopcartData(userResult.getId(), request, response);
-
         return ServerResponse.success(userResult);
     }
 
@@ -244,7 +243,9 @@ public class PassportController extends BaseController{
         // 清除用户的相关信息的cookie
         CookieUtils.deleteCookie(request, response, "user");
 
-        // TODO 用户退出登录，需要清空购物车
+        // 用户退出登录，清除redis中user的会话信息
+        redisOperator.del(REDIS_USER_TOKEN + ":" + userId);
+
         // 分布式会话中需要清除用户数据
         CookieUtils.deleteCookie(request, response, FOODIE_SHOPCART);
         return ServerResponse.success();

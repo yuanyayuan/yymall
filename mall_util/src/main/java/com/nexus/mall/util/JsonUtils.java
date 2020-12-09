@@ -7,13 +7,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 
 /**
- * @author imooc
- * @Title: JsonUtils.java
- * @Package com.imooc.utils
- * @Description: json转换类
- * Copyright: Copyright (c)
- * Company: www.imooc.com
- */
+
+* @Description:    json转换类
+
+* @Author:         Nexus
+
+* @CreateDate:     2020/12/8 23:54
+
+* @UpdateUser:     Nexus
+
+* @UpdateDate:     2020/12/8 23:54
+
+* @UpdateRemark:   修改内容
+
+* @Version:        1.0
+
+*/
 public class JsonUtils {
 
     // 定义jackson对象
