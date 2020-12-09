@@ -148,7 +148,7 @@ public class BackendMenuServiceImpl implements BackendMenuService {
                 .map(backendMenu -> coverMenuNode(backendMenu, backendMenuList)).collect(Collectors.toList());
     }
 
-    private  BackendMenuNode coverMenuNode(BackendMenu backendMenu,List<BackendMenu> menuList){
+    private BackendMenuNode coverMenuNode(BackendMenu backendMenu,List<BackendMenu> menuList){
         BackendMenuNode node = new BackendMenuNode();
         BeanUtils.copyProperties(backendMenu, node);
         List<BackendMenuNode> children = menuList.stream()

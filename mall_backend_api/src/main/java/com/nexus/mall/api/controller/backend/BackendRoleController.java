@@ -2,6 +2,8 @@ package com.nexus.mall.api.controller.backend;
 
 import com.nexus.mall.common.api.CommonPage;
 import com.nexus.mall.common.api.ServerResponse;
+import com.nexus.mall.pojo.BackendMenu;
+import com.nexus.mall.pojo.BackendResource;
 import com.nexus.mall.pojo.BackendRole;
 import com.nexus.mall.service.backend.BackendRoleService;
 import io.swagger.annotations.Api;
@@ -77,7 +79,40 @@ public class BackendRoleController {
     public ServerResponse updateStatus(@PathVariable Long id, @RequestParam(value = "status") Integer status) {
         BackendRole backendRole = new BackendRole();
         backendRole.setStatus(status);
-        int update = roleService.update(id, backendRole);
-        return null;
+        int count = roleService.update(id, backendRole);
+        if (count > 0) {
+            return ServerResponse.success(count);
+        }
+        return ServerResponse.failed();
+    }
+
+    @ApiOperation(value = "获取角色相关菜单", notes = "获取角色相关菜单", httpMethod = "GET")
+    @GetMapping(value = "/listMenu/{roleId}")
+    public ServerResponse<List<BackendMenu>> listMenu(@PathVariable Long roleId) {
+        List<BackendMenu> roleList = roleService.listMenu(roleId);
+        return ServerResponse.success(roleList);
+    }
+
+
+    @ApiOperation(value = "获取角色相关资源", notes = "获取角色相关资源", httpMethod = "GET")
+    @GetMapping(value = "/listResource/{roleId}")
+    public ServerResponse<List<BackendResource>> listResource(@PathVariable Long roleId) {
+        List<BackendResource> roleList = roleService.listResource(roleId);
+        return ServerResponse.success(roleList);
+    }
+
+    @ApiOperation(value = "给角色分配菜单", notes = "给角色分配菜单", httpMethod = "GET")
+    @GetMapping(value = "/allocMenu")
+    @ResponseBody
+    public ServerResponse allocMenu(@RequestParam Long roleId, @RequestParam List<Long> menuIds) {
+        int count = roleService.allocMenu(roleId, menuIds);
+        return ServerResponse.success(count);
+    }
+
+    @ApiOperation(value = "给角色分配资源",notes = "给角色分配资源",httpMethod = "POST")
+    @PostMapping(value = "/allocResource")
+    public ServerResponse allocResource(@RequestParam Long roleId, @RequestParam List<Long> resourceIds) {
+        int count = roleService.allocResource(roleId, resourceIds);
+        return ServerResponse.success(count);
     }
 }

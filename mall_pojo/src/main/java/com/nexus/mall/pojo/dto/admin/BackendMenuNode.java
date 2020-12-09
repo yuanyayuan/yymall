@@ -1,5 +1,6 @@
 package com.nexus.mall.pojo.dto.admin;
 
+import com.nexus.mall.pojo.BackendMenu;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +26,7 @@ import java.util.List;
 */
 @Getter
 @Setter
-public class BackendMenuNode {
+public class BackendMenuNode extends BackendMenu {
     @ApiModelProperty(value = "子级菜单")
     private List<BackendMenuNode> children;
 }
