@@ -102,8 +102,8 @@ public class BackendRoleController {
         return ServerResponse.success(roleList);
     }
 
-    @ApiOperation(value = "给角色分配菜单", notes = "给角色分配菜单", httpMethod = "GET")
-    @GetMapping(value = "/allocMenu")
+    @ApiOperation(value = "给角色分配菜单", notes = "给角色分配菜单", httpMethod = "POST")
+    @PostMapping(value = "/allocMenu")
     @ResponseBody
     public ServerResponse allocMenu(@RequestParam Long roleId, @RequestParam List<Long> menuIds) {
         int count = roleService.allocMenu(roleId, menuIds);
