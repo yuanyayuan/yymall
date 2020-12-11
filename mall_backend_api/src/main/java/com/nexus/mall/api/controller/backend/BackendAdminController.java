@@ -214,7 +214,7 @@ public class BackendAdminController {
     }
 
     @ApiOperation(value = "获取指定用户的角色",notes = "获取指定用户的角色",httpMethod = "GET")
-    @PostMapping(value = "role/{adminId}")
+    @GetMapping(value = "role/{adminId}")
     public ServerResponse<List<BackendRole>> getRoleList(@PathVariable Long adminId) {
         List<BackendRole> roleList = adminService.getRoleList(adminId);
         return ServerResponse.success(roleList);

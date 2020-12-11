@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Api(value = "后台用户角色管理",tags = {"后台用户角色管理"})
 @RestController
@@ -22,7 +23,7 @@ public class BackendRoleController {
     private BackendRoleService roleService;
 
     @ApiOperation(value = "添加角色", notes = "添加角色", httpMethod = "POST")
-    @GetMapping(value = "/create")
+    @PostMapping(value = "/create")
     public ServerResponse create(@RequestBody BackendRole role){
         int count = roleService.create(role);
         if (count > 0) {
@@ -55,7 +56,7 @@ public class BackendRoleController {
     @GetMapping(value = "/listAll")
     public ServerResponse<List<BackendRole>> listAll() {
         List<BackendRole> roleList = roleService.list();
-        return ServerResponse.success(roleList);
+        return ServerResponse.success(roleList.stream().filter(role -> role.getStatus() == 1).collect(Collectors.toList()));
     }
 
     @ApiOperation(value = "根据角色名称分页获取角色列表", notes = "根据角色名称分页获取角色列表", httpMethod = "GET")
