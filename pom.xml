@@ -38,7 +38,6 @@
         <java.version>1.8</java.version>
         <skipTests>true</skipTests>
         <hutool.version>4.5.7</hutool.version>
-        <pagehelper.version>5.1.8</pagehelper.version>
         <knife4j.version>3.0</knife4j.version>
         <guava.version>30.0-jre</guava.version>
         <swagger2.version>3.0.0</swagger2.version>
@@ -68,7 +67,6 @@
         <mall-backend-service.version>0.0.1-SNAPSHOT</mall-backend-service.version>
         <mall-util.version>0.0.1-SNAPSHOT</mall-util.version>
         <mall-security.version>0.0.1-SNAPSHOT</mall-security.version>
-
         <aliyun.oss.version>3.9.1</aliyun.oss.version>
         <redis.version>2.3.5.RELEASE</redis.version>
     </properties>
@@ -205,12 +203,6 @@
                 <groupId>tk.mybatis</groupId>
                 <artifactId>mapper-generator</artifactId>
                 <version>${mapper-generator.version}</version>
-            </dependency>
-            <!--MyBatis分页插件-->
-            <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper</artifactId>
-                <version>${pagehelper.version}</version>
             </dependency>
             <!--MyBatis分页插件starter-->
             <dependency>

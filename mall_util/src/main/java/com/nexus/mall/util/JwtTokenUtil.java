@@ -10,8 +10,11 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * @author jiangzh
- */
+ * @className JwtTokenUtil
+ * @description 前台JWT认证
+ * @author LiYuan
+ * @date 2020/12/14
+**/
 public class JwtTokenUtil {
 
     private final JwtProperties jwtProperties = JwtProperties.getJwtProperties();

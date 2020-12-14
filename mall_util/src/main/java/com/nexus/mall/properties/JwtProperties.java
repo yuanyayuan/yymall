@@ -13,12 +13,28 @@ public class JwtProperties {
 
     public static final String JWT_PREFIX = "jwt";
 
+    /**
+     *
+     * JWT存储的请求头
+     *
+    **/
     private String header = "Authorization";
 
+    /**
+     *
+     * JWT加解密使用的密钥
+     *
+    **/
     private String secret = "defaultSecret";
 
-    // 默认是七天
+    /**
+     *
+     * 默认是七天,JWT的超期限时间(60*60*24*7)
+     *
+    **/
     private Long expiration = 604800L;
+
+    private String head = "Bearer ";
 
     private String authPath = "login";
 

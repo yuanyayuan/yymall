@@ -134,14 +134,14 @@ public class PassportController extends BaseController{
             return ServerResponse.loginFail();
         }
 
-        //引入UserVO 不需要进行脱敏
-        //setNullProperty(userResult);
+        // 引入UserVO 不需要进行脱敏
+        // setNullProperty(userResult);
 
-        //redis 存入用户Token
+        // redis 存入用户Token
         // 实现用户的redis会话
         UsersVO usersVO = conventUsersVO(userResult);
         CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(usersVO), true);
-        //同步购物车数据
+        // 同步购物车数据
         synchShopcartData(userResult.getId(), request, response);
         return ServerResponse.success(userResult);
     }

@@ -93,7 +93,7 @@ public class BackendMenuController {
             @RequestParam(value = "page", defaultValue = "1")
                     Integer page,
             @ApiParam(name = "pageSize", value = "分页的每一页显示的条数", required = false)
-            @RequestParam(value = "pageSize", defaultValue = "10")
+            @RequestParam(value = "pageSize", defaultValue = "5")
                     Integer pageSize) {
         List<BackendMenu> menuList = menuService.list(parentId, page, pageSize);
         return ServerResponse.success(CommonPage.restPage(menuList));

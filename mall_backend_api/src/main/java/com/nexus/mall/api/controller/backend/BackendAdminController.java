@@ -3,6 +3,7 @@ package com.nexus.mall.api.controller.backend;
 import cn.hutool.core.collection.CollUtil;
 import com.google.common.collect.Maps;
 import com.nexus.mall.common.api.CommonPage;
+import com.nexus.mall.common.api.PagedGridResult;
 import com.nexus.mall.common.api.ResultCode;
 import com.nexus.mall.common.api.ServerResponse;
 import com.nexus.mall.pojo.BackendAdmin;
@@ -148,10 +149,10 @@ public class BackendAdminController {
             @RequestParam(value = "page", defaultValue = "1")
                     Integer page,
             @ApiParam(name = "pageSize", value = "分页的每一页显示的条数", required = false)
-            @RequestParam(value = "pageSize", defaultValue = "10")
+            @RequestParam(value = "pageSize", defaultValue = "5")
                     Integer pageSize){
-        List<BackendAdmin> result = adminService.list(keyword, page, pageSize);
-        return ServerResponse.success(CommonPage.restPage(result));
+        List<BackendAdmin> adminList = adminService.list(keyword, page, pageSize);
+        return ServerResponse.success(CommonPage.restPage(adminList));
     }
 
     @ApiOperation(value = "获取指定用户信息",notes = "获取指定用户信息",httpMethod = "GET")

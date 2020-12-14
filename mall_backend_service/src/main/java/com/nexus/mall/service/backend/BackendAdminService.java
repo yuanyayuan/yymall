@@ -1,5 +1,6 @@
 package com.nexus.mall.service.backend;
 
+import com.nexus.mall.common.api.PagedGridResult;
 import com.nexus.mall.pojo.BackendAdmin;
 import com.nexus.mall.pojo.BackendResource;
 import com.nexus.mall.pojo.BackendRole;

@@ -1,5 +1,6 @@
 package com.nexus.mall.api.controller.backend;
 
+import com.nexus.mall.common.api.CommonPage;
 import com.nexus.mall.common.api.ServerResponse;
 import com.nexus.mall.pojo.BackendResource;
 import com.nexus.mall.security.component.DynamicSecurityMetadataSource;
@@ -9,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
 
@@ -80,6 +83,27 @@ public class BackendResourceController {
             return ServerResponse.failed();
         }
     }
-
+    @ApiOperation(value = "分页模糊查询后台资源",notes = "分页模糊查询后台资源",httpMethod = "GET")
+    @GetMapping(value = "/list")
+    public ServerResponse<CommonPage<BackendResource>> list(
+            @RequestParam(required = false)
+                    Long categoryId,
+            @RequestParam(required = false)
+                    String nameKeyword,
+            @RequestParam(required = false)
+                    String urlKeyword,
+            @RequestParam(value = "page", defaultValue = "1")
+                    Integer page,
+            @RequestParam(value = "pageSize", defaultValue = "5")
+                    Integer pageSize) {
+        List<BackendResource> resourceList = resourceService.list(categoryId, nameKeyword, urlKeyword, page, pageSize);
+        return ServerResponse.success(CommonPage.restPage(resourceList));
+    }
+    @ApiOperation(value = "查询所有后台资源",notes = "查询所有后台资源",httpMethod = "GET")
+    @GetMapping(value = "/listAll")
+    public ServerResponse<List<BackendResource>> listAll() {
+        List<BackendResource> resourceList = resourceService.listAll();
+        return ServerResponse.success(resourceList);
+    }
 
 }

@@ -36,6 +36,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.util.Date;
 import java.util.List;
 
+
 /**
 
 * @Description:    BackendAdminService实现类
@@ -234,15 +235,14 @@ public class BackendAdminServiceImpl implements BackendAdminService {
      **/
     @Override
     public List<BackendAdmin> list(String keyword, Integer page, Integer pageSize) {
-        PageHelper.startPage(page, pageSize);
         Example example = new Example(BackendAdmin.class);
         Example.Criteria criteria = example.createCriteria();
         if (!StringUtils.isEmpty(keyword)) {
             criteria.andLike("username","%" + keyword + "%");
             example.or(example.createCriteria().andLike("nickName","%" + keyword + "%"));
         }
+        PageHelper.startPage(page, pageSize);
         return adminMapper.selectByExample(example);
-
     }
 
     /**

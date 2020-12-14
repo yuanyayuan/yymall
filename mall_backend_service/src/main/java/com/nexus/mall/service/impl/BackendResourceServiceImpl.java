@@ -130,7 +130,6 @@ public class BackendResourceServiceImpl implements BackendResourceService {
      */
     @Override
     public List<BackendResource> list(Long categoryId, String nameKeyword, String urlKeyword, Integer page, Integer pageSize) {
-        PageHelper.startPage(page,pageSize);
         Example example = new Example(BackendResource.class);
         Example.Criteria criteria = example.createCriteria();
         if (categoryId != null){
@@ -142,6 +141,7 @@ public class BackendResourceServiceImpl implements BackendResourceService {
         if (StrUtil.isNotEmpty(urlKeyword)){
             criteria.andLike("url",'%'+urlKeyword+'%');
         }
+        PageHelper.startPage(page,pageSize);
         return resourceMapper.selectByExample(example);
     }
 }

@@ -2,6 +2,7 @@ package com.nexus.mall.api.controller.backend;
 
 import com.nexus.mall.common.api.CommonPage;
 import com.nexus.mall.common.api.ServerResponse;
+import com.nexus.mall.pojo.BackendAdmin;
 import com.nexus.mall.pojo.BackendMenu;
 import com.nexus.mall.pojo.BackendResource;
 import com.nexus.mall.pojo.BackendRole;
@@ -61,7 +62,7 @@ public class BackendRoleController {
 
     @ApiOperation(value = "根据角色名称分页获取角色列表", notes = "根据角色名称分页获取角色列表", httpMethod = "GET")
     @GetMapping(value = "/list")
-    public ServerResponse listAll(
+    public ServerResponse<CommonPage<BackendRole>> listAll(
             @ApiParam(name = "keyword", value = "关键字", required = true)
             @RequestParam(value = "keyword", required = false)
                     String keyword,
@@ -69,7 +70,7 @@ public class BackendRoleController {
             @RequestParam(value = "page",defaultValue = "1",required = false)
                     Integer page,
             @ApiParam(name = "pageSize", value = "分页的每一页显示的条数", required = false)
-            @RequestParam(value = "pageSize",defaultValue = "10",required = false)
+            @RequestParam(value = "pageSize",defaultValue = "5",required = false)
                     Integer pageSize) {
         List<BackendRole> roleList = roleService.list(keyword, page, pageSize);
         return ServerResponse.success(CommonPage.restPage(roleList));
