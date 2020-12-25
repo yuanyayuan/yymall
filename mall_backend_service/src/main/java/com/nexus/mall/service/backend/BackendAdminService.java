@@ -83,7 +83,7 @@ public interface BackendAdminService {
     /**
      * 获取用户信息
      * @Author : Nexus
-     * @Description : 获取用户信息
+     * @Description :
      * @Date : 2020/9/10 21:46
      * @Param : username
      * @return : org.springframework.security.core.userdetails.UserDetails
@@ -91,9 +91,9 @@ public interface BackendAdminService {
     UserDetails loadUserByUsername(String username);
 
     /**
-     * getResourceList
+     * 获取指定用户的可访问资源
      * @Author : Nexus
-     * @Description : 获取指定用户的可访问资源
+     * @Description :
      * @Date : 2020/9/10 21:57
      * @Param : adminId
      * @return : java.util.List<com.nexus.mall.pojo.BackendResource>
@@ -101,9 +101,9 @@ public interface BackendAdminService {
     List<BackendResource> getResourceList(Long adminId);
 
     /**
-     * getRoleList
+     * 获取用户对于角色
      * @Author LiYuan
-     * @Description 获取用户对于角色
+     * @Description
      * @Date 14:44 2020/9/11
      * @param adminId
      * @return java.util.List<com.nexus.mall.pojo.BackendRole>
@@ -111,9 +111,9 @@ public interface BackendAdminService {
     List<BackendRole> getRoleList(Long adminId);
 
     /**
-     * list
+     * 根据用户名或昵称分页查询用户
      * @Author LiYuan
-     * @Description 根据用户名或昵称分页查询用户
+     * @Description
      * @Date 10:47 2020/9/14
      * @param keyword
      * @param page
@@ -122,20 +122,18 @@ public interface BackendAdminService {
     **/
     List<BackendAdmin> list(String keyword, Integer page, Integer pageSize);
     /**
-     * getItem
+     * 根据用户id获取用户
      * @Author LiYuan
-     * @Description 根据用户id获取用户
+     * @Description
      * @Date 11:29 2020/9/14
      * @param id
      * @return com.nexus.mall.pojo.BackendAdmin
     **/
     BackendAdmin getItem(Long id);
     /**
-     *
-     * update
-     *
+     * 修改指定用户信息
      * @Author LiYuan
-     * @Description 修改指定用户信息
+     * @Description
      * @Date 11:39 2020/9/14
      * @param id
      * @param admin
@@ -143,33 +141,27 @@ public interface BackendAdminService {
     **/
     int update(Long id, BackendAdmin admin);
     /**
-     *
-     * updatePassword
-     *
+     * 修改密码
      * @Author LiYuan
-     * @Description 修改密码
+     * @Description
      * @Date 11:03 2020/9/15
      * @param updatePasswordParam
      * @return int
     **/
     int updatePassword(UpdateAdminPasswordParam updatePasswordParam);
     /**
-     *
-     * delete
-     *
+     * 删除指定用户
      * @Author LiYuan
-     * @Description 删除指定用户
+     * @Description
      * @Date 11:27 2020/9/15
      * @param id
      * @return int
     **/
     int delete(Long id);
     /**
-     *
-     * updateRole
-     *
+     * 修改用户角色关系
      * @Author LiYuan
-     * @Description 修改用户角色关系
+     * @Description
      * @Date 16:07 2020/9/15
      * @param adminId
      * @param roleIds

@@ -100,7 +100,7 @@ public class OrderServiceImpl implements OrderService {
         List<ShopcartBO> toBeRemovedShopcatList = new ArrayList<>();
         for (String itemSpecId : itemSpecIdArr) {
             ShopcartBO cartItem = getBuyCountsFromShopcart(shopcartList, itemSpecId);
-            //todo 整合redis后，商品购买的数量重新从redis的购物车中获取
+            // 整合redis后，商品购买的数量重新从redis的购物车中获取
             if (cartItem == null){
                 Asserts.fail("服务器异常，请稍后再试");
             }
