@@ -1,5 +1,7 @@
 package com.nexus.mall.common.service;
 
+import com.nexus.mall.util.BloomFilterHelper;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -397,4 +399,26 @@ public interface RedisService {
      * @return : java.lang.Long
      **/
     Long lRemove(String key, long count, Object value);
+    /**
+     * 布隆过滤器
+     * @Author : Nexus
+     * @Description : //TODO
+     * @Date : 2021/4/3 21:29
+     * @Param : bloomFilterHelper
+     * @Param : key
+     * @Param : value
+     * @return : void
+     **/
+    <T> void addByBloomFilter(BloomFilterHelper<T> bloomFilterHelper, String key, T value);
+    /**
+     * 布隆过滤器
+     * @Author : Nexus
+     * @Description : //TODO
+     * @Date : 2021/4/3 21:29
+     * @Param : bloomFilterHelper
+     * @Param : key
+     * @Param : value
+     * @return : boolean
+     **/
+    <T> boolean includeByBloomFilter(BloomFilterHelper<T> bloomFilterHelper, String key, T value);
 }

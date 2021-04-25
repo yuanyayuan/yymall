@@ -1,8 +1,12 @@
 package com.nexus.mall.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.nexus.mall.dao.backend.*;
+import com.nexus.mall.dao.backend.BackendRoleMapper;
+import com.nexus.mall.dao.backend.BackendRoleMapperCustom;
+import com.nexus.mall.dao.backend.BackendRoleMenuRelationMapper;
+import com.nexus.mall.dao.backend.BackendRoleResourceRelationMapper;
 import com.nexus.mall.pojo.*;
+import com.nexus.mall.service.backend.BackendAdminCacheService;
 import com.nexus.mall.service.backend.BackendRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,15 +38,14 @@ public class BackendRoleServiceImpl implements BackendRoleService {
 
     @Autowired
     private BackendRoleMapper roleMapper;
-
     @Autowired
     private BackendRoleMenuRelationMapper roleMenuRelationMapper;
-
     @Autowired
     private BackendRoleResourceRelationMapper roleResourceRelationMapper;
-
     @Autowired
     private BackendRoleMapperCustom roleMapperCustom;
+    @Autowired
+    private BackendAdminCacheService adminCacheService;
 
     /**
      * 根据用户id获取对应菜单
@@ -105,7 +108,9 @@ public class BackendRoleServiceImpl implements BackendRoleService {
     public int delete(List<Long> ids) {
         Example roleExample = new Example(BackendRole.class);
         roleExample.createCriteria().andIn("id",ids);
-        return roleMapper.deleteByExample(roleExample);
+        int count = roleMapper.deleteByExample(roleExample);
+        adminCacheService.delResourceListByRoleIds(ids);
+        return count;
     }
 
     /**
@@ -219,6 +224,7 @@ public class BackendRoleServiceImpl implements BackendRoleService {
             backendRoleResourceRelation.setResourceId(menuId);
             roleResourceRelationMapper.insert(backendRoleResourceRelation);
         }
+        adminCacheService.delResourceListByRole(roleId);
         return resourceIds.size();
     }
 }

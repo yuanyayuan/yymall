@@ -15,7 +15,7 @@ server:
 ############################################################
 spring:
   profiles:
-    active: dev
+    active: prod
   application:
     name: mall-backend-api
   datasource:                                         # 数据源的相关配置

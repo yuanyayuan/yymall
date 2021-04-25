@@ -1,6 +1,5 @@
 package com.nexus.mall.api.controller;
 
-import com.nexus.mall.common.api.ResultCode;
 import com.nexus.mall.common.api.ServerResponse;
 import com.nexus.mall.common.util.RedisOperator;
 import com.nexus.mall.pojo.bo.user.ShopcartBO;

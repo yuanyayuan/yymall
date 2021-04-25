@@ -95,4 +95,5 @@ public class RedisController {
         List<String> keysList = Arrays.asList(keys);
         return redisOperator.batchGet(keysList);
     }
+
 }

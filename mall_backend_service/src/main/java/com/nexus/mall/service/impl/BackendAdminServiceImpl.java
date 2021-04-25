@@ -168,12 +168,20 @@ public class BackendAdminServiceImpl implements BackendAdminService {
      */
     @Override
     public BackendAdmin getAdminByUsername(String username) {
+        //先从缓存中获取数据
+        BackendAdmin admin = adminCacheService.getAdmin(username);
+        if(admin!=null) {
+            return  admin;
+        }
         Example example = new Example(BackendAdmin.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("username",username);
         List<BackendAdmin> adminList = adminMapper.selectByExample(example);
         if (adminList != null && adminList.size() > 0) {
-            return adminList.get(0);
+            admin = adminList.get(0);
+            //将数据库中的数据存入缓存中
+            adminCacheService.setAdmin(admin);
+            return admin;
         }
         return null;
     }
@@ -204,7 +212,17 @@ public class BackendAdminServiceImpl implements BackendAdminService {
      */
     @Override
     public List<BackendResource> getResourceList(Long adminId) {
-        List<BackendResource> resourceList = adminRoleRelationMapperCustom.getResourceList(adminId);
+        //先从缓存中获取数据
+        List<BackendResource> resourceList = adminCacheService.getResourceList(adminId);
+        if(CollUtil.isNotEmpty(resourceList)){
+            return  resourceList;
+        }
+        //缓存中没有从数据库中获取
+        resourceList = adminRoleRelationMapperCustom.getResourceList(adminId);
+        if(CollUtil.isNotEmpty(resourceList)){
+            //将数据库中的数据存入缓存中
+            adminCacheService.setResourceList(adminId,resourceList);
+        }
         return resourceList;
     }
 
@@ -284,7 +302,9 @@ public class BackendAdminServiceImpl implements BackendAdminService {
                 admin.setPassword(passwordEncoder.encode(admin.getPassword()));
             }
         }
-        return adminMapper.updateByPrimaryKeySelective(admin);
+        int count = adminMapper.updateByPrimaryKeySelective(admin);
+        adminCacheService.delAdmin(id);
+        return count;
     }
 
     /**
@@ -336,6 +356,7 @@ public class BackendAdminServiceImpl implements BackendAdminService {
         }
         admin.setPassword(passwordEncoder.encode(updatePasswordParam.getNewPassword()));
         adminMapper.updateByPrimaryKey(admin);
+        adminCacheService.delAdmin(admin.getId());
         return 1;
     }
 
@@ -350,7 +371,10 @@ public class BackendAdminServiceImpl implements BackendAdminService {
      **/
     @Override
     public int delete(Long id) {
-        return adminMapper.deleteByPrimaryKey(id);
+        adminCacheService.delAdmin(id);
+        int count = adminMapper.deleteByPrimaryKey(id);
+        adminCacheService.delResourceList(id);
+        return count;
     }
 
     /**
@@ -372,7 +396,7 @@ public class BackendAdminServiceImpl implements BackendAdminService {
         criteria.andEqualTo("adminId",adminId);
         adminRoleRelationMapper.deleteByExample(example);
         //2.建立新关系
-        if(CollectionUtils.isEmpty(roleIds)){
+        if(!CollectionUtils.isEmpty(roleIds)){
             List<BackendAdminRoleRelation> list = Lists.newLinkedList();
             assert roleIds != null;
             for (Long roleId : roleIds) {
@@ -383,6 +407,7 @@ public class BackendAdminServiceImpl implements BackendAdminService {
             }
             adminRoleRelationMapperCustom.insertList(list);
         }
+        adminCacheService.delResourceList(adminId);
         return count;
     }
 }

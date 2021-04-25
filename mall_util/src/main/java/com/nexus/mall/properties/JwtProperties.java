@@ -1,6 +1,22 @@
 package com.nexus.mall.properties;
 
+/**
 
+* @Description:    java类作用描述
+
+* @Author:         Nexus
+
+* @CreateDate:     2021/4/3 21:14
+
+* @UpdateUser:     Nexus
+
+* @UpdateDate:     2021/4/3 21:14
+
+* @UpdateRemark:   修改内容
+
+* @Version:        1.0
+
+*/
 public class JwtProperties {
 
     private static final JwtProperties jwtProperties = new JwtProperties();

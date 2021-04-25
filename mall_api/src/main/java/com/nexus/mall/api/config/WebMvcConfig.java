@@ -1,5 +1,6 @@
 package com.nexus.mall.api.config;
 
+import com.nexus.mall.api.interceptor.UserTokenInterceptor;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -30,13 +31,31 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
     }
-
+    @Bean
+    public UserTokenInterceptor userTokenInterceptor() { return new UserTokenInterceptor(); }
     /**
      * 通用拦截器排除swagger设置，所有拦截器都会自动加swagger相关的资源排除信息
      */
     @SuppressWarnings("unchecked")
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(userTokenInterceptor())
+                .addPathPatterns("/hello")
+                .addPathPatterns("/shopcart/add")
+                .addPathPatterns("/shopcart/del")
+                .addPathPatterns("/address/list")
+                .addPathPatterns("/address/add")
+                .addPathPatterns("/address/update")
+                .addPathPatterns("/address/setDefalut")
+                .addPathPatterns("/address/delete")
+                .addPathPatterns("/orders/*")
+                .addPathPatterns("/center/*")
+                .addPathPatterns("/userInfo/*")
+                .addPathPatterns("/myorders/*")
+                .addPathPatterns("/mycomments/*")
+                .excludePathPatterns("/myorders/deliver")
+                .excludePathPatterns("/orders/notifyMerchantOrderPaid");
+        WebMvcConfigurer.super.addInterceptors(registry);
         try {
             Field registrationsField = FieldUtils.getField(InterceptorRegistry.class, "registrations", true);
             List<InterceptorRegistration> registrations = (List<InterceptorRegistration>) ReflectionUtils.getField(registrationsField, registry);

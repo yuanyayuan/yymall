@@ -1,9 +1,8 @@
-package com.nexus.mall.api.controller.backend;
+package com.nexus.mall.api.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import com.google.common.collect.Maps;
 import com.nexus.mall.common.api.CommonPage;
-import com.nexus.mall.common.api.PagedGridResult;
 import com.nexus.mall.common.api.ResultCode;
 import com.nexus.mall.common.api.ServerResponse;
 import com.nexus.mall.pojo.BackendAdmin;

@@ -1,9 +1,11 @@
 package com.nexus.mall.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.nexus.mall.common.service.RedisService;
 import com.nexus.mall.dao.backend.BackendAdminRoleRelationMapper;
 import com.nexus.mall.dao.backend.BackendAdminRoleRelationMapperCustom;
 import com.nexus.mall.pojo.BackendAdmin;
+import com.nexus.mall.pojo.BackendAdminRoleRelation;
 import com.nexus.mall.pojo.BackendResource;
 import com.nexus.mall.service.backend.BackendAdminCacheService;
 import com.nexus.mall.service.backend.BackendAdminService;
@@ -11,8 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 
@@ -100,7 +104,15 @@ public class BackendAdminCacheServiceImpl implements BackendAdminCacheService {
      */
     @Override
     public void delResourceListByRole(Long roleId) {
-
+        Example example = new Example(BackendAdminRoleRelation.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("roleId",roleId);
+        List<BackendAdminRoleRelation> relationList = adminRoleRelationMapper.selectByExample(example);
+        if (CollUtil.isNotEmpty(relationList)) {
+            String keyPrefix = REDIS_DATABASE + ":" + REDIS_KEY_RESOURCE_LIST + ":";
+            List<String> keys = relationList.stream().map(relation -> keyPrefix + relation.getAdminId()).collect(Collectors.toList());
+            redisService.del(keys);
+        }
     }
 
     /**
@@ -115,7 +127,15 @@ public class BackendAdminCacheServiceImpl implements BackendAdminCacheService {
      */
     @Override
     public void delResourceListByRoleIds(List<Long> roleIds) {
-
+        Example example = new Example(BackendAdminRoleRelation.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andIn("roleId",roleIds);
+        List<BackendAdminRoleRelation> relationList = adminRoleRelationMapper.selectByExample(example);
+        if (CollUtil.isNotEmpty(relationList)) {
+            String keyPrefix = REDIS_DATABASE + ":" + REDIS_KEY_RESOURCE_LIST + ":";
+            List<String> keys = relationList.stream().map(relation -> keyPrefix + relation.getAdminId()).collect(Collectors.toList());
+            redisService.del(keys);
+        }
     }
 
     /**
@@ -130,7 +150,12 @@ public class BackendAdminCacheServiceImpl implements BackendAdminCacheService {
      */
     @Override
     public void delResourceListByResource(Long resourceId) {
-
+        List<Long> adminIdList = adminRoleRelationDao.getAdminIdList(resourceId);
+        if (CollUtil.isNotEmpty(adminIdList)) {
+            String keyPrefix = REDIS_DATABASE + ":" + REDIS_KEY_RESOURCE_LIST + ":";
+            List<String> keys = adminIdList.stream().map(adminId -> keyPrefix + adminId).collect(Collectors.toList());
+            redisService.del(keys);
+        }
     }
 
     /**
@@ -145,7 +170,8 @@ public class BackendAdminCacheServiceImpl implements BackendAdminCacheService {
      */
     @Override
     public BackendAdmin getAdmin(String username) {
-        return null;
+        String key = REDIS_DATABASE + ":" + REDIS_KEY_ADMIN + ":" + username;
+        return (BackendAdmin) redisService.get(key);
     }
 
     /**
@@ -160,7 +186,8 @@ public class BackendAdminCacheServiceImpl implements BackendAdminCacheService {
      */
     @Override
     public void setAdmin(BackendAdmin admin) {
-
+        String key = REDIS_DATABASE + ":" + REDIS_KEY_ADMIN + ":" + admin.getUsername();
+        redisService.set(key, admin, REDIS_EXPIRE);
     }
 
     /**
@@ -175,7 +202,8 @@ public class BackendAdminCacheServiceImpl implements BackendAdminCacheService {
      */
     @Override
     public List<BackendResource> getResourceList(Long adminId) {
-        return null;
+        String key = REDIS_DATABASE + ":" + REDIS_KEY_RESOURCE_LIST + ":" + adminId;
+        return (List<BackendResource>) redisService.get(key);
     }
 
     /**
@@ -192,6 +220,7 @@ public class BackendAdminCacheServiceImpl implements BackendAdminCacheService {
      */
     @Override
     public void setResourceList(Long adminId, List<BackendResource> resourceList) {
-
+        String key = REDIS_DATABASE + ":" + REDIS_KEY_RESOURCE_LIST + ":" + adminId;
+        redisService.set(key, resourceList, REDIS_EXPIRE);
     }
 }

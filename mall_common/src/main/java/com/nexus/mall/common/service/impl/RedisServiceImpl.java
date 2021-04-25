@@ -1,9 +1,10 @@
 package com.nexus.mall.common.service.impl;
 
+import com.google.common.base.Preconditions;
 import com.nexus.mall.common.service.RedisService;
+import com.nexus.mall.util.BloomFilterHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -412,5 +413,35 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public Long lRemove(String key, long count, Object value) {
         return redisTemplate.opsForList().remove(key, count, value);
+    }
+
+
+    /**
+     * 根据给定的布隆过滤器添加值
+     */
+    @Override
+    public <T> void addByBloomFilter(BloomFilterHelper<T> bloomFilterHelper, String key, T value) {
+        Preconditions.checkArgument(bloomFilterHelper != null, "bloomFilterHelper不能为空");
+        int[] offset = bloomFilterHelper.murmurHashOffset(value);
+        for (int i : offset) {
+            System.out.println("key : " + key + " " + "value : " + i);
+            redisTemplate.opsForValue().setBit(key, i, true);
+        }
+    }
+
+    /**
+     * 根据给定的布隆过滤器判断值是否存在
+     */
+    public <T> boolean includeByBloomFilter(BloomFilterHelper<T> bloomFilterHelper, String key, T value) {
+        Preconditions.checkArgument(bloomFilterHelper != null, "bloomFilterHelper不能为空");
+        int[] offset = bloomFilterHelper.murmurHashOffset(value);
+        for (int i : offset) {
+            System.out.println("key : " + key + " " + "value : " + i);
+            if (!redisTemplate.opsForValue().getBit(key, i)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

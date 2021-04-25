@@ -1,8 +1,7 @@
-package com.nexus.mall.api.controller.backend;
+package com.nexus.mall.api.controller;
 
 import com.nexus.mall.common.api.CommonPage;
 import com.nexus.mall.common.api.ServerResponse;
-import com.nexus.mall.pojo.BackendAdmin;
 import com.nexus.mall.pojo.BackendMenu;
 import com.nexus.mall.pojo.BackendResource;
 import com.nexus.mall.pojo.BackendRole;
